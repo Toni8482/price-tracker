@@ -4,8 +4,16 @@
 
 return [
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], [], []],
+    'api_books' => [[], ['_controller' => 'App\\Controller\\ApiBookController::index'], [], [['text', '/api/books']], [], [], []],
+    'api_book_detail' => [['id'], ['_controller' => 'App\\Controller\\ApiBookController::show'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/api/books']], [], [], []],
     'api_products' => [[], ['_controller' => 'App\\Controller\\ApiProductController::listProducts'], [], [['text', '/api/products']], [], [], []],
     'add_product' => [[], ['_controller' => 'App\\Controller\\ProductController::addProduct'], [], [['text', '/add-product']], [], [], []],
+    'app_product_curl' => [[], ['_controller' => 'App\\Controller\\ProductCurlController::index'], [], [['text', '/product/curl']], [], [], []],
+    'scrape_books' => [[], ['_controller' => 'App\\Controller\\ScrapeController::scrapeBooks'], [], [['text', '/api/scrape-books']], [], [], []],
+    'App\Controller\ApiBookController::index' => [[], ['_controller' => 'App\\Controller\\ApiBookController::index'], [], [['text', '/api/books']], [], [], []],
+    'App\Controller\ApiBookController::show' => [['id'], ['_controller' => 'App\\Controller\\ApiBookController::show'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/api/books']], [], [], []],
     'App\Controller\ApiProductController::listProducts' => [[], ['_controller' => 'App\\Controller\\ApiProductController::listProducts'], [], [['text', '/api/products']], [], [], []],
     'App\Controller\ProductController::addProduct' => [[], ['_controller' => 'App\\Controller\\ProductController::addProduct'], [], [['text', '/add-product']], [], [], []],
+    'App\Controller\ProductCurlController::index' => [[], ['_controller' => 'App\\Controller\\ProductCurlController::index'], [], [['text', '/product/curl']], [], [], []],
+    'App\Controller\ScrapeController::scrapeBooks' => [[], ['_controller' => 'App\\Controller\\ScrapeController::scrapeBooks'], [], [['text', '/api/scrape-books']], [], [], []],
 ];

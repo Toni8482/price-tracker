@@ -14,7 +14,10 @@ class ComposerStaticInit75e7f8d848176580e9902a32f6f14640
         '8825ede83f2f289127722d4e842cf7e8' => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme/bootstrap.php',
         'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
+        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         '9d2b9fc6db0f153a0a149fefb182415e' => __DIR__ . '/..' . '/symfony/polyfill-php84/bootstrap.php',
+        '662a729f963d39afe703c9d9b7ab4a8c' => __DIR__ . '/..' . '/symfony/polyfill-php83/bootstrap.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -23,11 +26,13 @@ class ComposerStaticInit75e7f8d848176580e9902a32f6f14640
             'Symfony\\Runtime\\Symfony\\Component\\' => 34,
             'Symfony\\Polyfill\\Php85\\' => 23,
             'Symfony\\Polyfill\\Php84\\' => 23,
+            'Symfony\\Polyfill\\Php83\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Intl\\Normalizer\\' => 33,
             'Symfony\\Polyfill\\Intl\\Grapheme\\' => 31,
             'Symfony\\Flex\\' => 13,
             'Symfony\\Contracts\\Service\\' => 26,
+            'Symfony\\Contracts\\HttpClient\\' => 29,
             'Symfony\\Contracts\\EventDispatcher\\' => 34,
             'Symfony\\Contracts\\Cache\\' => 24,
             'Symfony\\Component\\Yaml\\' => 23,
@@ -40,12 +45,15 @@ class ComposerStaticInit75e7f8d848176580e9902a32f6f14640
             'Symfony\\Component\\Process\\' => 26,
             'Symfony\\Component\\HttpKernel\\' => 29,
             'Symfony\\Component\\HttpFoundation\\' => 33,
+            'Symfony\\Component\\HttpClient\\' => 29,
             'Symfony\\Component\\Finder\\' => 25,
             'Symfony\\Component\\Filesystem\\' => 29,
             'Symfony\\Component\\EventDispatcher\\' => 34,
             'Symfony\\Component\\ErrorHandler\\' => 31,
             'Symfony\\Component\\Dotenv\\' => 25,
+            'Symfony\\Component\\DomCrawler\\' => 29,
             'Symfony\\Component\\DependencyInjection\\' => 38,
+            'Symfony\\Component\\CssSelector\\' => 30,
             'Symfony\\Component\\Console\\' => 26,
             'Symfony\\Component\\Config\\' => 25,
             'Symfony\\Component\\Cache\\' => 24,
@@ -56,6 +64,8 @@ class ComposerStaticInit75e7f8d848176580e9902a32f6f14640
         'P' =>
         array (
             'Psr\\Log\\' => 8,
+            'Psr\\Http\\Message\\' => 17,
+            'Psr\\Http\\Client\\' => 16,
             'Psr\\EventDispatcher\\' => 20,
             'Psr\\Container\\' => 14,
             'Psr\\Cache\\' => 10,
@@ -64,6 +74,16 @@ class ComposerStaticInit75e7f8d848176580e9902a32f6f14640
         'N' =>
         array (
             'Nelmio\\CorsBundle\\' => 18,
+        ),
+        'M' =>
+        array (
+            'Masterminds\\' => 12,
+        ),
+        'G' =>
+        array (
+            'GuzzleHttp\\Psr7\\' => 16,
+            'GuzzleHttp\\Promise\\' => 19,
+            'GuzzleHttp\\' => 11,
         ),
         'D' =>
         array (
@@ -101,6 +121,10 @@ class ComposerStaticInit75e7f8d848176580e9902a32f6f14640
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php84',
         ),
+        'Symfony\\Polyfill\\Php83\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php83',
+        ),
         'Symfony\\Polyfill\\Mbstring\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
@@ -120,6 +144,10 @@ class ComposerStaticInit75e7f8d848176580e9902a32f6f14640
         'Symfony\\Contracts\\Service\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/service-contracts',
+        ),
+        'Symfony\\Contracts\\HttpClient\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/symfony/http-client-contracts',
         ),
         'Symfony\\Contracts\\EventDispatcher\\' =>
         array (
@@ -169,6 +197,10 @@ class ComposerStaticInit75e7f8d848176580e9902a32f6f14640
         array (
             0 => __DIR__ . '/..' . '/symfony/http-foundation',
         ),
+        'Symfony\\Component\\HttpClient\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/symfony/http-client',
+        ),
         'Symfony\\Component\\Finder\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/finder',
@@ -189,9 +221,17 @@ class ComposerStaticInit75e7f8d848176580e9902a32f6f14640
         array (
             0 => __DIR__ . '/..' . '/symfony/dotenv',
         ),
+        'Symfony\\Component\\DomCrawler\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/symfony/dom-crawler',
+        ),
         'Symfony\\Component\\DependencyInjection\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/dependency-injection',
+        ),
+        'Symfony\\Component\\CssSelector\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/symfony/css-selector',
         ),
         'Symfony\\Component\\Console\\' =>
         array (
@@ -221,6 +261,15 @@ class ComposerStaticInit75e7f8d848176580e9902a32f6f14640
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
         ),
+        'Psr\\Http\\Message\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Psr\\Http\\Client\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-client/src',
+        ),
         'Psr\\EventDispatcher\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/event-dispatcher/src',
@@ -240,6 +289,22 @@ class ComposerStaticInit75e7f8d848176580e9902a32f6f14640
         'Nelmio\\CorsBundle\\' =>
         array (
             0 => __DIR__ . '/..' . '/nelmio/cors-bundle',
+        ),
+        'Masterminds\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/masterminds/html5/src',
+        ),
+        'GuzzleHttp\\Psr7\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
+        ),
+        'GuzzleHttp\\Promise\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
+        ),
+        'GuzzleHttp\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
         'Doctrine\\SqlFormatter\\' =>
         array (
@@ -305,10 +370,21 @@ class ComposerStaticInit75e7f8d848176580e9902a32f6f14640
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'DateError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateError.php',
+        'DateException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateException.php',
+        'DateInvalidOperationException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateInvalidOperationException.php',
+        'DateInvalidTimeZoneException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateInvalidTimeZoneException.php',
+        'DateMalformedIntervalStringException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateMalformedIntervalStringException.php',
+        'DateMalformedPeriodStringException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateMalformedPeriodStringException.php',
+        'DateMalformedStringException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateMalformedStringException.php',
+        'DateObjectError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateObjectError.php',
+        'DateRangeError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateRangeError.php',
         'Deprecated' => __DIR__ . '/..' . '/symfony/polyfill-php84/Resources/stubs/Deprecated.php',
         'NoDiscard' => __DIR__ . '/..' . '/symfony/polyfill-php85/Resources/stubs/NoDiscard.php',
         'Normalizer' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
+        'Override' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/Override.php',
         'ReflectionConstant' => __DIR__ . '/..' . '/symfony/polyfill-php84/Resources/stubs/ReflectionConstant.php',
+        'SQLite3Exception' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/SQLite3Exception.php',
         '©' => __DIR__ . '/..' . '/symfony/cache/Traits/ValueWrapper.php',
     );
 
