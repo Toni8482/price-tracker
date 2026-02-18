@@ -25,6 +25,21 @@ class Product
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $enlace_product = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $genero = null;
+
+    #[ORM\Column]
+    private ?float $stock = null;
+
+   #[ORM\Column(type: "text", nullable: true)]
+    private ?string $description = null;
+
+    #[ORM\Column]
+    private ?int $rating = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +89,66 @@ class Product
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getEnlaceProduct(): ?string
+    {
+        return $this->enlace_product;
+    }
+
+    public function setEnlaceProduct(string $enlace_product): static
+    {
+        $this->enlace_product = $enlace_product;
+
+        return $this;
+    }
+
+    public function getGenero(): ?string
+    {
+        return $this->genero;
+    }
+
+    public function setGenero(string $genero): static
+    {
+        $this->genero = $genero;
+
+        return $this;
+    }
+
+    public function getStock(): ?float
+    {
+        return $this->stock;
+    }
+
+    public function setStock(float $stock): static
+    {
+        $this->stock = $stock;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getRating(): ?int
+    {
+        return $this->rating;
+    }
+
+    public function setRating(int $rating): static
+    {
+        $this->rating = $rating;
 
         return $this;
     }

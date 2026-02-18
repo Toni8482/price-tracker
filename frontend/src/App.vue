@@ -1,30 +1,34 @@
 <template>
-  <div>
-    <h1>Productos</h1>
-    <ul>
-      <li v-for="product in products" :key="product.id">
-        {{ product.name }} - {{ product.price }}€
-      </li>
-    </ul>
-  </div>
+   <MenuComponent></MenuComponent>
+ <router-view></router-view>
+
 </template>
 
 <script>
-import { getProducts } from './services/api';
+
+import ListaLibros from './components/ListaLibros.vue'
+import MenuComponent from './components/MenuComponent.vue';
+
 
 export default {
+
+  components: {
+    ListaLibros,
+    MenuComponent
+  },
   data() {
     return {
-      products: [],
+    
     };
   },
-  async created() {
-    try {
-      const response = await getProducts();
-      this.products = response.data;
-    } catch (error) {
-      console.error('Error fetching products:', error);
-    }
-  },
+  
 };
 </script>
+
+<style>
+body{
+  margin: 0px;
+  padding: 0px;
+}
+  
+</style>
