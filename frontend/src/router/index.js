@@ -3,8 +3,14 @@ import ListaLibros from "../components/ListaLibros.vue";
 import DetallesLibro from "@/components/DetallesLibro.vue";
 import ListaPerfumes from "@/components/ListaPerfumes.vue";
 import DetallesPerfumes from "@/components/DetallesPerfume.vue";
+import Home from "@/components/HomeComponent.vue"
 
 const routes = [
+  {
+    path: "/",
+    name: "Home",
+    component: Home,
+  },
   {
     path: "/lista",
     name: "lista",

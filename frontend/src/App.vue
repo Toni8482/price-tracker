@@ -11,7 +11,7 @@ import MenuComponent from './components/MenuComponent.vue';
 
 
 export default {
-
+name: "App",
   components: {
     ListaLibros,
     MenuComponent

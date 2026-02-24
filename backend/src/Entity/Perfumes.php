@@ -45,6 +45,15 @@ class Perfumes
     )]
     private ?Stores $store = null;
 
+    #[ORM\Column(length: 100)]
+    private ?string $brand = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $contenido = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $concentracion = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -142,6 +151,42 @@ class Perfumes
     public function setStore(Stores $store): static
     {
         $this->store = $store;
+        return $this;
+    }
+
+    public function getBrand(): ?string
+    {
+        return $this->brand;
+    }
+
+    public function setBrand(string $brand): static
+    {
+        $this->brand = $brand;
+
+        return $this;
+    }
+
+    public function getContenido(): ?string
+    {
+        return $this->contenido;
+    }
+
+    public function setContenido(string $contenido): static
+    {
+        $this->contenido = $contenido;
+
+        return $this;
+    }
+
+    public function getConcentracion(): ?string
+    {
+        return $this->concentracion;
+    }
+
+    public function setConcentracion(string $concentracion): static
+    {
+        $this->concentracion = $concentracion;
+
         return $this;
     }
 }

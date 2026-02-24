@@ -2,7 +2,8 @@
 
 namespace App\Command;
 
-use App\Service\PerfumesScraper;
+
+use App\Service\PerfumesScraperService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -10,14 +11,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputOption;
 
 #[AsCommand(
-    name: 'app:scrape-perfumes-new',
+    name: 'app:scrape-perfumes',
     description: 'Scrapea perfumes y los guarda en la base de datos'
 )]
 class ScrapePerfumesCommand extends Command
 {
-    private PerfumesScraper $scraper;
+    private PerfumesScraperService $scraper;
 
-    public function __construct(PerfumesScraper $scraper)
+    public function __construct(PerfumesScraperService $scraper)
     {
         parent::__construct();
         $this->scraper = $scraper;
@@ -26,15 +27,15 @@ class ScrapePerfumesCommand extends Command
     protected function configure(): void
     {
         $this
-           
-             ->addOption(
+
+            ->addOption(
                 'url1',
                 'u1',
                 InputOption::VALUE_OPTIONAL,
                 'URL de perfumerias a scrapear',
                 'https://perfumerias.com/perfumes-hombre/'
             )
-             ->addOption(
+            ->addOption(
                 'url2',
                 'u2',
                 InputOption::VALUE_OPTIONAL,
@@ -53,18 +54,33 @@ class ScrapePerfumesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-       $urla = $input->getOption('url1');
-       $urlo = $input->getOption('url2');
+        $urla = $input->getOption('url1');
+        $urlo = $input->getOption('url2');
         $category = $input->getOption('category');
-        
+
         $output->writeln('⏳ Iniciando scraping de Perfumes...');
         $output->writeln("   URL: $urla");
-         $output->writeln("   URL: $urlo");
+        $output->writeln("   URL: $urlo");
         $output->writeln("   Categoría: $category");
-        
+        $urls =[$urla, $urlo];
         try {
-            $this->scraper->scrape($urla, $urlo, $category);
+
+            $start = microtime(true);
+
+
+
+
+
+            $this->scraper->scrape($urls, $category);
             $output->writeln('✅ Componentes guardados correctamente');
+
+
+            $end = microtime(true);
+
+            $time = $end - $start;
+
+
+            $output->writeln('⏱️ Tiempo total: ' . round($time, 2) . ' segundos');
             return Command::SUCCESS;
         } catch (\Exception $e) {
             $output->writeln('<error>❌ Error: ' . $e->getMessage() . '</error>');
