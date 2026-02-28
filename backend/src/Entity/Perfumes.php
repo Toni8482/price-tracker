@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Stores;
+use App\Entity\TargetPublic;
 use App\Repository\PerfumesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -48,11 +49,19 @@ class Perfumes
     #[ORM\Column(length: 100)]
     private ?string $brand = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 150)]
     private ?string $contenido = null;
 
     #[ORM\Column(length: 100)]
     private ?string $concentracion = null;
+
+      #[ORM\ManyToOne(targetEntity: TargetPublic::class)]
+    #[ORM\JoinColumn(
+        name: 'target_public_id',
+        referencedColumnName: 'id',
+        nullable: false
+    )]
+    private ?TargetPublic $target_public = null;
 
     public function getId(): ?int
     {
@@ -187,6 +196,17 @@ class Perfumes
     {
         $this->concentracion = $concentracion;
 
+        return $this;
+    }
+
+     public function getTargetPublic(): ?TargetPublic
+    {
+        return $this->target_public;
+    }
+
+    public function setTargetPublic(TargetPublic $targetPublic): static
+    {
+        $this->target_public =  $targetPublic;
         return $this;
     }
 }

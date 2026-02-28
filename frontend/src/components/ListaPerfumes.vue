@@ -40,6 +40,7 @@
                     <p class="">{{ perfume.stock }}</p>
 
                     <p class="">{{ perfume.store_name }}</p>
+                    <p class="">{{ perfume.target_public }}</p>
                     <a class="" href={{ perfume.perfume_url }}>{{ perfume.perfume_url }}</a>
                     <img :src="perfume.store_logo" alt="Imagen logo" />
                     <button @click="VisualizarPerfume(perfume.id)">Detalles</button>

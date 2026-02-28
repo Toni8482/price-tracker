@@ -30,6 +30,7 @@ final class ApiPerfumesController extends AbstractController
                 "store_logo"=> $perfume->getStore()->getLogo(),
                  "contenido"=> $perfume->getContenido(),
                 "concentracion"=> $perfume->getConcentracion(),
+                "target_public"=> $perfume->getTargetPublic()->getName(),
             ];
         }
 
