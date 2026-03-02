@@ -32,17 +32,33 @@
         </div>
         <div>
             <ul v-if="this.perfumes.length">
-                <li v-for="perfume in this.perfumes" :key="perfume.id">
-                    <img :src="perfume.imagen_url" alt="Imagen perfume" />
+                <li v-for="perfume in filteredPerfumes" :key="perfume.id">
+
+                    <div class="div_imagen"> <img :src="perfume.precioSeleccionado.image_url_precio_contenido"
+                            alt="Imagen perfume" /></div>
+
                     <p class="marca">{{ perfume.marca }}</p>
                     <p class="title">{{ perfume.nombre }}</p>
-                    <p class="price">{{ perfume.precio }}€</p>
-                    <p class="">{{ perfume.stock }}</p>
+                    <p class="price">{{ perfume.precioSeleccionado.precio }} €</p>
 
-                    <p class="">{{ perfume.store_name }}</p>
+
+
                     <p class="">{{ perfume.target_public }}</p>
-                    <a class="" href={{ perfume.perfume_url }}>{{ perfume.perfume_url }}</a>
-                    <img :src="perfume.store_logo" alt="Imagen logo" />
+
+
+                    <div class="div_logo"> <img :src="perfume.store_logo" alt="Imagen logo" /></div>
+
+
+                    <div>
+
+
+                        <select v-model="perfume.precioSeleccionado">
+                            <option v-for="precioContenido in perfume.precio_contenido" :key="precioContenido.contenido"
+                                :value="precioContenido">
+                                {{ precioContenido.contenido }}
+                            </option>
+                        </select>
+                    </div>
                     <button @click="VisualizarPerfume(perfume.id)">Detalles</button>
                 </li>
             </ul>
@@ -64,7 +80,9 @@ export default {
             perfumes: [],
             selectedStore: "",
             selectedPrice: "",
-            selectedName: ""
+            selectedName: "",
+            selectedContenido: "",
+
         };
     },
     methods: {
@@ -89,10 +107,6 @@ export default {
         filteredPerfumes() {
             let result = this.perfumes
 
-
-
-
-
             // 🔹 Buscador por palabra
             if (this.selectedName != "") {
                 const query = this.selectedName.toLowerCase()
@@ -103,106 +117,144 @@ export default {
                 )
             }
 
-
-
             return result
-        }
+        },
+
+
 
     },
     async mounted() {
         try {
             this.perfumes = await getAllPerfumes();
-            this.perfumes = this.AgruparPerfumeIgual();
 
+            this.perfumes = this.perfumes.map(p => ({
+                ...p,
+                precioSeleccionado: {
+                    precio: p.precio_contenido?.[0]?.precio || 0,
+                    image_url_precio_contenido: p.precio_contenido?.[0].image_url_precio_contenido || "",
+                }
+
+            }));
+
+            this.perfumes = this.AgruparPerfumeIgual();
         } catch (error) {
             console.error(error);
         }
-
-
-
-
     },
 };
 </script>
 
 <style scoped>
+/* CONTENEDOR PRINCIPAL */
 .lista-libros {
-    padding: 20px;
+    padding: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-h1 {
-    text-align: center;
-    color: #4b0082;
-    margin-bottom: 30px;
-    font-family: 'Segoe UI', sans-serif;
-}
-
-/* Grid de libros */
+/* GRID DE PERFUMES */
 ul {
     display: grid;
-    grid-template-rows: repeat(auto-fit, minmax(80px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 25px;
     padding: 0;
     margin: 0;
     list-style: none;
 }
 
-/* Cada tarjeta de libro */
+/* TARJETA */
 li {
     background: #a45ed8;
-    border-radius: 12px;
-    padding: 10px;
+    border-radius: 14px;
+    padding: 15px;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s, background 0.3s;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+    transition: transform 0.25s ease, background 0.25s ease;
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+    /* evita desbordes de select */
 }
 
 li:hover {
     background: #caa0f1;
-    transform: translateY(-5px);
+    transform: translateY(-6px);
 }
 
-/* Imagen */
-img {
-
-    max-height: 100px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 10px;
+/* CONTENEDOR DE IMÁGENES */
+.div_imagen {
+    width: 100%;
+    height: 160px;
     border: 2px solid #fff;
-    object-fit: contain;
-
-    color: black;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Título y precio */
+/* IMÁGENES */
+.div_imagen img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+
+}
+
+li:hover .div_imagen img {
+    transform: scale(1.05);
+}
+
+
+
+
+/* TEXTO */
 .title {
     font-weight: bold;
-    margin: 5px 0;
+    font-size: 1rem;
     color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .marca {
     font-weight: bold;
-    margin: 5px 0;
-    color: #af3030;
+    color: #8b1d1d;
 }
 
 .price {
     color: #f0e68c;
-    margin-bottom: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
 }
 
-/* Botón */
+/* SELECT */
+select {
+    width: 100%;
+    max-width: 100%;
+    padding: 6px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* BOTÓN */
 button {
+    margin-top: auto;
     background-color: #4b0082;
     color: white;
     border: none;
-    padding: 8px 15px;
-    border-radius: 8px;
+    padding: 10px;
+    border-radius: 10px;
     cursor: pointer;
     font-weight: bold;
     transition: background 0.3s, transform 0.2s;
@@ -213,11 +265,75 @@ button:hover {
     transform: scale(1.05);
 }
 
+/* FILTROS */
 #filters {
     display: grid;
-    margin: 30px;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
     text-align: center;
-    gap: 10px;
+}
+
+/* LOGO TIENDA */
+.div_logo {
+    width: 100%;
+    height: 40px;
+    margin-top: 5px;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    border-radius: 10px;
+
+}
+
+
+.div_logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+
+}
+
+select {
+    background-color: #4b0082;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+select:hover {
+    background-color: #6a1aa6;
+}
+
+select:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(75, 0, 130, 0.5);
+}
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    ul {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 20px;
+    }
+
+    .div_imagen {
+        height: 140px;
+    }
+
+    .title,
+    .marca,
+    .price {
+        font-size: 0.9rem;
+    }
+
+    select {
+        font-size: 0.9rem;
+    }
 }
 </style>

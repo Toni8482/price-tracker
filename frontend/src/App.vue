@@ -6,14 +6,14 @@
 
 <script>
 
-import ListaLibros from './components/ListaLibros.vue'
+
 import MenuComponent from './components/MenuComponent.vue';
 
 
 export default {
 name: "App",
   components: {
-    ListaLibros,
+    
     MenuComponent
   },
   data() {

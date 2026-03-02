@@ -4,9 +4,14 @@ namespace App\Entity;
 
 use App\Entity\Stores;
 use App\Entity\TargetPublic;
+use App\Entity\PrecioContenido;
+
 use App\Repository\PerfumesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: PerfumesRepository::class)]
 class Perfumes
@@ -19,17 +24,14 @@ class Perfumes
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column]
-    private ?float $price = null;
-
+   
     #[ORM\Column(length: 255)]
     private ?string $perfume_url = null;
 
     #[ORM\Column(length: 100)]
     private ?string $category = null;
 
-    #[ORM\Column]
-    private ?int $stock = null;
+   
 
     #[ORM\Column(length: 255)]
     private ?string $image_url = null;
@@ -49,19 +51,36 @@ class Perfumes
     #[ORM\Column(length: 100)]
     private ?string $brand = null;
 
-    #[ORM\Column(length: 150)]
-    private ?string $contenido = null;
+   
 
     #[ORM\Column(length: 100)]
     private ?string $concentracion = null;
 
-      #[ORM\ManyToOne(targetEntity: TargetPublic::class)]
+    #[ORM\ManyToOne(targetEntity: TargetPublic::class)]
     #[ORM\JoinColumn(
         name: 'target_public_id',
         referencedColumnName: 'id',
         nullable: false
     )]
     private ?TargetPublic $target_public = null;
+
+
+    #[ORM\OneToMany(
+        mappedBy: 'precioContenido',
+        targetEntity: PrecioContenido::class
+    )]
+    private Collection $preciosContenidos;
+
+    public function __construct()
+    {
+        $this->preciosContenidos = new ArrayCollection();
+    }
+
+    /** @return Collection<int, PrecioContenido> */
+    public function getPrecioContenido(): Collection
+    {
+        return $this->preciosContenidos;
+    }
 
     public function getId(): ?int
     {
@@ -80,17 +99,7 @@ class Perfumes
         return $this;
     }
 
-    public function getPrice(): ?float
-    {
-        return $this->price;
-    }
-
-    public function setPrice(float $price): static
-    {
-        $this->price = $price;
-
-        return $this;
-    }
+   
 
     public function getPerfumeUrl(): ?string
     {
@@ -116,17 +125,7 @@ class Perfumes
         return $this;
     }
 
-    public function getStock(): ?int
-    {
-        return $this->stock;
-    }
-
-    public function setStock(int $stock): static
-    {
-        $this->stock = $stock;
-
-        return $this;
-    }
+   
 
     public function getImageUrl(): ?string
     {
@@ -175,17 +174,7 @@ class Perfumes
         return $this;
     }
 
-    public function getContenido(): ?string
-    {
-        return $this->contenido;
-    }
-
-    public function setContenido(string $contenido): static
-    {
-        $this->contenido = $contenido;
-
-        return $this;
-    }
+   
 
     public function getConcentracion(): ?string
     {
@@ -199,7 +188,7 @@ class Perfumes
         return $this;
     }
 
-     public function getTargetPublic(): ?TargetPublic
+    public function getTargetPublic(): ?TargetPublic
     {
         return $this->target_public;
     }

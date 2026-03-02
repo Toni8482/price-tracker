@@ -4,12 +4,19 @@ namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Perfumes;
+use App\Entity\PrecioContenido;
 use App\Repository\StoresRepository;
 use App\Repository\TargetPublicRepository;
 
+
 class SaveBdPerfumes
 {
-    public function __construct(private EntityManagerInterface $em, private StoresRepository $storesRepository, private TargetPublicRepository $targetPublicRepository) {}
+    public function __construct(
+        private EntityManagerInterface $em,
+        private StoresRepository $storesRepository,
+        private TargetPublicRepository $targetPublicRepository,
+      
+    ) {}
 
     public function savePerfumes(array $perfumes, string $base_url, string $publico)
     {
@@ -18,15 +25,11 @@ class SaveBdPerfumes
             $newPerfume = new Perfumes();
             $newPerfume->setBrand($perfume['marca']);
             $newPerfume->setName($perfume['nombre']);
-            $newPerfume->setPrice($perfume['precio']);
             $newPerfume->setCategory("Hombre");
             $newPerfume->setImageUrl($perfume['url_imagen']);
             $newPerfume->setPerfumeUrl($perfume['url_producto']);
             $newPerfume->setDescription($perfume['descripcion']);
-            $newPerfume->setStock(0);
-            $newPerfume->setContenido($perfume['contenido']);
             $newPerfume->setConcentracion($perfume['concentracion']);
-          
 
             $store = "";
             if ($base_url == "https://perfumerias.com") {
@@ -39,7 +42,6 @@ class SaveBdPerfumes
             $newPerfume->setStore($store);
 
 
-
             if ($publico == "hombre") {
 
                 $publicoObjetivo = $this->targetPublicRepository->find(2);
@@ -48,9 +50,18 @@ class SaveBdPerfumes
                 $publicoObjetivo = $this->targetPublicRepository->find(1);
             }
 
-
             $newPerfume->setTargetPublic($publicoObjetivo);
 
+            foreach ($perfume['precio_contenido'] as $precio) {
+
+
+                $newPrecioContenido = new PrecioContenido();
+                $newPrecioContenido->setPerfumes($newPerfume);
+                $newPrecioContenido->setPrecio($precio['precio']);
+                $newPrecioContenido->setContenido($precio['contenido']);  
+                $newPrecioContenido->setImageUrl($precio['image_url']);
+                 $this->em->persist($newPrecioContenido);
+            }
 
             $this->em->persist($newPerfume);
         }

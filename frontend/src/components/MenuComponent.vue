@@ -2,7 +2,7 @@
   <nav class="menu">
     <ul>
       <li><router-link to="/">Inicio</router-link></li>
-      <li><router-link to="/lista">Lista</router-link></li>
+    
       <li><router-link to="/perfumes">Lista perfumes</router-link></li>
     </ul>
   </nav>

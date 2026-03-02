@@ -226,54 +226,6 @@
       <tag name="controller.service_arguments"/>
       <tag name="routing.route_loader"/>
     </service>
-    <service id="App\Command\DebugScrapeCommand" class="App\Command\DebugScrapeCommand" autowire="true" autoconfigure="true">
-      <tag name="console.command" command="app:debug-scrape" description="Debug: obtiene el HTML de PCComponentes y muestra estructura" help=""/>
-      <tag name="console.command"/>
-      <tag name="container.no_preload"/>
-      <argument type="service" id="http_client.uri_template"/>
-      <call method="setName">
-        <argument>app:debug-scrape</argument>
-      </call>
-      <call method="setDescription">
-        <argument>Debug: obtiene el HTML de PCComponentes y muestra estructura</argument>
-      </call>
-    </service>
-    <service id="App\Command\ScrapeBooksCommand" class="App\Command\ScrapeBooksCommand" autowire="true" autoconfigure="true">
-      <tag name="console.command" command="app:scrape-books" description="Scrapea libros y los guarda en la base de datos" help=""/>
-      <tag name="console.command"/>
-      <tag name="container.no_preload"/>
-      <argument type="service" id="App\Service\BookScraper"/>
-      <call method="setName">
-        <argument>app:scrape-books</argument>
-      </call>
-      <call method="setDescription">
-        <argument>Scrapea libros y los guarda en la base de datos</argument>
-      </call>
-    </service>
-    <service id="App\Command\ScrapePCComponentsCommand" class="App\Command\ScrapePCComponentsCommand" autowire="true" autoconfigure="true">
-      <tag name="console.command" command="app:scrape-pccomponents" description="Scrapea componentes de PCComponentes y los guarda en la base de datos" help=""/>
-      <tag name="console.command"/>
-      <tag name="container.no_preload"/>
-      <argument type="service" id="App\Service\PCComponentScraper"/>
-      <call method="setName">
-        <argument>app:scrape-pccomponents</argument>
-      </call>
-      <call method="setDescription">
-        <argument>Scrapea componentes de PCComponentes y los guarda en la base de datos</argument>
-      </call>
-    </service>
-    <service id="App\Command\ScrapePCFactoryCommand" class="App\Command\ScrapePCFactoryCommand" autowire="true" autoconfigure="true">
-      <tag name="console.command" command="app:scrape-pcfactory" description="Scrapea componentes de PC Factory y los guarda en la base de datos" help=""/>
-      <tag name="console.command"/>
-      <tag name="container.no_preload"/>
-      <argument type="service" id="App\Service\PCFactoryScraper"/>
-      <call method="setName">
-        <argument>app:scrape-pcfactory</argument>
-      </call>
-      <call method="setDescription">
-        <argument>Scrapea componentes de PC Factory y los guarda en la base de datos</argument>
-      </call>
-    </service>
     <service id="App\Command\ScrapePerfumesCommand" class="App\Command\ScrapePerfumesCommand" autowire="true" autoconfigure="true">
       <tag name="console.command" command="app:scrape-perfumes" description="Scrapea perfumes y los guarda en la base de datos" help=""/>
       <tag name="console.command"/>
@@ -286,49 +238,6 @@
         <argument>Scrapea perfumes y los guarda en la base de datos</argument>
       </call>
     </service>
-    <service id="App\Command\ScrapeProductsCommand" class="App\Command\ScrapeProductsCommand" autowire="true" autoconfigure="true">
-      <tag name="console.command" command="app:scrape-products" description="Scrapea libros y los guarda en la base de datos" help=""/>
-      <tag name="console.command"/>
-      <tag name="container.no_preload"/>
-      <argument type="service" id="App\Service\ProductScraper"/>
-      <call method="setName">
-        <argument>app:scrape-products</argument>
-      </call>
-      <call method="setDescription">
-        <argument>Scrapea libros y los guarda en la base de datos</argument>
-      </call>
-    </service>
-    <service id="App\Controller\ApiAllPerfumesController" class="App\Controller\ApiAllPerfumesController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="routing.controller"/>
-      <tag name="container.service_subscriber"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.TJNRSaV.App\Controller\ApiAllPerfumesController"/>
-      </call>
-    </service>
-    <service id="App\Controller\ApiBookController" class="App\Controller\ApiBookController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="container.service_subscriber"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.TJNRSaV.App\Controller\ApiBookController"/>
-      </call>
-    </service>
-    <service id="App\Controller\ApiPerfumeriasController" class="App\Controller\ApiPerfumeriasController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="routing.controller"/>
-      <tag name="container.service_subscriber"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.TJNRSaV.App\Controller\ApiPerfumeriasController"/>
-      </call>
-    </service>
-    <service id="App\Controller\ApiPerfumesClubController" class="App\Controller\ApiPerfumesClubController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="routing.controller"/>
-      <tag name="container.service_subscriber"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.TJNRSaV.App\Controller\ApiPerfumesClubController"/>
-      </call>
-    </service>
     <service id="App\Controller\ApiPerfumesController" class="App\Controller\ApiPerfumesController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="routing.controller"/>
@@ -337,60 +246,11 @@
         <argument type="service" id=".service_locator.TJNRSaV.App\Controller\ApiPerfumesController"/>
       </call>
     </service>
-    <service id="App\Controller\ApiProductController" class="App\Controller\ApiProductController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="container.service_subscriber"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.TJNRSaV.App\Controller\ApiProductController"/>
-      </call>
-    </service>
-    <service id="App\Controller\ProductController" class="App\Controller\ProductController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="container.service_subscriber"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.TJNRSaV.App\Controller\ProductController"/>
-      </call>
-    </service>
-    <service id="App\Controller\ProductCurlController" class="App\Controller\ProductCurlController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="routing.controller"/>
-      <tag name="container.service_subscriber"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.TJNRSaV.App\Controller\ProductCurlController"/>
-      </call>
-    </service>
-    <service id="App\Controller\ScrapeController" class="App\Controller\ScrapeController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="container.service_subscriber"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.TJNRSaV.App\Controller\ScrapeController"/>
-      </call>
-    </service>
-    <service id="App\Entity\Book" class="App\Entity\Book" autowire="true" autoconfigure="true">
-      <tag name="container.excluded" source="because it's a Doctrine entity"/>
-      <tag name="container.excluded" source="with #[Doctrine\ORM\Mapping\Entity] attribute"/>
-    </service>
-    <service id="App\Entity\PCComponent" class="App\Entity\PCComponent" autowire="true" autoconfigure="true">
-      <tag name="container.excluded" source="because it's a Doctrine entity"/>
-      <tag name="container.excluded" source="with #[Doctrine\ORM\Mapping\Entity] attribute"/>
-    </service>
-    <service id="App\Entity\PCFactoryComponent" class="App\Entity\PCFactoryComponent" autowire="true" autoconfigure="true">
-      <tag name="container.excluded" source="because it's a Doctrine entity"/>
-      <tag name="container.excluded" source="with #[Doctrine\ORM\Mapping\Entity] attribute"/>
-    </service>
-    <service id="App\Entity\Perfumerias" class="App\Entity\Perfumerias" autowire="true" autoconfigure="true">
-      <tag name="container.excluded" source="because it's a Doctrine entity"/>
-      <tag name="container.excluded" source="with #[Doctrine\ORM\Mapping\Entity] attribute"/>
-    </service>
     <service id="App\Entity\Perfumes" class="App\Entity\Perfumes" autowire="true" autoconfigure="true">
       <tag name="container.excluded" source="because it's a Doctrine entity"/>
       <tag name="container.excluded" source="with #[Doctrine\ORM\Mapping\Entity] attribute"/>
     </service>
-    <service id="App\Entity\PerfumesClub" class="App\Entity\PerfumesClub" autowire="true" autoconfigure="true">
-      <tag name="container.excluded" source="because it's a Doctrine entity"/>
-      <tag name="container.excluded" source="with #[Doctrine\ORM\Mapping\Entity] attribute"/>
-    </service>
-    <service id="App\Entity\Product" class="App\Entity\Product" autowire="true" autoconfigure="true">
+    <service id="App\Entity\PrecioContenido" class="App\Entity\PrecioContenido" autowire="true" autoconfigure="true">
       <tag name="container.excluded" source="because it's a Doctrine entity"/>
       <tag name="container.excluded" source="with #[Doctrine\ORM\Mapping\Entity] attribute"/>
     </service>
@@ -402,31 +262,11 @@
       <tag name="container.excluded" source="because it's a Doctrine entity"/>
       <tag name="container.excluded" source="with #[Doctrine\ORM\Mapping\Entity] attribute"/>
     </service>
-    <service id="App\Repository\BookRepository" class="App\Repository\BookRepository" autowire="true" autoconfigure="true">
-      <tag name="doctrine.repository_service"/>
-      <argument type="service" id="doctrine"/>
-    </service>
-    <service id="App\Repository\PCComponentRepository" class="App\Repository\PCComponentRepository" autowire="true" autoconfigure="true">
-      <tag name="doctrine.repository_service"/>
-      <argument type="service" id="doctrine"/>
-    </service>
-    <service id="App\Repository\PCFactoryComponentRepository" class="App\Repository\PCFactoryComponentRepository" autowire="true" autoconfigure="true">
-      <tag name="doctrine.repository_service"/>
-      <argument type="service" id="doctrine"/>
-    </service>
-    <service id="App\Repository\PerfumeriasRepository" class="App\Repository\PerfumeriasRepository" autowire="true" autoconfigure="true">
-      <tag name="doctrine.repository_service"/>
-      <argument type="service" id="doctrine"/>
-    </service>
-    <service id="App\Repository\PerfumesClubRepository" class="App\Repository\PerfumesClubRepository" autowire="true" autoconfigure="true">
-      <tag name="doctrine.repository_service"/>
-      <argument type="service" id="doctrine"/>
-    </service>
     <service id="App\Repository\PerfumesRepository" class="App\Repository\PerfumesRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
-    <service id="App\Repository\ProductRepository" class="App\Repository\ProductRepository" autowire="true" autoconfigure="true">
+    <service id="App\Repository\PrecioContenidoRepository" class="App\Repository\PrecioContenidoRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
@@ -438,39 +278,13 @@
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
-    <service id="App\Service\BookScraper" class="App\Service\BookScraper" autowire="true" autoconfigure="true">
-      <argument type="service" id="doctrine.orm.default_entity_manager"/>
-    </service>
     <service id="App\Service\FormatterService" class="App\Service\FormatterService" autowire="true" autoconfigure="true"/>
-    <service id="App\Service\NodosPerfumeriaClub" class="App\Service\NodosPerfumeriaClub" autowire="true" autoconfigure="true">
-      <argument type="service" id="App\Repository\StoresRepository"/>
-      <argument type="service" id="App\Service\FormatterService"/>
-    </service>
-    <service id="App\Service\NodosPerfumerias" class="App\Service\NodosPerfumerias" autowire="true" autoconfigure="true">
-      <argument type="service" id="App\Repository\StoresRepository"/>
-      <argument type="service" id="App\Service\FormatterService"/>
-    </service>
-    <service id="App\Service\PCComponentScraper" class="App\Service\PCComponentScraper" autowire="true" autoconfigure="true">
-      <argument type="service" id="http_client.uri_template"/>
-      <argument type="service" id="doctrine.orm.default_entity_manager"/>
-      <argument type="service" id="App\Repository\PCComponentRepository"/>
-    </service>
-    <service id="App\Service\PCFactoryScraper" class="App\Service\PCFactoryScraper" autowire="true" autoconfigure="true">
-      <argument type="service" id="http_client.uri_template"/>
-      <argument type="service" id="doctrine.orm.default_entity_manager"/>
-      <argument type="service" id="App\Repository\PCFactoryComponentRepository"/>
-    </service>
     <service id="App\Service\PerfumesScraperService" class="App\Service\PerfumesScraperService" autowire="true" autoconfigure="true">
       <argument type="service" id="App\Service\SaveBdPerfumes"/>
       <argument type="service" id="App\Service\PeticionesUrlsService"/>
-      <argument type="service" id="App\Service\NodosPerfumerias"/>
-      <argument type="service" id="App\Service\NodosPerfumeriaClub"/>
+      <argument type="service" id="App\Service\FormatterService"/>
     </service>
     <service id="App\Service\PeticionesUrlsService" class="App\Service\PeticionesUrlsService" autowire="true" autoconfigure="true"/>
-    <service id="App\Service\ProductScraper" class="App\Service\ProductScraper" autowire="true" autoconfigure="true">
-      <argument type="service" id="http_client.uri_template"/>
-      <argument type="service" id="doctrine.orm.default_entity_manager"/>
-    </service>
     <service id="App\Service\SaveBdPerfumes" class="App\Service\SaveBdPerfumes" autowire="true" autoconfigure="true">
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
       <argument type="service" id="App\Repository\StoresRepository"/>
@@ -499,7 +313,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" priority="-50">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.0W2UYV."/>
+      <argument type="service" id=".service_locator.MqvPkvA"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" priority="-100">controller.argument_value_resolver</tag>
@@ -1691,7 +1505,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.0W2UYV."/>
+      <argument type="service" id=".service_locator.MqvPkvA"/>
     </service>
     <service id="routing.resolver" class="Symfony\Component\Config\Loader\LoaderResolver">
       <call method="addLoader">
@@ -1765,11 +1579,7 @@
     <service id="routing.loader.attribute.services" class="Symfony\Component\Routing\Loader\AttributeServicesLoader">
       <tag name="routing.loader" priority="-10"/>
       <argument type="collection">
-        <argument>App\Controller\ApiAllPerfumesController</argument>
-        <argument>App\Controller\ApiPerfumeriasController</argument>
-        <argument>App\Controller\ApiPerfumesClubController</argument>
         <argument>App\Controller\ApiPerfumesController</argument>
-        <argument>App\Controller\ProductCurlController</argument>
       </argument>
     </service>
     <service id="routing.loader.attribute.directory" class="Symfony\Component\Routing\Loader\AttributeDirectoryLoader">
@@ -2158,7 +1968,7 @@
     <service id="doctrine.orm.configuration" class="Doctrine\ORM\Configuration" abstract="true"/>
     <service id="doctrine.orm.entity_manager.abstract" class="Doctrine\ORM\EntityManager" lazy="true" abstract="true"/>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory">
-      <argument type="service" id=".service_locator.Rk0dpFV"/>
+      <argument type="service" id=".service_locator.omRPWDz"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -2855,88 +2665,25 @@
       <tag name="kernel.event_listener" event="kernel.response" method="onResponse" priority="-15"/>
       <tag name="container.hot_path"/>
     </service>
-    <service id=".instanceof.Symfony\Component\Console\Command\Command.0.App\Command\DebugScrapeCommand" class="App\Command\DebugScrapeCommand" autowire="true" abstract="true"/>
-    <service id=".instanceof.App\Command\DebugScrapeCommand.0.App\Command\DebugScrapeCommand" class="App\Command\DebugScrapeCommand" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Command\DebugScrapeCommand" class="App\Command\DebugScrapeCommand" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Component\Console\Command\Command.0.App\Command\ScrapeBooksCommand" class="App\Command\ScrapeBooksCommand" autowire="true" abstract="true"/>
-    <service id=".instanceof.App\Command\ScrapeBooksCommand.0.App\Command\ScrapeBooksCommand" class="App\Command\ScrapeBooksCommand" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Command\ScrapeBooksCommand" class="App\Command\ScrapeBooksCommand" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Component\Console\Command\Command.0.App\Command\ScrapePCComponentsCommand" class="App\Command\ScrapePCComponentsCommand" autowire="true" abstract="true"/>
-    <service id=".instanceof.App\Command\ScrapePCComponentsCommand.0.App\Command\ScrapePCComponentsCommand" class="App\Command\ScrapePCComponentsCommand" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Command\ScrapePCComponentsCommand" class="App\Command\ScrapePCComponentsCommand" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Component\Console\Command\Command.0.App\Command\ScrapePCFactoryCommand" class="App\Command\ScrapePCFactoryCommand" autowire="true" abstract="true"/>
-    <service id=".instanceof.App\Command\ScrapePCFactoryCommand.0.App\Command\ScrapePCFactoryCommand" class="App\Command\ScrapePCFactoryCommand" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Command\ScrapePCFactoryCommand" class="App\Command\ScrapePCFactoryCommand" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Console\Command\Command.0.App\Command\ScrapePerfumesCommand" class="App\Command\ScrapePerfumesCommand" autowire="true" abstract="true"/>
     <service id=".instanceof.App\Command\ScrapePerfumesCommand.0.App\Command\ScrapePerfumesCommand" class="App\Command\ScrapePerfumesCommand" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Command\ScrapePerfumesCommand" class="App\Command\ScrapePerfumesCommand" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Component\Console\Command\Command.0.App\Command\ScrapeProductsCommand" class="App\Command\ScrapeProductsCommand" autowire="true" abstract="true"/>
-    <service id=".instanceof.App\Command\ScrapeProductsCommand.0.App\Command\ScrapeProductsCommand" class="App\Command\ScrapeProductsCommand" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Command\ScrapeProductsCommand" class="App\Command\ScrapeProductsCommand" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ApiAllPerfumesController" class="App\Controller\ApiAllPerfumesController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ApiAllPerfumesController" class="App\Controller\ApiAllPerfumesController" autowire="true" abstract="true"/>
-    <service id=".instanceof.App\Controller\ApiAllPerfumesController.0.App\Controller\ApiAllPerfumesController" class="App\Controller\ApiAllPerfumesController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\ApiAllPerfumesController" class="App\Controller\ApiAllPerfumesController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ApiBookController" class="App\Controller\ApiBookController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ApiBookController" class="App\Controller\ApiBookController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\ApiBookController" class="App\Controller\ApiBookController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ApiPerfumeriasController" class="App\Controller\ApiPerfumeriasController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ApiPerfumeriasController" class="App\Controller\ApiPerfumeriasController" autowire="true" abstract="true"/>
-    <service id=".instanceof.App\Controller\ApiPerfumeriasController.0.App\Controller\ApiPerfumeriasController" class="App\Controller\ApiPerfumeriasController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\ApiPerfumeriasController" class="App\Controller\ApiPerfumeriasController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ApiPerfumesClubController" class="App\Controller\ApiPerfumesClubController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ApiPerfumesClubController" class="App\Controller\ApiPerfumesClubController" autowire="true" abstract="true"/>
-    <service id=".instanceof.App\Controller\ApiPerfumesClubController.0.App\Controller\ApiPerfumesClubController" class="App\Controller\ApiPerfumesClubController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\ApiPerfumesClubController" class="App\Controller\ApiPerfumesClubController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ApiPerfumesController" class="App\Controller\ApiPerfumesController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ApiPerfumesController" class="App\Controller\ApiPerfumesController" autowire="true" abstract="true"/>
     <service id=".instanceof.App\Controller\ApiPerfumesController.0.App\Controller\ApiPerfumesController" class="App\Controller\ApiPerfumesController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\ApiPerfumesController" class="App\Controller\ApiPerfumesController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ApiProductController" class="App\Controller\ApiProductController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ApiProductController" class="App\Controller\ApiProductController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\ApiProductController" class="App\Controller\ApiProductController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ProductController" class="App\Controller\ProductController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ProductController" class="App\Controller\ProductController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\ProductController" class="App\Controller\ProductController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ProductCurlController" class="App\Controller\ProductCurlController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ProductCurlController" class="App\Controller\ProductCurlController" autowire="true" abstract="true"/>
-    <service id=".instanceof.App\Controller\ProductCurlController.0.App\Controller\ProductCurlController" class="App\Controller\ProductCurlController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\ProductCurlController" class="App\Controller\ProductCurlController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ScrapeController" class="App\Controller\ScrapeController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ScrapeController" class="App\Controller\ScrapeController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\ScrapeController" class="App\Controller\ScrapeController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.App\Entity\Book.0.App\Entity\Book" class="App\Entity\Book" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Entity\Book" class="App\Entity\Book" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.App\Entity\PCComponent.0.App\Entity\PCComponent" class="App\Entity\PCComponent" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Entity\PCComponent" class="App\Entity\PCComponent" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.App\Entity\PCFactoryComponent.0.App\Entity\PCFactoryComponent" class="App\Entity\PCFactoryComponent" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Entity\PCFactoryComponent" class="App\Entity\PCFactoryComponent" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.App\Entity\Perfumerias.0.App\Entity\Perfumerias" class="App\Entity\Perfumerias" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Entity\Perfumerias" class="App\Entity\Perfumerias" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.App\Entity\Perfumes.0.App\Entity\Perfumes" class="App\Entity\Perfumes" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Entity\Perfumes" class="App\Entity\Perfumes" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.App\Entity\PerfumesClub.0.App\Entity\PerfumesClub" class="App\Entity\PerfumesClub" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Entity\PerfumesClub" class="App\Entity\PerfumesClub" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.App\Entity\Product.0.App\Entity\Product" class="App\Entity\Product" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Entity\Product" class="App\Entity\Product" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.App\Entity\PrecioContenido.0.App\Entity\PrecioContenido" class="App\Entity\PrecioContenido" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Entity\PrecioContenido" class="App\Entity\PrecioContenido" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.App\Entity\Stores.0.App\Entity\Stores" class="App\Entity\Stores" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Entity\Stores" class="App\Entity\Stores" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.App\Entity\TargetPublic.0.App\Entity\TargetPublic" class="App\Entity\TargetPublic" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Entity\TargetPublic" class="App\Entity\TargetPublic" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\BookRepository" class="App\Repository\BookRepository" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Repository\BookRepository" class="App\Repository\BookRepository" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\PCComponentRepository" class="App\Repository\PCComponentRepository" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Repository\PCComponentRepository" class="App\Repository\PCComponentRepository" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\PCFactoryComponentRepository" class="App\Repository\PCFactoryComponentRepository" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Repository\PCFactoryComponentRepository" class="App\Repository\PCFactoryComponentRepository" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\PerfumeriasRepository" class="App\Repository\PerfumeriasRepository" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Repository\PerfumeriasRepository" class="App\Repository\PerfumeriasRepository" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\PerfumesClubRepository" class="App\Repository\PerfumesClubRepository" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Repository\PerfumesClubRepository" class="App\Repository\PerfumesClubRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\PerfumesRepository" class="App\Repository\PerfumesRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\PerfumesRepository" class="App\Repository\PerfumesRepository" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\ProductRepository" class="App\Repository\ProductRepository" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Repository\ProductRepository" class="App\Repository\ProductRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\PrecioContenidoRepository" class="App\Repository\PrecioContenidoRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\PrecioContenidoRepository" class="App\Repository\PrecioContenidoRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\StoresRepository" class="App\Repository\StoresRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\StoresRepository" class="App\Repository\StoresRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\TargetPublicRepository" class="App\Repository\TargetPublicRepository" autowire="true" abstract="true"/>
@@ -3377,140 +3124,38 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.1vYpZ1B" method="withContext"/>
     </service>
-    <service id=".service_locator.e8I66cD" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="perfumeriasRepository" type="service_closure" id="App\Repository\PerfumeriasRepository"/>
-        <argument key="perfumesClubRepository" type="service_closure" id="App\Repository\PerfumesClubRepository"/>
-      </argument>
-    </service>
-    <service id=".service_locator.e8I66cD.App\Controller\ApiAllPerfumesController::index()" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ApiAllPerfumesController::index()"/>
-      <argument>App\Controller\ApiAllPerfumesController::index()</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.e8I66cD" method="withContext"/>
-    </service>
-    <service id=".service_locator.zUpmxTP" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="bookRepository" type="service_closure" id="App\Repository\BookRepository"/>
-      </argument>
-    </service>
-    <service id=".service_locator.zUpmxTP.App\Controller\ApiBookController::index()" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ApiBookController::index()"/>
-      <argument>App\Controller\ApiBookController::index()</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.zUpmxTP" method="withContext"/>
-    </service>
-    <service id=".service_locator.zUpmxTP.App\Controller\ApiBookController::show()" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ApiBookController::show()"/>
-      <argument>App\Controller\ApiBookController::show()</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.zUpmxTP" method="withContext"/>
-    </service>
-    <service id=".service_locator.HwoPxyR" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="perfumeriasRepository" type="service_closure" id="App\Repository\PerfumeriasRepository"/>
-      </argument>
-    </service>
-    <service id=".service_locator.HwoPxyR.App\Controller\ApiPerfumeriasController::index()" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ApiPerfumeriasController::index()"/>
-      <argument>App\Controller\ApiPerfumeriasController::index()</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.HwoPxyR" method="withContext"/>
-    </service>
-    <service id=".service_locator.HwoPxyR.App\Controller\ApiPerfumeriasController::show()" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ApiPerfumeriasController::show()"/>
-      <argument>App\Controller\ApiPerfumeriasController::show()</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.HwoPxyR" method="withContext"/>
-    </service>
-    <service id=".service_locator.yBOcBF0" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="perfumesClubRepository" type="service_closure" id="App\Repository\PerfumesClubRepository"/>
-      </argument>
-    </service>
-    <service id=".service_locator.yBOcBF0.App\Controller\ApiPerfumesClubController::index()" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ApiPerfumesClubController::index()"/>
-      <argument>App\Controller\ApiPerfumesClubController::index()</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.yBOcBF0" method="withContext"/>
-    </service>
-    <service id=".service_locator.yBOcBF0.App\Controller\ApiPerfumesClubController::show()" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ApiPerfumesClubController::show()"/>
-      <argument>App\Controller\ApiPerfumesClubController::show()</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.yBOcBF0" method="withContext"/>
-    </service>
-    <service id=".service_locator.q5GA76U" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.2KKAeja" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="perfumesRepository" type="service_closure" id="App\Repository\PerfumesRepository"/>
+        <argument key="precioContenidoRepository" type="service_closure" id="App\Repository\PrecioContenidoRepository"/>
       </argument>
     </service>
-    <service id=".service_locator.q5GA76U.App\Controller\ApiPerfumesController::index()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.2KKAeja.App\Controller\ApiPerfumesController::index()" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\ApiPerfumesController::index()"/>
       <argument>App\Controller\ApiPerfumesController::index()</argument>
       <argument type="service" id="service_container"/>
-      <factory service=".service_locator.q5GA76U" method="withContext"/>
+      <factory service=".service_locator.2KKAeja" method="withContext"/>
     </service>
-    <service id=".service_locator.q5GA76U.App\Controller\ApiPerfumesController::show()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.2KKAeja.App\Controller\ApiPerfumesController::show()" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\ApiPerfumesController::show()"/>
       <argument>App\Controller\ApiPerfumesController::show()</argument>
       <argument type="service" id="service_container"/>
-      <factory service=".service_locator.q5GA76U" method="withContext"/>
+      <factory service=".service_locator.2KKAeja" method="withContext"/>
     </service>
-    <service id=".service_locator.z0A7H.F" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="em" type="service_closure" id="doctrine.orm.default_entity_manager"/>
-      </argument>
-    </service>
-    <service id=".service_locator.z0A7H.F.App\Controller\ApiProductController::listProducts()" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ApiProductController::listProducts()"/>
-      <argument>App\Controller\ApiProductController::listProducts()</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.z0A7H.F" method="withContext"/>
-    </service>
-    <service id=".service_locator.z0A7H.F.App\Controller\ProductController::addProduct()" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ProductController::addProduct()"/>
-      <argument>App\Controller\ProductController::addProduct()</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.z0A7H.F" method="withContext"/>
-    </service>
-    <service id=".service_locator.0W2UYV." class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.MqvPkvA" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.1vYpZ1B.kernel::registerContainerConfiguration()"/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.1vYpZ1B.kernel::registerContainerConfiguration()"/>
         <argument key="kernel::loadRoutes" type="service_closure" id=".service_locator.1vYpZ1B.kernel::loadRoutes()"/>
         <argument key="App\Kernel::loadRoutes" type="service_closure" id=".service_locator.1vYpZ1B.kernel::loadRoutes()"/>
-        <argument key="App\Controller\ApiAllPerfumesController::index" type="service_closure" id=".service_locator.e8I66cD.App\Controller\ApiAllPerfumesController::index()"/>
-        <argument key="App\Controller\ApiBookController::index" type="service_closure" id=".service_locator.zUpmxTP.App\Controller\ApiBookController::index()"/>
-        <argument key="App\Controller\ApiBookController::show" type="service_closure" id=".service_locator.zUpmxTP.App\Controller\ApiBookController::show()"/>
-        <argument key="App\Controller\ApiPerfumeriasController::index" type="service_closure" id=".service_locator.HwoPxyR.App\Controller\ApiPerfumeriasController::index()"/>
-        <argument key="App\Controller\ApiPerfumeriasController::show" type="service_closure" id=".service_locator.HwoPxyR.App\Controller\ApiPerfumeriasController::show()"/>
-        <argument key="App\Controller\ApiPerfumesClubController::index" type="service_closure" id=".service_locator.yBOcBF0.App\Controller\ApiPerfumesClubController::index()"/>
-        <argument key="App\Controller\ApiPerfumesClubController::show" type="service_closure" id=".service_locator.yBOcBF0.App\Controller\ApiPerfumesClubController::show()"/>
-        <argument key="App\Controller\ApiPerfumesController::index" type="service_closure" id=".service_locator.q5GA76U.App\Controller\ApiPerfumesController::index()"/>
-        <argument key="App\Controller\ApiPerfumesController::show" type="service_closure" id=".service_locator.q5GA76U.App\Controller\ApiPerfumesController::show()"/>
-        <argument key="App\Controller\ApiProductController::listProducts" type="service_closure" id=".service_locator.z0A7H.F.App\Controller\ApiProductController::listProducts()"/>
-        <argument key="App\Controller\ProductController::addProduct" type="service_closure" id=".service_locator.z0A7H.F.App\Controller\ProductController::addProduct()"/>
+        <argument key="App\Controller\ApiPerfumesController::index" type="service_closure" id=".service_locator.2KKAeja.App\Controller\ApiPerfumesController::index()"/>
+        <argument key="App\Controller\ApiPerfumesController::show" type="service_closure" id=".service_locator.2KKAeja.App\Controller\ApiPerfumesController::show()"/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.1vYpZ1B.kernel::registerContainerConfiguration()"/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.1vYpZ1B.kernel::loadRoutes()"/>
-        <argument key="App\Controller\ApiAllPerfumesController:index" type="service_closure" id=".service_locator.e8I66cD.App\Controller\ApiAllPerfumesController::index()"/>
-        <argument key="App\Controller\ApiBookController:index" type="service_closure" id=".service_locator.zUpmxTP.App\Controller\ApiBookController::index()"/>
-        <argument key="App\Controller\ApiBookController:show" type="service_closure" id=".service_locator.zUpmxTP.App\Controller\ApiBookController::show()"/>
-        <argument key="App\Controller\ApiPerfumeriasController:index" type="service_closure" id=".service_locator.HwoPxyR.App\Controller\ApiPerfumeriasController::index()"/>
-        <argument key="App\Controller\ApiPerfumeriasController:show" type="service_closure" id=".service_locator.HwoPxyR.App\Controller\ApiPerfumeriasController::show()"/>
-        <argument key="App\Controller\ApiPerfumesClubController:index" type="service_closure" id=".service_locator.yBOcBF0.App\Controller\ApiPerfumesClubController::index()"/>
-        <argument key="App\Controller\ApiPerfumesClubController:show" type="service_closure" id=".service_locator.yBOcBF0.App\Controller\ApiPerfumesClubController::show()"/>
-        <argument key="App\Controller\ApiPerfumesController:index" type="service_closure" id=".service_locator.q5GA76U.App\Controller\ApiPerfumesController::index()"/>
-        <argument key="App\Controller\ApiPerfumesController:show" type="service_closure" id=".service_locator.q5GA76U.App\Controller\ApiPerfumesController::show()"/>
-        <argument key="App\Controller\ApiProductController:listProducts" type="service_closure" id=".service_locator.z0A7H.F.App\Controller\ApiProductController::listProducts()"/>
-        <argument key="App\Controller\ProductController:addProduct" type="service_closure" id=".service_locator.z0A7H.F.App\Controller\ProductController::addProduct()"/>
+        <argument key="App\Controller\ApiPerfumesController:index" type="service_closure" id=".service_locator.2KKAeja.App\Controller\ApiPerfumesController::index()"/>
+        <argument key="App\Controller\ApiPerfumesController:show" type="service_closure" id=".service_locator.2KKAeja.App\Controller\ApiPerfumesController::show()"/>
       </argument>
     </service>
     <service id=".service_locator.nqEKT7G" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -3577,16 +3222,11 @@
         <argument key="doctrine.orm.default_listeners.attach_entity_listeners" type="service_closure" id="doctrine.orm.default_listeners.attach_entity_listeners"/>
       </argument>
     </service>
-    <service id=".service_locator.Rk0dpFV" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.omRPWDz" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="App\Repository\BookRepository" type="service_closure" id="App\Repository\BookRepository"/>
-        <argument key="App\Repository\PCComponentRepository" type="service_closure" id="App\Repository\PCComponentRepository"/>
-        <argument key="App\Repository\PCFactoryComponentRepository" type="service_closure" id="App\Repository\PCFactoryComponentRepository"/>
-        <argument key="App\Repository\PerfumeriasRepository" type="service_closure" id="App\Repository\PerfumeriasRepository"/>
-        <argument key="App\Repository\PerfumesClubRepository" type="service_closure" id="App\Repository\PerfumesClubRepository"/>
         <argument key="App\Repository\PerfumesRepository" type="service_closure" id="App\Repository\PerfumesRepository"/>
-        <argument key="App\Repository\ProductRepository" type="service_closure" id="App\Repository\ProductRepository"/>
+        <argument key="App\Repository\PrecioContenidoRepository" type="service_closure" id="App\Repository\PrecioContenidoRepository"/>
         <argument key="App\Repository\StoresRepository" type="service_closure" id="App\Repository\StoresRepository"/>
         <argument key="App\Repository\TargetPublicRepository" type="service_closure" id="App\Repository\TargetPublicRepository"/>
       </argument>
@@ -3640,57 +3280,9 @@
         <argument key="parameter_bag" type="service_closure" id="parameter_bag" on-invalid="ignore"/>
       </argument>
     </service>
-    <service id=".service_locator.TJNRSaV.App\Controller\ApiAllPerfumesController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ApiAllPerfumesController"/>
-      <argument>App\Controller\ApiAllPerfumesController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.TJNRSaV" method="withContext"/>
-    </service>
-    <service id=".service_locator.TJNRSaV.App\Controller\ApiBookController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ApiBookController"/>
-      <argument>App\Controller\ApiBookController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.TJNRSaV" method="withContext"/>
-    </service>
-    <service id=".service_locator.TJNRSaV.App\Controller\ApiPerfumeriasController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ApiPerfumeriasController"/>
-      <argument>App\Controller\ApiPerfumeriasController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.TJNRSaV" method="withContext"/>
-    </service>
-    <service id=".service_locator.TJNRSaV.App\Controller\ApiPerfumesClubController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ApiPerfumesClubController"/>
-      <argument>App\Controller\ApiPerfumesClubController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.TJNRSaV" method="withContext"/>
-    </service>
     <service id=".service_locator.TJNRSaV.App\Controller\ApiPerfumesController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\ApiPerfumesController"/>
       <argument>App\Controller\ApiPerfumesController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.TJNRSaV" method="withContext"/>
-    </service>
-    <service id=".service_locator.TJNRSaV.App\Controller\ApiProductController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ApiProductController"/>
-      <argument>App\Controller\ApiProductController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.TJNRSaV" method="withContext"/>
-    </service>
-    <service id=".service_locator.TJNRSaV.App\Controller\ProductController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ProductController"/>
-      <argument>App\Controller\ProductController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.TJNRSaV" method="withContext"/>
-    </service>
-    <service id=".service_locator.TJNRSaV.App\Controller\ProductCurlController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ProductCurlController"/>
-      <argument>App\Controller\ProductCurlController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.TJNRSaV" method="withContext"/>
-    </service>
-    <service id=".service_locator.TJNRSaV.App\Controller\ScrapeController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ScrapeController"/>
-      <argument>App\Controller\ScrapeController</argument>
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.TJNRSaV" method="withContext"/>
     </service>
@@ -3797,15 +3389,7 @@
       <call method="allowControllers">
         <argument type="collection">
           <argument>App\Kernel</argument>
-          <argument>App\Controller\ApiAllPerfumesController</argument>
-          <argument>App\Controller\ApiBookController</argument>
-          <argument>App\Controller\ApiPerfumeriasController</argument>
-          <argument>App\Controller\ApiPerfumesClubController</argument>
           <argument>App\Controller\ApiPerfumesController</argument>
-          <argument>App\Controller\ApiProductController</argument>
-          <argument>App\Controller\ProductController</argument>
-          <argument>App\Controller\ProductCurlController</argument>
-          <argument>App\Controller\ScrapeController</argument>
           <argument>Doctrine\Bundle\DoctrineBundle\Controller\ProfilerController</argument>
         </argument>
       </call>
@@ -3835,47 +3419,12 @@
     <service id=".errored..service_locator.1vYpZ1B.Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface">
       <tag name="container.error" message="Cannot autowire service &quot;.service_locator.1vYpZ1B&quot;: it needs an instance of &quot;Symfony\Component\Config\Loader\LoaderInterface&quot; but this type has been excluded from autowiring."/>
     </service>
-    <service id=".App\Command\DebugScrapeCommand.lazy" class="Symfony\Component\Console\Command\LazyCommand">
-      <argument>app:debug-scrape</argument>
-      <argument type="collection"/>
-      <argument>Debug: obtiene el HTML de PCComponentes y muestra estructura</argument>
-      <argument>false</argument>
-      <argument type="service_closure" id="App\Command\DebugScrapeCommand"/>
-    </service>
-    <service id=".App\Command\ScrapeBooksCommand.lazy" class="Symfony\Component\Console\Command\LazyCommand">
-      <argument>app:scrape-books</argument>
-      <argument type="collection"/>
-      <argument>Scrapea libros y los guarda en la base de datos</argument>
-      <argument>false</argument>
-      <argument type="service_closure" id="App\Command\ScrapeBooksCommand"/>
-    </service>
-    <service id=".App\Command\ScrapePCComponentsCommand.lazy" class="Symfony\Component\Console\Command\LazyCommand">
-      <argument>app:scrape-pccomponents</argument>
-      <argument type="collection"/>
-      <argument>Scrapea componentes de PCComponentes y los guarda en la base de datos</argument>
-      <argument>false</argument>
-      <argument type="service_closure" id="App\Command\ScrapePCComponentsCommand"/>
-    </service>
-    <service id=".App\Command\ScrapePCFactoryCommand.lazy" class="Symfony\Component\Console\Command\LazyCommand">
-      <argument>app:scrape-pcfactory</argument>
-      <argument type="collection"/>
-      <argument>Scrapea componentes de PC Factory y los guarda en la base de datos</argument>
-      <argument>false</argument>
-      <argument type="service_closure" id="App\Command\ScrapePCFactoryCommand"/>
-    </service>
     <service id=".App\Command\ScrapePerfumesCommand.lazy" class="Symfony\Component\Console\Command\LazyCommand">
       <argument>app:scrape-perfumes</argument>
       <argument type="collection"/>
       <argument>Scrapea perfumes y los guarda en la base de datos</argument>
       <argument>false</argument>
       <argument type="service_closure" id="App\Command\ScrapePerfumesCommand"/>
-    </service>
-    <service id=".App\Command\ScrapeProductsCommand.lazy" class="Symfony\Component\Console\Command\LazyCommand">
-      <argument>app:scrape-products</argument>
-      <argument type="collection"/>
-      <argument>Scrapea libros y los guarda en la base de datos</argument>
-      <argument>false</argument>
-      <argument type="service_closure" id="App\Command\ScrapeProductsCommand"/>
     </service>
     <service id=".console.command.about.lazy" class="Symfony\Component\Console\Command\LazyCommand">
       <argument>about</argument>
@@ -4353,14 +3902,9 @@
     </service>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
       <tag name="container.no_preload"/>
-      <argument type="service" id=".service_locator.o7VApCK"/>
+      <argument type="service" id=".service_locator.HCy2hJz"/>
       <argument type="collection">
-        <argument key="app:debug-scrape">App\Command\DebugScrapeCommand</argument>
-        <argument key="app:scrape-books">App\Command\ScrapeBooksCommand</argument>
-        <argument key="app:scrape-pccomponents">App\Command\ScrapePCComponentsCommand</argument>
-        <argument key="app:scrape-pcfactory">App\Command\ScrapePCFactoryCommand</argument>
         <argument key="app:scrape-perfumes">App\Command\ScrapePerfumesCommand</argument>
-        <argument key="app:scrape-products">App\Command\ScrapeProductsCommand</argument>
         <argument key="about">console.command.about</argument>
         <argument key="assets:install">console.command.assets_install</argument>
         <argument key="cache:clear">console.command.cache_clear</argument>
@@ -4450,15 +3994,10 @@
         <argument key="make:webhook">maker.auto_command.make_webhook</argument>
       </argument>
     </service>
-    <service id=".service_locator.o7VApCK" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.HCy2hJz" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="App\Command\DebugScrapeCommand" type="service_closure" id=".App\Command\DebugScrapeCommand.lazy"/>
-        <argument key="App\Command\ScrapeBooksCommand" type="service_closure" id=".App\Command\ScrapeBooksCommand.lazy"/>
-        <argument key="App\Command\ScrapePCComponentsCommand" type="service_closure" id=".App\Command\ScrapePCComponentsCommand.lazy"/>
-        <argument key="App\Command\ScrapePCFactoryCommand" type="service_closure" id=".App\Command\ScrapePCFactoryCommand.lazy"/>
         <argument key="App\Command\ScrapePerfumesCommand" type="service_closure" id=".App\Command\ScrapePerfumesCommand.lazy"/>
-        <argument key="App\Command\ScrapeProductsCommand" type="service_closure" id=".App\Command\ScrapeProductsCommand.lazy"/>
         <argument key="console.command.about" type="service_closure" id=".console.command.about.lazy"/>
         <argument key="console.command.assets_install" type="service_closure" id=".console.command.assets_install.lazy"/>
         <argument key="console.command.cache_clear" type="service_closure" id=".console.command.cache_clear.lazy"/>
@@ -4611,7 +4150,7 @@
     <service id="doctrine.orm.default_entity_manager.event_manager" alias="doctrine.dbal.default_connection.event_manager"/>
     <service id="doctrine.migrations.metadata_storage" alias="doctrine.migrations.storage.table_storage"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.ryAvHi4" public="true"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.0W2UYV."/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.MqvPkvA"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.W55Po6X"/>
     <service id="Psr\Log\LoggerInterface" alias="logger"/>
     <service id="http_client" alias="http_client.uri_template"/>
@@ -4620,12 +4159,7 @@
     <service id="argument_resolver" alias="debug.argument_resolver"/>
     <service id="doctrine.orm.default_metadata_driver" alias=".doctrine.orm.default_metadata_driver"/>
     <service id=".service_locator.c0wzfI4" alias=".service_locator.1vYpZ1B"/>
-    <service id=".service_locator.vGYbxd6" alias=".service_locator.e8I66cD"/>
-    <service id=".service_locator.Flp8fQM" alias=".service_locator.zUpmxTP"/>
-    <service id=".service_locator.cGw5Egh" alias=".service_locator.HwoPxyR"/>
-    <service id=".service_locator.uVFw.du" alias=".service_locator.yBOcBF0"/>
-    <service id=".service_locator.YBApGjr" alias=".service_locator.q5GA76U"/>
-    <service id=".service_locator.0ekWYPZ" alias=".service_locator.z0A7H.F"/>
+    <service id=".service_locator.BF9Zx1B" alias=".service_locator.2KKAeja"/>
     <service id=".service_locator.zXdBNpV" alias=".service_locator.TJNRSaV"/>
   </services>
 </container>
