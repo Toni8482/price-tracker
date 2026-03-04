@@ -107,7 +107,7 @@ class ScrapePerfumesCommand extends Command
 
 
 #$perH, $perM, $clubH,  $clubM
-        $webSite = [$perH];
+        $webSite = [$perH, $perM, $clubH,  $clubM];
         try {
 
             $start = microtime(true);

@@ -1,80 +1,93 @@
 <template>
-    <div class="lista-libros">
-        <h1>Perfumes scrapeados</h1>
-        <div id="filters">
-            <label for="">
-                Filtro
-            </label>
-            <select v-model="selectedStore">
-                <option value="">Todos</option>
-                <option value="1">
-                    perfumerias
-                </option>
-                <option value="2">
-                    perfumerias club
-                </option>
-            </select>
+    <div class="div_template">
+        <div class="content_title">
+            <h1>Perfumes</h1>
 
-
-            <label for="">
-                Buscar
-            </label>
-            <input type="text" v-model="selectedName">
-
-            <label for="">
-                Orden
-            </label>
-            <select v-model="selectedPrice">
-                <option value="mayor">Mayor precio </option>
-                <option value="menor">Menor precio</option>
-
-            </select>
         </div>
-        <div>
-            <ul v-if="this.perfumes.length">
-                <li v-for="perfume in filteredPerfumes" :key="perfume.id">
+        <div class="content_lista">
+            <div class="filtros-content">
+                <div class="seleccion_filtrado">
+                    <p>Genero</p>
+                    <label>
+                        <input type="radio" v-model="generoSeleccionado" name="genero" value="todos">
+                        Todos
+                    </label>
+                    <label>
+                        <input type="radio" v-model="generoSeleccionado" name="genero" value="mujeres">
+                        Mujeres {{ contadorMujeres }}
+                    </label>
+                    <label>
+                        <input type="radio" v-model="generoSeleccionado" name="genero" value="hombres">
+                        Hombres {{ contadorHombres }}
+                    </label>
+                </div>
 
-                    <div class="div_imagen"> <img :src="perfume.precioSeleccionado.image_url_precio_contenido"
-                            alt="Imagen perfume" /></div>
+                <div class="seleccion_filtrado">
+                    <p>Tiendas</p>
+                    <label>
+                        <input type="radio" v-model="webSiteSeleccionado" name="tienda" value="todos">
+                        Todos
+                    </label>
+                    <label>
+                        <input type="radio" v-model="webSiteSeleccionado" name="tienda" value="perfumerias">
+                        Perfumerias
+                    </label>
+                    <label>
+                        <input type="radio" v-model="webSiteSeleccionado" name="tienda" value="perfumesClub">
+                        PerfumesClub
+                    </label>
+                </div>
+            </div>
 
-                    <p class="marca">{{ perfume.marca }}</p>
-                    <p class="title">{{ perfume.nombre }}</p>
-                    <p class="price">{{ perfume.precioSeleccionado.precio }} €</p>
 
 
 
-                    <p class="">{{ perfume.target_public }}</p>
 
 
-                    <div class="div_logo"> <img :src="perfume.store_logo" alt="Imagen logo" /></div>
+            <div class="lista-libros">
+                <ul v-if="this.perfumes.length">
+                    <li v-for="perfume in filteredPerfumes" :key="perfume.id">
 
+                        <div class="div_imagen">
+                            <img :src="perfume.precioSeleccionado.image_url_precio_contenido" alt="Imagen perfume" />
+                        </div>
 
-                    <div>
+                        <p class="marca">{{ perfume.marca }}</p>
+                        <p class="title">{{ perfume.nombre }}</p>
+                        <p class="price">{{ perfume.precioSeleccionado.precio }} €</p>
+                        <p class="">{{ perfume.target_public }}</p>
 
+                        <div class="div_logo">
+                            <img :src="perfume.store_logo" alt="Imagen logo" />
+                        </div>
 
-                        <select v-model="perfume.precioSeleccionado">
-                            <option v-for="precioContenido in perfume.precio_contenido" :key="precioContenido.contenido"
-                                :value="precioContenido">
-                                {{ precioContenido.contenido }}
-                            </option>
-                        </select>
-                    </div>
-                    <button @click="VisualizarPerfume(perfume.id)">Detalles</button>
-                </li>
-            </ul>
+                        <div>
+                            <select v-model="perfume.precioSeleccionado" >
+                                <option v-for="precioContenido in perfume.precio_contenido"
+                                    :key="precioContenido.contenido" :value="precioContenido" >
+                                    {{ precioContenido.contenido }}
+                                </option>
+                            </select>
+                        </div>
+                        <button @click="VisualizarPerfume(perfume.id)">Detalles</button>
+                    </li>
+                </ul>
 
-            <p v-else>Cargando perfumes…</p>
-
+                <p v-else>Cargando perfumes…</p>
+            </div>
         </div>
     </div>
+
 </template>
 
 <script>
 import { getAllPerfumes } from "../services/api";
 
-
 export default {
     name: "ListaPerfumes",
+    props: {
+
+    },
     data() {
         return {
             perfumes: [],
@@ -82,7 +95,11 @@ export default {
             selectedPrice: "",
             selectedName: "",
             selectedContenido: "",
-
+            mostrarFiltros: false, // controla el desplegable
+            webSiteSeleccionado: 'todos',
+            generoSeleccionado: 'todos',
+            contadorMujeres: 0,
+            contadorHombres: 0,
         };
     },
     methods: {
@@ -92,51 +109,91 @@ export default {
 
         AgruparPerfumeIgual() {
             let result = this.perfumes;
-
-            result = result.slice().sort((a, b) => (a.precio - b.precio));
-
-            result = result.filter((p, indice, arr) => indice === arr.findIndex(x => x.nombre === p.nombre));
-
+            result = result.slice().sort((a, b) => a.precio - b.precio);
+            result = result.filter(
+                (p, indice, arr) => indice === arr.findIndex(x => x.nombre === p.nombre)
+            );
             return result;
-        }
-
-
-
+        },
     },
     computed: {
         filteredPerfumes() {
-            let result = this.perfumes
+            let result = this.perfumes;
 
-            // 🔹 Buscador por palabra
-            if (this.selectedName != "") {
-                const query = this.selectedName.toLowerCase()
-                result = result.filter(p => p.nombre.toLowerCase().startsWith(query))
 
-                result = result.slice().sort((a, b) =>
-                    a.nombre.localeCompare(b.nombre)
+            if (this.generoSeleccionado != '') {
+                switch (this.generoSeleccionado) {
+                    case 'todos':
+                        result = result;
+                        break;
+                    case 'hombres':
+                        result = result.filter(p => p.target_public == 'Hombre');
+                        break;
+                    case 'mujeres':
+                        result = result.filter(p => p.target_public == 'Mujer');
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+
+
+            if (this.webSiteSeleccionado != '') {
+                switch (this.webSiteSeleccionado) {
+                    case 'todos':
+                        result = result;
+                        break;
+                    case 'perfumerias':
+                        result = result.filter(p => p.store_name == 'Perfumerias');
+                        break;
+                    case 'perfumesClub':
+                        result = result.filter(p => p.store_name == 'Perfumes Club');
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+
+
+            if (this.$route.query.nombre) {
+                const queryNombre = this.$route.query.nombre
+                const q = queryNombre.toLowerCase()
+                result = result.filter(p =>
+                    p.nombre.toLowerCase().includes(q)
                 )
             }
 
-            return result
+            if (this.selectedName != "") {
+                const query = this.selectedName.toLowerCase();
+                result = result.filter(p => p.nombre.toLowerCase().startsWith(query));
+                result = result.slice().sort((a, b) => a.nombre.localeCompare(b.nombre));
+            }
+
+            return result;
         },
-
-
-
     },
     async mounted() {
         try {
             this.perfumes = await getAllPerfumes();
-
             this.perfumes = this.perfumes.map(p => ({
                 ...p,
                 precioSeleccionado: {
                     precio: p.precio_contenido?.[0]?.precio || 0,
                     image_url_precio_contenido: p.precio_contenido?.[0].image_url_precio_contenido || "",
-                }
-
+                    contenido: p.precio_contenido?.[0].contenido || "",
+                },
             }));
-
             this.perfumes = this.AgruparPerfumeIgual();
+
+
+            this.contadorHombres = this.perfumes.filter(p => p.target_public == 'Hombre').length;
+
+            this.contadorMujeres = this.perfumes.filter(p => p.target_public == 'Mujer').length;
+
         } catch (error) {
             console.error(error);
         }
@@ -146,16 +203,15 @@ export default {
 
 <style scoped>
 /* CONTENEDOR PRINCIPAL */
-.lista-libros {
-    padding: 30px;
-    max-width: 1400px;
-    margin: 0 auto;
+h1{
+    text-align: center;
+  
 }
 
 /* GRID DE PERFUMES */
 ul {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: 200px 200px 200px 200px 200px;
     gap: 25px;
     padding: 0;
     margin: 0;
@@ -172,15 +228,30 @@ li {
     transition: transform 0.25s ease, background 0.25s ease;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 1px;
     min-width: 0;
-    /* evita desbordes de select */
 }
 
 li:hover {
     background: #caa0f1;
     transform: translateY(-6px);
 }
+
+/* CONTENEDOR TEMPLATE */
+.div_template {
+    display: grid;
+    grid-template-columns: 200px 200px 200px;
+    gap: 20px;
+
+    /* igual que el ancho del botón */
+}
+
+
+
+
+
+
+
 
 /* CONTENEDOR DE IMÁGENES */
 .div_imagen {
@@ -195,21 +266,16 @@ li:hover {
     justify-content: center;
 }
 
-/* IMÁGENES */
 .div_imagen img {
     max-width: 100%;
     max-height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease, opacity 0.3s ease;
-
 }
 
 li:hover .div_imagen img {
     transform: scale(1.05);
 }
-
-
-
 
 /* TEXTO */
 .title {
@@ -285,18 +351,16 @@ button:hover {
     justify-content: center;
     border: 2px solid #fff;
     border-radius: 10px;
-
 }
-
 
 .div_logo img {
     max-width: 100%;
     max-height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease, opacity 0.3s ease;
-
 }
 
+/* SELECT ESTILO */
 select {
     background-color: #4b0082;
     color: #fff;
@@ -315,6 +379,49 @@ select:focus {
     outline: none;
     box-shadow: 0 0 5px rgba(75, 0, 130, 0.5);
 }
+
+.content_title {
+
+    grid-column: 1 / 6;
+  
+
+}
+
+.content_lista {
+    display: grid;
+    grid-template-columns: 300px 220px 220px;
+}
+
+.lista-libros {
+    padding: 30px;
+
+    margin: 0 auto;
+
+    grid-column: 2 / 4;
+
+
+}
+
+
+
+.filtros-content {
+    grid-column: 1 / 1;
+
+    margin: 30px;
+
+
+}
+
+.seleccion_filtrado {
+    background-color: rgb(139, 194, 176);
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    font-size: 22px;
+}
+
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
     ul {

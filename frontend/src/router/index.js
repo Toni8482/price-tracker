@@ -3,6 +3,11 @@ import { createRouter, createWebHistory } from "vue-router";
 import ListaPerfumes from "@/components/ListaPerfumes.vue";
 import DetallesPerfumes from "@/components/DetallesPerfume.vue";
 import Home from "@/components/HomeComponent.vue"
+import ListaUsers from "@/components/ListUsersComponent.vue"
+import Login from "@/components/LoginComponent.vue"
+import ListaFavoritos from "@/components/FavoritosComponent.vue"
+import FormUser from "@/components/FormUserComponent.vue"
+
 
 const routes = [
   {
@@ -21,6 +26,24 @@ const routes = [
     path: "/perfume/:id",
     name: "detalle-perfume",
     component: DetallesPerfumes,
+  },
+   {
+    path: "/users",
+    name: "lista-users",
+    component: ListaUsers,
+  }, {
+    path: "/login",
+    name: "login",
+    component: Login,
+  }, {
+    path: "/favoritos",
+    name: "lista-favoritos",
+    component: ListaFavoritos,
+  },
+  {
+    path: "/form-user",
+    name: "form-user",
+    component: FormUser,
   },
 ];
 

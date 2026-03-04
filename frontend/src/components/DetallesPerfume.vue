@@ -1,48 +1,43 @@
 <template>
   <div class="detalles-libro">
     <h1>Detalles de perfume</h1>
- <div v-if="perfume" >
-    <div  class="card">
-      <div class="imagen_card">
-        <img :src="perfume.imagen_url" alt="Portada del libro" />
+    <div v-if="perfume">
+      <div class="card">
+        <div class="imagen_card">
+          <img :src="imagenCard" alt="Imagen perfume" />
+        </div>
+
+        <div class="info">
+          <img :src="perfume.store_logo">
+
+          <h2>{{ perfume.marca }}</h2>
+          <p> {{ perfume.nombre }}</p>
+          <p> {{ perfume.concentracion }}</p>
+
+
+          <p>Elige tamaño:</p>
+          <label v-for="precioContenido in perfume.precio_contenido" :key="precioContenido.contenido">
+            <input type="radio" v-model="cantidadSeleccionada" name="tamano" :value="precioContenido.contenido">
+            {{ precioContenido.contenido }}
+            {{ precioContenido.precio }}
+
+
+          </label>
+
+
+          <button @click="$router.back()">Volver a la lista</button><br>
+          <button @click="abrirNuevaPestana(perfume.perfume_url)">Ir a tienda</button>
+        </div>
+
       </div>
-
-      <div class="info">
-        <img :src="perfume.store_logo">
-       
-        <p>{{ perfume.marca }}</p>
-        <p> {{ perfume.nombre }}</p>
-
-
-        <p>Elige  tamaño:</p>
-        <label v-for="precioContenido in perfume.precio_contenido" :key="precioContenido.contenido">
-          <input type="radio" name="tamano" :value="precioContenido.contenido">
-         {{ precioContenido.contenido }}
-         {{ precioContenido.precio }}
-
-
-        </label>
-      
-       
-
-
-
-        <button @click="$router.back()">Volver a la lista</button><br>
-        <button @click="abrirNuevaPestana(perfume.perfume_url)">Ir a tienda</button>
-      </div>
-
-      
-
-
-    </div>
-    <!-- Botón para mostrar/ocultar descripción -->
-<button @click="mostrarDescripcion = !mostrarDescripcion" class="toggle-desc">
-  {{ mostrarDescripcion ? 'Ocultar descripción' : 'Ver descripción' }}
-</button>
-<div class="descripcion" :class="{ abierto: mostrarDescripcion }">
+      <!-- Botón para mostrar/ocultar descripción -->
+      <button @click="mostrarDescripcion = !mostrarDescripcion" class="toggle-desc">
+        {{ mostrarDescripcion ? 'Ocultar descripción' : 'Ver descripción' }}
+      </button>
+      <div class="descripcion" :class="{ abierto: mostrarDescripcion }">
         <p v-html="perfume.descripcion"> </p>
       </div>
-</div>
+    </div>
     <div v-else>
       <p>Cargando...</p>
     </div>
@@ -53,23 +48,22 @@
           <th>Marca</th>
           <th>Nombre</th>
           <th>Concentracion</th>
-          <th>Contenido</th>
-          <th>Precio</th>
+
           <th>Tienda</th>
           <th></th>
           <th></th>
         </tr>
-        <tr v-for="perfume in this.perfumesComparados" :key="perfume.id">
+        <tr v-for="perfume in perfumesComparados" :key="perfume.id">
           <td> <img :src="perfume.imagen_url" alt="Imagen perfume" /></td>
           <td>{{ perfume.marca }}</td>
           <td>{{ perfume.nombre }}</td>
           <td>{{ perfume.concentracion }}</td>
-     <!--
+          <!--
         <td>{{ perfume.precio_contenido.contenido }}</td>
           <td>{{ perfume.precio_contenido.precio }}
             €
            </td>   -->
-      
+
           <td><img :src="perfume.store_logo" alt="Imagen logo"></td>
 
           <td> <button @click="cargarPerfume(perfume.id)">Detalles</button></td>
@@ -79,7 +73,8 @@
 
       </table>
 
-
+      <span v-else>Cargando tabla ...</span>
+     
 
     </div>
   </div>
@@ -89,75 +84,83 @@
 </template>
 
 <script>
-
-import { getPerfume } from "../services/api";
-import { getAllPerfumes } from "../services/api";
+import { getPerfume, getAllPerfumes } from "../services/api";
 
 export default {
   name: "DetallesPerfume",
+
   data() {
     return {
       perfume: null,
-       mostrarDescripcion: false, // controla el desplegable
+      mostrarDescripcion: false,
       perfumesComparados: [],
-      perfumes: []
+      perfumes: [],
+      cantidadSeleccionada: "",
     };
   },
+
   watch: {
-    '$route.params.id': {
+    "$route.params.id": {
       immediate: true,
       handler(newId) {
-        this.cargarPerfume(newId)
+        this.cargarPerfume(newId);
+
+      },
+    },
+    perfumes() {
+      this.PerfumesIguales();
+    }
+  },
+  computed: {
+    imagenCard() {
+      let result = "";
+      if (this.cantidadSeleccionada !== "") {
+
+        this.perfume.precio_contenido.forEach(p => {
+
+          if (p.contenido == this.cantidadSeleccionada) {
+
+            result = p.image_url_precio_contenido;
+          }
+        });
+
       }
+      return result;
     }
   },
   methods: {
     PerfumesIguales() {
+      if (!this.perfume) return;
 
-      let result = this.perfumes;
-
-      this.perfumesComparados = result.filter(p => p.nombre.includes(this.perfume.nombre));
-
-
-
+      this.perfumesComparados = this.perfumes.filter((p) =>
+        p.nombre.includes(this.perfume.nombre)
+      );
     },
+
     async cargarPerfume(id) {
       try {
         this.perfume = await getPerfume(id);
 
-        this.PerfumesIguales()
+        // Seleccionar automáticamente el primer tamaño
+        if (this.perfume.precio_contenido?.length) {
+          this.cantidadSeleccionada =
+            this.perfume.precio_contenido[0].contenido;
+        }
+
+   
       } catch (error) {
         console.error(error);
       }
-
     },
 
     abrirNuevaPestana(urlTienda) {
       window.open(urlTienda, "_blank", "noopener,noreferrer");
-    }
-
-
+    },
   },
+
   async mounted() {
-
-
     try {
       this.perfumes = await getAllPerfumes();
-
-
-    } catch (error) {
-      console.error(error);
-    }
-
-
-
-
-
-    const id = this.$route.params.id;
-    try {
-      this.perfume = await getPerfume(id);
-
-      this.PerfumesIguales()
     } catch (error) {
       console.error(error);
     }
@@ -184,12 +187,14 @@ h1 {
 /* Tarjeta principal */
 .card {
   display: flex;
-  flex-direction: row; /* Imagen izquierda, info derecha */
+  flex-direction: row;
+  /* Imagen izquierda, info derecha */
   background: #a45ed8;
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-  margin: 30px 0 10px; /* espacio abajo para la descripción */
+  margin: 30px 0 10px;
+  /* espacio abajo para la descripción */
   width: 90%;
   max-width: 900px;
   gap: 20px;
@@ -198,7 +203,8 @@ h1 {
 
 /* Imagen del perfume a la izquierda */
 .imagen_card {
-  flex: 0 0 40%; /* ocupa 40% del ancho */
+  flex: 0 0 40%;
+  /* ocupa 40% del ancho */
   height: 300px;
   border-radius: 12px;
   overflow: hidden;
@@ -313,14 +319,15 @@ button:hover {
   background: #f8f0ff;
   color: #201b1b;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   padding: 0 20px;
   margin-top: 10px;
 }
 
 /* Cuando está abierto */
 .descripcion.abierto {
-  max-height: 500px; /* suficiente para tu contenido */
+  max-height: 500px;
+  /* suficiente para tu contenido */
   padding: 20px;
 }
 
@@ -394,7 +401,8 @@ td img {
     width: 100%;
   }
 
-  .descripcion, .table_perfumes {
+  .descripcion,
+  .table_perfumes {
     width: 95%;
   }
 

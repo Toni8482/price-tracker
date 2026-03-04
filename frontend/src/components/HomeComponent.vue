@@ -6,10 +6,7 @@
       <h1>Bienvenido a PerfumeScraper</h1>
       <p>Encuentra tus perfumes favoritos al mejor precio</p>
 
-      <div class="search">
-        <input v-model="busqueda" placeholder="Buscar perfume..." />
-        <button @click="buscarPerfume">Buscar</button>
-      </div>
+
     </div>
 
     <!-- Estadísticas rápidas -->
@@ -23,7 +20,12 @@
         <p>Tiendas</p>
       </div>
       <div class="stat-card">
-        <h2>{{ perfumeMasCaro.precio }}€</h2>
+        <h2 v-if="perfumeMasCaro">
+          {{ perfumeMasCaro.precioSeleccionado.precio }}€
+        </h2>
+        <h2 v-else>
+          0€
+        </h2>
         <p>Perfume más caro</p>
       </div>
     </div>
@@ -46,28 +48,25 @@
 </template>
 
 <script>
+import { getAllPerfumes } from "../services/api";
+
+
 export default {
   name: "Home",
   data() {
     return {
       busqueda: "",
       tiendas: 2,
-      perfumes: [
-        { id: 1, nombre: "Aqua Vitae", marca: "Brand A", precio: 49, imagen_url: "https://via.placeholder.com/200x250?text=Perfume+1" },
-        { id: 2, nombre: "Mystic Rose", marca: "Brand B", precio: 75, imagen_url: "https://via.placeholder.com/200x250?text=Perfume+2" },
-        { id: 3, nombre: "Ocean Breeze", marca: "Brand C", precio: 65, imagen_url: "https://via.placeholder.com/200x250?text=Perfume+3" },
-        { id: 4, nombre: "Velvet Night", marca: "Brand D", precio: 90, imagen_url: "https://via.placeholder.com/200x250?text=Perfume+4" },
-        { id: 5, nombre: "Golden Oud", marca: "Brand E", precio: 120, imagen_url: "https://via.placeholder.com/200x250?text=Perfume+5" },
-      ],
+      perfumes: [],
     };
   },
   computed: {
     perfumesDestacados() {
       // Devuelve los 4 perfumes con mayor precio
-      return [...this.perfumes].sort((a,b) => b.precio - a.precio).slice(0,4);
+      return [...this.perfumes].sort((a, b) => b.precioSeleccionado.precio - a.precioSeleccionado.precio).slice(0, 4);
     },
     perfumeMasCaro() {
-      return this.perfumes.reduce((max,p) => p.precio > max.precio ? p : max, this.perfumes[0]);
+      return this.perfumes.reduce((max, p) => p.precioSeleccionado.precio > max.precioSeleccionado.precio ? p : max, this.perfumes[0]);
     }
   },
   methods: {
@@ -79,16 +78,41 @@ export default {
       alert(`Ir al detalle del perfume con ID: ${id}`);
       // Aquí iría la navegación real: this.$router.push({name:'detalle-perfume', params:{id}})
     }
-  }
+  },
+  async mounted() {
+    try {
+      this.perfumes = await getAllPerfumes();
+      this.perfumes = this.perfumes.map(p => ({
+        ...p,
+        precioSeleccionado: {
+          precio: p.precio_contenido?.[0]?.precio || 0,
+          image_url_precio_contenido: p.precio_contenido?.[0].image_url_precio_contenido || "",
+        },
+      }));
+
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
 };
 </script>
 
 <style scoped>
 /* Reset simple */
-body { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
 
 /* Contenedor Home */
-.home { display: flex; flex-direction: column; align-items: center; padding: 20px; }
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
 
 /* Banner */
 .banner {
@@ -99,20 +123,34 @@ body { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
   border-radius: 20px;
   padding: 50px 20px;
   text-align: center;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
   margin-bottom: 30px;
 }
 
-.banner h1 { font-size: 2.5rem; margin-bottom: 10px; }
-.banner p { font-size: 1.2rem; margin-bottom: 20px; }
+.banner h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
 
-.banner .search { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.banner p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.banner .search {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .banner input {
   padding: 10px;
   border-radius: 8px;
   border: none;
   min-width: 200px;
 }
+
 .banner button {
   padding: 10px 20px;
   border-radius: 8px;
@@ -123,7 +161,10 @@ body { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
   cursor: pointer;
   transition: all 0.2s;
 }
-.banner button:hover { background-color: #f0e6ff; }
+
+.banner button:hover {
+  background-color: #f0e6ff;
+}
 
 /* Estadísticas */
 .stats {
@@ -133,6 +174,7 @@ body { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
   justify-content: center;
   margin-bottom: 30px;
 }
+
 .stat-card {
   background-color: #f8f0ff;
   color: #4b0082;
@@ -140,14 +182,30 @@ body { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
   border-radius: 15px;
   text-align: center;
   width: 180px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-.stat-card h2 { font-size: 2rem; margin: 0; }
-.stat-card p { margin: 5px 0 0 0; }
+
+.stat-card h2 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.stat-card p {
+  margin: 5px 0 0 0;
+}
 
 /* Destacados */
-.destacados { width: 100%; max-width: 1000px; margin-bottom: 50px; }
-.destacados h2 { color: #4b0082; margin-bottom: 20px; text-align: center; }
+.destacados {
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 50px;
+}
+
+.destacados h2 {
+  color: #4b0082;
+  margin-bottom: 20px;
+  text-align: center;
+}
 
 .cards {
   display: flex;
@@ -162,7 +220,7 @@ body { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
   padding: 15px;
   text-align: center;
   width: 200px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -176,9 +234,21 @@ body { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
   margin-bottom: 10px;
 }
 
-.card .marca { color: #af3030; font-weight: bold; }
-.card .nombre { font-weight: bold; color: #201b1b; margin: 5px 0; }
-.card .precio { color: #4b0082; font-weight: bold; }
+.card .marca {
+  color: #af3030;
+  font-weight: bold;
+}
+
+.card .nombre {
+  font-weight: bold;
+  color: #201b1b;
+  margin: 5px 0;
+}
+
+.card .precio {
+  color: #4b0082;
+  font-weight: bold;
+}
 
 .card button {
   margin-top: 10px;
@@ -190,10 +260,18 @@ body { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
   cursor: pointer;
   transition: all 0.2s;
 }
-.card button:hover { background-color: #6a1aa6; }
+
+.card button:hover {
+  background-color: #6a1aa6;
+}
 
 /* Responsive */
-@media(max-width: 768px){
-  .cards, .stats { flex-direction: column; align-items: center; }
+@media(max-width: 768px) {
+
+  .cards,
+  .stats {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 </style>
