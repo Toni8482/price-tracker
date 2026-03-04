@@ -1,20 +1,22 @@
 import { createRouter, createWebHistory } from "vue-router";
-import ListaLibros from "../components/ListaLibros.vue";
-import DetallesLibro from "@/components/DetallesLibro.vue";
+
 import ListaPerfumes from "@/components/ListaPerfumes.vue";
 import DetallesPerfumes from "@/components/DetallesPerfume.vue";
+import Home from "@/components/HomeComponent.vue"
+import ListaUsers from "@/components/ListUsersComponent.vue"
+import Login from "@/components/LoginComponent.vue"
+import ListaFavoritos from "@/components/FavoritosComponent.vue"
+import FormUser from "@/components/FormUserComponent.vue"
+
 
 const routes = [
   {
-    path: "/lista",
-    name: "lista",
-    component: ListaLibros,
+    path: "/",
+    name: "Home",
+    component: Home,
   },
-   {
-    path: "/libro/:id",
-    name: "detalle-libro",
-    component: DetallesLibro,
-  },
+ 
+  
    {
     path: "/perfumes",
     name: "lista-perfume",
@@ -24,6 +26,24 @@ const routes = [
     path: "/perfume/:id",
     name: "detalle-perfume",
     component: DetallesPerfumes,
+  },
+   {
+    path: "/users",
+    name: "lista-users",
+    component: ListaUsers,
+  }, {
+    path: "/login",
+    name: "login",
+    component: Login,
+  }, {
+    path: "/favoritos",
+    name: "lista-favoritos",
+    component: ListaFavoritos,
+  },
+  {
+    path: "/form-user",
+    name: "form-user",
+    component: FormUser,
   },
 ];
 
