@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\Stores;
 use App\Entity\TargetPublic;
 use App\Entity\PrecioContenido;
+use App\Entity\User;
 
 use App\Repository\PerfumesRepository;
 use Doctrine\DBAL\Types\Types;
@@ -24,14 +25,14 @@ class Perfumes
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-   
+
     #[ORM\Column(length: 255)]
     private ?string $perfume_url = null;
 
     #[ORM\Column(length: 100)]
     private ?string $category = null;
 
-   
+
 
     #[ORM\Column(length: 255)]
     private ?string $image_url = null;
@@ -51,7 +52,7 @@ class Perfumes
     #[ORM\Column(length: 100)]
     private ?string $brand = null;
 
-   
+
 
     #[ORM\Column(length: 100)]
     private ?string $concentracion = null;
@@ -71,15 +72,29 @@ class Perfumes
     )]
     private Collection $preciosContenidos;
 
+
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'perfumes')]
+    private Collection $users;
+
+
+
+
     public function __construct()
     {
         $this->preciosContenidos = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /** @return Collection<int, PrecioContenido> */
     public function getPrecioContenido(): Collection
     {
         return $this->preciosContenidos;
+    }
+
+    /** @return Collection<int, User> */
+    public function getUsers(): Collection
+    {
+        return $this->users;
     }
 
     public function getId(): ?int
@@ -99,7 +114,7 @@ class Perfumes
         return $this;
     }
 
-   
+
 
     public function getPerfumeUrl(): ?string
     {
@@ -125,7 +140,7 @@ class Perfumes
         return $this;
     }
 
-   
+
 
     public function getImageUrl(): ?string
     {
@@ -174,7 +189,7 @@ class Perfumes
         return $this;
     }
 
-   
+
 
     public function getConcentracion(): ?string
     {
@@ -196,6 +211,20 @@ class Perfumes
     public function setTargetPublic(TargetPublic $targetPublic): static
     {
         $this->target_public =  $targetPublic;
+        return $this;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+        }
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        $this->users->removeElement($user);
         return $this;
     }
 }

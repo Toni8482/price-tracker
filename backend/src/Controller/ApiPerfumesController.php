@@ -8,11 +8,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
+
 final class ApiPerfumesController extends AbstractController
 {
     #[Route('/api/perfumes', name: 'app_api_perfumes')]
-    public function index(PerfumesRepository $perfumesRepository, PrecioContenidoRepository $precioContenidoRepository): JsonResponse
-    {
+    public function index(
+        PerfumesRepository $perfumesRepository,
+        PrecioContenidoRepository $precioContenidoRepository,
+       
+    ): JsonResponse {
         $perfumes = $perfumesRepository->findAll();
 
 
@@ -89,7 +93,7 @@ final class ApiPerfumesController extends AbstractController
             "nombre" => $perfume->getName(),
             "perfume_url" => $perfume->getPerfumeUrl(),
             "imagen_url" => $perfume->getImageUrl(),
-          
+
             "store_id" => $perfume->getStore()->getId(),
             "store_name" => $perfume->getStore()->getName(),
             "store_url" => $perfume->getStore()->getBaseUrl(),
