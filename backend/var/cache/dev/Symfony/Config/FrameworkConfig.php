@@ -835,7 +835,7 @@ class FrameworkConfig implements \Symfony\Component\Config\Builder\ConfigBuilder
      * @template TValue of array|bool
      * @param TValue $value
      * Property access configuration
-     * @default {"enabled":false,"magic_call":false,"magic_get":true,"magic_set":true,"throw_exception_on_invalid_index":false,"throw_exception_on_invalid_property_path":true}
+     * @default {"enabled":true,"magic_call":false,"magic_get":true,"magic_set":true,"throw_exception_on_invalid_index":false,"throw_exception_on_invalid_property_path":true}
      * @return \Symfony\Config\Framework\PropertyAccessConfig|$this
      * @psalm-return (TValue is array ? \Symfony\Config\Framework\PropertyAccessConfig : static)
      * @deprecated since Symfony 7.4
@@ -864,7 +864,7 @@ class FrameworkConfig implements \Symfony\Component\Config\Builder\ConfigBuilder
      * @template TValue of array|bool
      * @param TValue $value
      * Type info configuration
-     * @default {"enabled":false,"aliases":[]}
+     * @default {"enabled":true,"aliases":[]}
      * @return \Symfony\Config\Framework\TypeInfoConfig|$this
      * @psalm-return (TValue is array ? \Symfony\Config\Framework\TypeInfoConfig : static)
      * @deprecated since Symfony 7.4
@@ -893,7 +893,7 @@ class FrameworkConfig implements \Symfony\Component\Config\Builder\ConfigBuilder
      * @template TValue of array|bool
      * @param TValue $value
      * Property info configuration
-     * @default {"enabled":false}
+     * @default {"enabled":true}
      * @return \Symfony\Config\Framework\PropertyInfoConfig|$this
      * @psalm-return (TValue is array ? \Symfony\Config\Framework\PropertyInfoConfig : static)
      * @deprecated since Symfony 7.4

@@ -11,6 +11,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.7",
         "doctrine/orm": "^3.6",
         "guzzlehttp/guzzle": "^7.10",
+        "lexik/jwt-authentication-bundle": "*",
         "nelmio/cors-bundle": "^2.6",
         "symfony/console": "7.4.*",
         "symfony/css-selector": "7.4.*",
@@ -19,7 +20,10 @@
         "symfony/flex": "^2",
         "symfony/framework-bundle": "7.4.*",
         "symfony/http-client": "7.4.*",
+        "symfony/password-hasher": "7.4.*",
         "symfony/runtime": "7.4.*",
+        "symfony/security-bundle": "7.4.*",
+        "symfony/security-core": "7.4.*",
         "symfony/yaml": "7.4.*"
     },
     "config": {

@@ -9,6 +9,11 @@ return [
     false, // $matchHost
     [ // $staticRoutes
         '/api/perfumes' => [[['_route' => 'app_api_perfumes', '_controller' => 'App\\Controller\\ApiPerfumesController::index'], null, null, null, false, false, null]],
+        '/users' => [[['_route' => 'app_api_users', '_controller' => 'App\\Controller\\ApiUsersController::index'], null, ['POST' => 0], null, false, false, null]],
+        '/api/favorites' => [[['_route' => 'app_api_favorites', '_controller' => 'App\\Controller\\ApiUsersController::favorites'], null, ['POST' => 0], null, false, false, null]],
+        '/api/headers' => [[['_route' => 'app_apiusers_headers', '_controller' => 'App\\Controller\\ApiUsersController::headers'], null, ['GET' => 0], null, false, false, null]],
+        '/api/me' => [[['_route' => 'api_me', '_controller' => 'App\\Controller\\ApiUsersController::me'], null, ['GET' => 0], null, false, false, null]],
+        '/login' => [[['_route' => 'login', '_controller' => 'App\\Controller\\AuthController::login'], null, ['POST' => 0], null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'
