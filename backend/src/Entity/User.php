@@ -133,4 +133,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // @deprecated, to be removed when upgrading to Symfony 8
     }
+
+    public function addPerfume(Perfumes $perfume): self
+    {
+        if (!$this->perfumes->contains($perfume)) {
+            $this->perfumes->add($perfume);
+        }
+
+        return $this;
+    }
 }

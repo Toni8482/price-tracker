@@ -8,7 +8,11 @@
         </div>
 
         <div class="info">
-          <img :src="perfume.store_logo">
+          <div>
+            <img :src="perfume.store_logo">
+            <button @click="asignarPerfume(perfume.id)">🤍</button>
+          </div>
+
 
           <h2>{{ perfume.marca }}</h2>
           <p> {{ perfume.nombre }}</p>
@@ -74,7 +78,7 @@
       </table>
 
       <span v-else>Cargando tabla ...</span>
-     
+
 
     </div>
   </div>
@@ -84,7 +88,7 @@
 </template>
 
 <script>
-import { getPerfume, getAllPerfumes } from "../services/api";
+import { getPerfume, getAllPerfumes, addFavorito } from "../services/api";
 
 export default {
   name: "DetallesPerfume",
@@ -147,7 +151,7 @@ export default {
             this.perfume.precio_contenido[0].contenido;
         }
 
-   
+
       } catch (error) {
         console.error(error);
       }
@@ -156,6 +160,17 @@ export default {
     abrirNuevaPestana(urlTienda) {
       window.open(urlTienda, "_blank", "noopener,noreferrer");
     },
+
+    async asignarPerfume(id) {
+      const token = localStorage.getItem("token");
+      const userId = parseInt(localStorage.getItem("user_id")) ;
+      const userEmail = localStorage.getItem("user_email");
+
+
+
+      await addFavorito(token, userId, id);
+      alert(`Asignado perfume con id: ${id} a favoritos del usuario con ID: ${userId} y con email: ${userEmail}`);
+    }
   },
 
   async mounted() {
@@ -165,6 +180,7 @@ export default {
       console.error(error);
     }
   },
+
 };
 </script>
 

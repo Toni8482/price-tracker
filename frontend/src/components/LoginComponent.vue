@@ -17,7 +17,7 @@
 </template>
 <script>
 
-
+import { Login, getMe } from '@/services/api';
 
 
 
@@ -37,8 +37,18 @@ export default {
   computed: {},
   methods: {
 
-    login() {
-      alert(JSON.stringify(this.user));
+    async login() {
+
+      const data = await Login(this.user);
+      console.log(`Token: ${data.token}`);
+      localStorage.setItem('token', data.token);
+
+      const usuario = await getMe(data.token);
+      console.log(usuario);
+      localStorage.setItem('user_email', usuario.email);
+      localStorage.setItem('user_id', usuario.id);
+
+
     }
 
   },
@@ -52,16 +62,19 @@ export default {
 h1 {
   text-align: center;
 }
-form{
+
+form {
   display: flex;
   flex-direction: column;
   text-align: center;
   align-items: center;
 }
-label{
-margin: 10px;
+
+label {
+  margin: 10px;
 }
-button{
+
+button {
   width: 10%;
 }
 </style>

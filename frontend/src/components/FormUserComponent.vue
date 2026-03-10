@@ -29,7 +29,7 @@
 </template>
 <script>
 
-
+import { CreateUser } from '@/services/api';
 
 export default {
   name: "FormComponent",
@@ -49,13 +49,17 @@ export default {
   },
   computed: {},
   methods: {
-    crearUser() {
+   async crearUser() {
 
       if(this.user.password != this.repeatPassword){
         alert("Password no coincide.");
         return;
       }
      alert(JSON.stringify(this.user));
+
+      await CreateUser(this.user);
+
+
 
      this.user.nombre = "";
      this.user.email = "";

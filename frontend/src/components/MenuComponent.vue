@@ -22,12 +22,18 @@
         </form>
       </div>
       <li><router-link to="/perfumes">PERFUMES</router-link></li>
-      <li><router-link to="/favoritos">🤍</router-link></li>
+      <li><router-link  :to="{ name: 'lista-favoritos', params: { id: userId } }">
+        🤍
+      </router-link></li>
       <li><router-link to="/login">LOGIN</router-link></li>
       <li><router-link to="/users">USERS</router-link></li>
       <li><router-link to="/form-user">FORM USER</router-link></li>
-     
-     
+      <li v-if="userName">
+        <router-link :to="{ name: 'user', params: { id: userId } }">
+          {{ userName }}
+        </router-link>
+      </li>
+
     </ul>
   </nav>
 </template>
@@ -43,8 +49,13 @@ export default {
   data() {
     return {
       perfumes: [],
-       busqueda: ""
+      busqueda: "",
+      userName: null,
+      userId: 0,
     }
+  },
+  watch: {
+
   },
   computed: {},
   methods: {
@@ -79,6 +90,11 @@ export default {
     } catch (error) {
       console.error(error);
     }
+
+
+
+    this.userName = localStorage.getItem('user_email');
+    this.userId = localStorage.getItem('user_id');
   },
 }
 </script>

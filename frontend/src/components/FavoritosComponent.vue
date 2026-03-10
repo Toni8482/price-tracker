@@ -19,7 +19,7 @@
   </table>
 </template>
 <script>
-
+import {getFavoritosUser } from "../services/api";
 
 
 export default {
@@ -29,38 +29,27 @@ export default {
   },
   data() {
     return {
-      perfumesFavoritos: [
-        {
-          "marca": "Dior",
-          "nombre": "Sauvage",
-          "concentracion": "Eau de Parfum",
-          "tienda": "Sephora"
-        },
-        {
-          "marca": "Chanel",
-          "nombre": "Bleu de Chanel",
-          "concentracion": "Parfum",
-          "tienda": "El Corte Inglés"
-        },
-        {
-          "marca": "Yves Saint Laurent",
-          "nombre": "La Nuit de L'Homme",
-          "concentracion": "Eau de Toilette",
-          "tienda": "Douglas"
-        },
-        {
-          "marca": "Armani",
-          "nombre": "Acqua di Giò",
-          "concentracion": "Eau de Parfum",
-          "tienda": "Primor"
-        }
-      ]
+      perfumesFavoritos:null
     }
+  },
+   watch: {
+  
+    "$route.params.id": {
+      immediate: true,
+      handler(newId) {
+        this.cargarUsuario(newId);
+
+      },
+    },
+   
   },
   computed: {},
   methods: {
 
-
+ async cargarUsuario(id){
+        this.perfumesFavoritos = await getFavoritosUser (id);
+          
+    }
 
   },
   async mounted() {

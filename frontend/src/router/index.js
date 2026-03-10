@@ -7,7 +7,8 @@ import ListaUsers from "@/components/ListUsersComponent.vue"
 import Login from "@/components/LoginComponent.vue"
 import ListaFavoritos from "@/components/FavoritosComponent.vue"
 import FormUser from "@/components/FormUserComponent.vue"
-
+import DetalleUsuario from "@/components/DetallesUsuarios.vue";
+import { authMiddleware } from '../middleware/auth.js';
 
 const routes = [
   {
@@ -36,14 +37,21 @@ const routes = [
     name: "login",
     component: Login,
   }, {
-    path: "/favoritos",
+    path: "/favoritos/:id",
     name: "lista-favoritos",
     component: ListaFavoritos,
+  //  beforeEnter: authMiddleware,
   },
   {
     path: "/form-user",
     name: "form-user",
     component: FormUser,
+  },
+   {
+    path: "/user/:id",
+    name: "user",
+    component: DetalleUsuario,
+   // beforeEnter: authMiddleware,
   },
 ];
 
