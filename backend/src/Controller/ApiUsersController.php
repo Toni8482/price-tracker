@@ -31,7 +31,7 @@ final class ApiUsersController extends AbstractController
     #[Route('/api/favorites', name: 'app_api_favorites', methods: ['POST'])]
     public function favorites(Request $request, SaveBdUsers $SaveBdUsers): JsonResponse
     {
-
+       
         $data = json_decode($request->getContent(), true);
 
         $SaveBdUsers->saveFavorites($data);
@@ -50,7 +50,7 @@ final class ApiUsersController extends AbstractController
     {
         return $this->json($request->headers->all());
     }
-    
+
 
     #[Route('/api/me', name: 'api_me', methods: ['GET'])]
     public function me(#[CurrentUser] ?User $user): JsonResponse

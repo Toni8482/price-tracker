@@ -43,14 +43,14 @@ class SaveBdUsers
 
     public function saveFavorites(array $favorites,)
     {
-        foreach ($favorites as $favorite) {
+       
 
 
-            $user = $this->userRepository->find($favorite['user_id']);
-            $perfume = $this->PerfumesRepository->find($favorite['perfume_id']);
+            $user = $this->userRepository->find($favorites['user_id']);
+            $perfume = $this->PerfumesRepository->find($favorites['perfume_id']);
             $user->addPerfume($perfume);
 
             $this->em->flush();
-        }
+
     }
 }
