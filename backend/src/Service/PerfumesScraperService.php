@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\Service\SaveBdPerfumes;
+use App\Service\PerfumesServices;
 use App\Service\PeticionesUrlsService;
 use App\Service\FormatterService;
 
@@ -10,7 +10,7 @@ use App\Service\FormatterService;
 class PerfumesScraperService
 {
     public function __construct(
-        private SaveBdPerfumes $saveBdPerfumes,
+        private PerfumesServices $perfumesServices,
         private PeticionesUrlsService $peticionesUrlsService,
         private FormatterService $formatterService,
 
@@ -52,7 +52,7 @@ class PerfumesScraperService
                 }
                 $this->formatterService->consoleExitFormat($allResults);
 
-                $this->saveBdPerfumes->savePerfumes($allResults, $webSites[$i]['base_url'], $webSites[$i]['publico']);
+                $this->perfumesServices->savePerfumes($allResults, $webSites[$i]['base_url'], $webSites[$i]['publico']);
             }
             echo "❤️ Cantida de productos: " . $contadorProductos . " unidades" . PHP_EOL;
         } catch (\Exception $e) {

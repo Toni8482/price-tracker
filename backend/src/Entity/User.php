@@ -142,4 +142,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+      public function deletePerfume(Perfumes $perfume): self
+    {
+        if ($this->perfumes->contains($perfume)) {
+             $this->perfumes->removeElement($perfume);
+        }
+
+        return $this;
+    }
+
 }
