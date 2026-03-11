@@ -288,6 +288,14 @@
         <argument>Scrapea perfumes y los guarda en la base de datos</argument>
       </call>
     </service>
+    <service id="App\Controller\ApiFavoritesController" class="App\Controller\ApiFavoritesController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="routing.controller"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.TJNRSaV.App\Controller\ApiFavoritesController"/>
+      </call>
+    </service>
     <service id="App\Controller\ApiPerfumesController" class="App\Controller\ApiPerfumesController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="routing.controller"/>
@@ -354,17 +362,17 @@
     </service>
     <service id="App\Service\FormatterService" class="App\Service\FormatterService" autowire="true" autoconfigure="true"/>
     <service id="App\Service\PerfumesScraperService" class="App\Service\PerfumesScraperService" autowire="true" autoconfigure="true">
-      <argument type="service" id="App\Service\SaveBdPerfumes"/>
+      <argument type="service" id="App\Service\PerfumesServices"/>
       <argument type="service" id="App\Service\PeticionesUrlsService"/>
       <argument type="service" id="App\Service\FormatterService"/>
     </service>
-    <service id="App\Service\PeticionesUrlsService" class="App\Service\PeticionesUrlsService" autowire="true" autoconfigure="true"/>
-    <service id="App\Service\SaveBdPerfumes" class="App\Service\SaveBdPerfumes" autowire="true" autoconfigure="true">
+    <service id="App\Service\PerfumesServices" class="App\Service\PerfumesServices" autowire="true" autoconfigure="true">
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
       <argument type="service" id="App\Repository\StoresRepository"/>
       <argument type="service" id="App\Repository\TargetPublicRepository"/>
     </service>
-    <service id="App\Service\SaveBdUsers" class="App\Service\SaveBdUsers" autowire="true" autoconfigure="true">
+    <service id="App\Service\PeticionesUrlsService" class="App\Service\PeticionesUrlsService" autowire="true" autoconfigure="true"/>
+    <service id="App\Service\UserService" class="App\Service\UserService" autowire="true" autoconfigure="true">
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
       <argument type="service" id="App\Repository\UserRepository"/>
       <argument type="service" id="App\Repository\PerfumesRepository"/>
@@ -393,7 +401,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" priority="-50">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.GKpyqZZ"/>
+      <argument type="service" id=".service_locator.U0Vxkw5"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" priority="-100">controller.argument_value_resolver</tag>
@@ -1772,7 +1780,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.GKpyqZZ"/>
+      <argument type="service" id=".service_locator.U0Vxkw5"/>
     </service>
     <service id="routing.resolver" class="Symfony\Component\Config\Loader\LoaderResolver">
       <call method="addLoader">
@@ -1846,6 +1854,7 @@
     <service id="routing.loader.attribute.services" class="Symfony\Component\Routing\Loader\AttributeServicesLoader">
       <tag name="routing.loader" priority="-10"/>
       <argument type="collection">
+        <argument>App\Controller\ApiFavoritesController</argument>
         <argument>App\Controller\ApiPerfumesController</argument>
         <argument>App\Controller\ApiUsersController</argument>
         <argument>App\Controller\AuthController</argument>
@@ -4199,6 +4208,10 @@
     <service id=".instanceof.Symfony\Component\Console\Command\Command.0.App\Command\ScrapePerfumesCommand" class="App\Command\ScrapePerfumesCommand" autowire="true" abstract="true"/>
     <service id=".instanceof.App\Command\ScrapePerfumesCommand.0.App\Command\ScrapePerfumesCommand" class="App\Command\ScrapePerfumesCommand" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Command\ScrapePerfumesCommand" class="App\Command\ScrapePerfumesCommand" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ApiFavoritesController" class="App\Controller\ApiFavoritesController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ApiFavoritesController" class="App\Controller\ApiFavoritesController" autowire="true" abstract="true"/>
+    <service id=".instanceof.App\Controller\ApiFavoritesController.0.App\Controller\ApiFavoritesController" class="App\Controller\ApiFavoritesController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\ApiFavoritesController" class="App\Controller\ApiFavoritesController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ApiPerfumesController" class="App\Controller\ApiPerfumesController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ApiPerfumesController" class="App\Controller\ApiPerfumesController" autowire="true" abstract="true"/>
     <service id=".instanceof.App\Controller\ApiPerfumesController.0.App\Controller\ApiPerfumesController" class="App\Controller\ApiPerfumesController" autowire="true" abstract="true"/>
@@ -4897,6 +4910,37 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.1vYpZ1B" method="withContext"/>
     </service>
+    <service id=".service_locator.fX4VlkY" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="perfume" type="service_closure" id=".errored..service_locator.fX4VlkY.App\Entity\Perfumes"/>
+        <argument key="userService" type="service_closure" id="App\Service\UserService"/>
+      </argument>
+    </service>
+    <service id=".service_locator.fX4VlkY.App\Controller\ApiFavoritesController::favorites()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\ApiFavoritesController::favorites()"/>
+      <argument>App\Controller\ApiFavoritesController::favorites()</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.fX4VlkY" method="withContext"/>
+    </service>
+    <service id=".service_locator.fX4VlkY.App\Controller\ApiFavoritesController::deleteFavorites()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\ApiFavoritesController::deleteFavorites()"/>
+      <argument>App\Controller\ApiFavoritesController::deleteFavorites()</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.fX4VlkY" method="withContext"/>
+    </service>
+    <service id=".service_locator.2ccF7sE" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="precioContenidoRepository" type="service_closure" id="App\Repository\PrecioContenidoRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.2ccF7sE.App\Controller\ApiFavoritesController::favoritesUsers()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\ApiFavoritesController::favoritesUsers()"/>
+      <argument>App\Controller\ApiFavoritesController::favoritesUsers()</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.2ccF7sE" method="withContext"/>
+    </service>
     <service id=".service_locator.2KKAeja" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -4916,23 +4960,17 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.2KKAeja" method="withContext"/>
     </service>
-    <service id=".service_locator.6xt1_E9" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.j83KHed" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="SaveBdUsers" type="service_closure" id="App\Service\SaveBdUsers"/>
+        <argument key="userService" type="service_closure" id="App\Service\UserService"/>
       </argument>
     </service>
-    <service id=".service_locator.6xt1_E9.App\Controller\ApiUsersController::index()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.j83KHed.App\Controller\ApiUsersController::index()" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\ApiUsersController::index()"/>
       <argument>App\Controller\ApiUsersController::index()</argument>
       <argument type="service" id="service_container"/>
-      <factory service=".service_locator.6xt1_E9" method="withContext"/>
-    </service>
-    <service id=".service_locator.6xt1_E9.App\Controller\ApiUsersController::favorites()" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ApiUsersController::favorites()"/>
-      <argument>App\Controller\ApiUsersController::favorites()</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.6xt1_E9" method="withContext"/>
+      <factory service=".service_locator.j83KHed" method="withContext"/>
     </service>
     <service id=".service_locator.ipVZJsZ" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
@@ -4944,23 +4982,57 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.ipVZJsZ" method="withContext"/>
     </service>
-    <service id=".service_locator.GKpyqZZ" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.PtMLGj3" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="userRepository" type="service_closure" id="App\Repository\UserRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.PtMLGj3.App\Controller\ApiUsersController::users()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\ApiUsersController::users()"/>
+      <argument>App\Controller\ApiUsersController::users()</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.PtMLGj3" method="withContext"/>
+    </service>
+    <service id=".service_locator.j83KHed.App\Controller\ApiUsersController::editUser()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\ApiUsersController::editUser()"/>
+      <argument>App\Controller\ApiUsersController::editUser()</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.j83KHed" method="withContext"/>
+    </service>
+    <service id=".service_locator.j83KHed.App\Controller\ApiUsersController::deleteUser()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\ApiUsersController::deleteUser()"/>
+      <argument>App\Controller\ApiUsersController::deleteUser()</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.j83KHed" method="withContext"/>
+    </service>
+    <service id=".service_locator.U0Vxkw5" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.1vYpZ1B.kernel::registerContainerConfiguration()"/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.1vYpZ1B.kernel::registerContainerConfiguration()"/>
         <argument key="kernel::loadRoutes" type="service_closure" id=".service_locator.1vYpZ1B.kernel::loadRoutes()"/>
         <argument key="App\Kernel::loadRoutes" type="service_closure" id=".service_locator.1vYpZ1B.kernel::loadRoutes()"/>
+        <argument key="App\Controller\ApiFavoritesController::favorites" type="service_closure" id=".service_locator.fX4VlkY.App\Controller\ApiFavoritesController::favorites()"/>
+        <argument key="App\Controller\ApiFavoritesController::deleteFavorites" type="service_closure" id=".service_locator.fX4VlkY.App\Controller\ApiFavoritesController::deleteFavorites()"/>
+        <argument key="App\Controller\ApiFavoritesController::favoritesUsers" type="service_closure" id=".service_locator.2ccF7sE.App\Controller\ApiFavoritesController::favoritesUsers()"/>
         <argument key="App\Controller\ApiPerfumesController::index" type="service_closure" id=".service_locator.2KKAeja.App\Controller\ApiPerfumesController::index()"/>
         <argument key="App\Controller\ApiPerfumesController::show" type="service_closure" id=".service_locator.2KKAeja.App\Controller\ApiPerfumesController::show()"/>
-        <argument key="App\Controller\ApiUsersController::index" type="service_closure" id=".service_locator.6xt1_E9.App\Controller\ApiUsersController::index()"/>
-        <argument key="App\Controller\ApiUsersController::favorites" type="service_closure" id=".service_locator.6xt1_E9.App\Controller\ApiUsersController::favorites()"/>
+        <argument key="App\Controller\ApiUsersController::index" type="service_closure" id=".service_locator.j83KHed.App\Controller\ApiUsersController::index()"/>
+        <argument key="App\Controller\ApiUsersController::users" type="service_closure" id=".service_locator.PtMLGj3.App\Controller\ApiUsersController::users()"/>
+        <argument key="App\Controller\ApiUsersController::editUser" type="service_closure" id=".service_locator.j83KHed.App\Controller\ApiUsersController::editUser()"/>
+        <argument key="App\Controller\ApiUsersController::deleteUser" type="service_closure" id=".service_locator.j83KHed.App\Controller\ApiUsersController::deleteUser()"/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.1vYpZ1B.kernel::registerContainerConfiguration()"/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.1vYpZ1B.kernel::loadRoutes()"/>
+        <argument key="App\Controller\ApiFavoritesController:favorites" type="service_closure" id=".service_locator.fX4VlkY.App\Controller\ApiFavoritesController::favorites()"/>
+        <argument key="App\Controller\ApiFavoritesController:deleteFavorites" type="service_closure" id=".service_locator.fX4VlkY.App\Controller\ApiFavoritesController::deleteFavorites()"/>
+        <argument key="App\Controller\ApiFavoritesController:favoritesUsers" type="service_closure" id=".service_locator.2ccF7sE.App\Controller\ApiFavoritesController::favoritesUsers()"/>
         <argument key="App\Controller\ApiPerfumesController:index" type="service_closure" id=".service_locator.2KKAeja.App\Controller\ApiPerfumesController::index()"/>
         <argument key="App\Controller\ApiPerfumesController:show" type="service_closure" id=".service_locator.2KKAeja.App\Controller\ApiPerfumesController::show()"/>
-        <argument key="App\Controller\ApiUsersController:index" type="service_closure" id=".service_locator.6xt1_E9.App\Controller\ApiUsersController::index()"/>
-        <argument key="App\Controller\ApiUsersController:favorites" type="service_closure" id=".service_locator.6xt1_E9.App\Controller\ApiUsersController::favorites()"/>
+        <argument key="App\Controller\ApiUsersController:index" type="service_closure" id=".service_locator.j83KHed.App\Controller\ApiUsersController::index()"/>
+        <argument key="App\Controller\ApiUsersController:users" type="service_closure" id=".service_locator.PtMLGj3.App\Controller\ApiUsersController::users()"/>
+        <argument key="App\Controller\ApiUsersController:editUser" type="service_closure" id=".service_locator.j83KHed.App\Controller\ApiUsersController::editUser()"/>
+        <argument key="App\Controller\ApiUsersController:deleteUser" type="service_closure" id=".service_locator.j83KHed.App\Controller\ApiUsersController::deleteUser()"/>
       </argument>
     </service>
     <service id=".service_locator.nqEKT7G" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -5126,6 +5198,12 @@
         <argument key="parameter_bag" type="service_closure" id="parameter_bag" on-invalid="ignore"/>
       </argument>
     </service>
+    <service id=".service_locator.TJNRSaV.App\Controller\ApiFavoritesController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\ApiFavoritesController"/>
+      <argument>App\Controller\ApiFavoritesController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.TJNRSaV" method="withContext"/>
+    </service>
     <service id=".service_locator.TJNRSaV.App\Controller\ApiPerfumesController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\ApiPerfumesController"/>
       <argument>App\Controller\ApiPerfumesController</argument>
@@ -5282,6 +5360,7 @@
       <call method="allowControllers">
         <argument type="collection">
           <argument>App\Kernel</argument>
+          <argument>App\Controller\ApiFavoritesController</argument>
           <argument>App\Controller\ApiPerfumesController</argument>
           <argument>App\Controller\ApiUsersController</argument>
           <argument>App\Controller\AuthController</argument>
@@ -5339,6 +5418,9 @@
     </service>
     <service id=".errored..service_locator.1vYpZ1B.Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface">
       <tag name="container.error" message="Cannot autowire service &quot;.service_locator.1vYpZ1B&quot;: it needs an instance of &quot;Symfony\Component\Config\Loader\LoaderInterface&quot; but this type has been excluded from autowiring."/>
+    </service>
+    <service id=".errored..service_locator.fX4VlkY.App\Entity\Perfumes" class="App\Entity\Perfumes">
+      <tag name="container.error" message="Cannot autowire service &quot;.service_locator.fX4VlkY&quot;: it needs an instance of &quot;App\Entity\Perfumes&quot; but this type has been excluded because it's a Doctrine entity."/>
     </service>
     <service id=".App\Command\ScrapePerfumesCommand.lazy" class="Symfony\Component\Console\Command\LazyCommand">
       <argument>app:scrape-perfumes</argument>
@@ -6192,7 +6274,7 @@
     <service id="Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface" alias="lexik_jwt_authentication.encoder.lcobucci"/>
     <service id="lexik_jwt_authentication.key_loader" alias="lexik_jwt_authentication.key_loader.raw" public="true"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.ryAvHi4" public="true"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.GKpyqZZ"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.U0Vxkw5"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.W55Po6X"/>
     <service id="Psr\Log\LoggerInterface" alias="logger"/>
     <service id="http_client" alias="http_client.uri_template"/>
@@ -6208,8 +6290,11 @@
     <service id="security.event_dispatcher.main" alias="debug.security.event_dispatcher.main"/>
     <service id="doctrine.orm.default_metadata_driver" alias=".doctrine.orm.default_metadata_driver"/>
     <service id=".service_locator.c0wzfI4" alias=".service_locator.1vYpZ1B"/>
+    <service id=".service_locator.CyrQ1Xy" alias=".service_locator.fX4VlkY"/>
+    <service id=".service_locator.P90.uKM" alias=".service_locator.2ccF7sE"/>
     <service id=".service_locator.BF9Zx1B" alias=".service_locator.2KKAeja"/>
-    <service id=".service_locator.NZN4A0j" alias=".service_locator.6xt1_E9"/>
+    <service id=".service_locator.kA3Zayj" alias=".service_locator.j83KHed"/>
+    <service id=".service_locator.yZty4YD" alias=".service_locator.PtMLGj3"/>
     <service id=".service_locator.rNoQPCZ" alias=".service_locator.TJNRSaV"/>
   </services>
 </container>
