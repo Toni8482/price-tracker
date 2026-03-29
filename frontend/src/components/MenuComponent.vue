@@ -4,36 +4,49 @@
       <li><router-link to="/">HOME</router-link></li>
       <div>
         <form @submit.prevent="buscarPerfume">
-          <input type="search" v-model="busqueda" placeholder="Buscar..." list="lista-perfumes" />
+          <div class="busqueda">
+            <input type="search" v-model="busqueda" placeholder="Buscar..." list="lista-perfumes" />
 
-          <!-- DATALIST -->
-          <datalist id="lista-perfumes">
-            <option v-for="perfume in perfumes" :key="perfume.id" :value="perfume.nombre" />
-          </datalist>
-          <button type="submit" class="btn_buscar">
-            <span>
-              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path
-                  d="M22.658,21.28,17.9,16.522a9.558,9.558,0,1,0-1.424,1.4l4.768,4.768a1,1,0,1,0,1.414-1.414ZM3.049,10.513a7.5,7.5,0,1,1,7.5,7.5A7.509,7.509,0,0,1,3.049,10.513Z">
-                </path>
-              </svg>
-            </span>
-          </button>
+            <!-- DATALIST -->
+            <datalist id="lista-perfumes">
+              <option v-for="perfume in perfumes" :key="perfume.id" :value="perfume.nombre" />
+            </datalist>
+            <button type="submit" class="btn_buscar">
+              <span>
+                🔍
+              
+              </span>
+            </button>
+          </div>
         </form>
       </div>
       <li><router-link to="/perfumes">PERFUMES</router-link></li>
-      <li><router-link  :to="{ name: 'lista-favoritos', params: { id: userId } }">
-        🤍
-      </router-link></li>
-      <li><router-link to="/login">LOGIN</router-link></li>
-      <li><router-link to="/users">USERS</router-link></li>
-      <li><router-link to="/form-user">FORM USER</router-link></li>
-      <li v-if="userName">
-        <router-link :to="{ name: 'user', params: { id: userId } }">
-          {{ userName }}
-        </router-link>
-      </li>
 
+
+
+      <li><router-link to="/form-user">REGISTER</router-link></li>
+      <div class="div-header" v-if="user.userName && user.userId">
+        <li><router-link to="/users">USERS</router-link></li>
+        <li><router-link :to="{ name: 'lista-favoritos', params: { id: user.userId } }">
+            🤍
+          </router-link></li>
+        <li>
+
+          <router-link :to="{ name: 'user', params: { id: user.userId } }">
+
+
+            {{ user.userName }}
+          </router-link>
+        </li>
+        <li> <button @click="logout">Logout</button></li>
+
+      </div>
+      <div v-else>
+        <li><router-link to="/login">LOGIN</router-link></li>
+      </div>
+      <li>
+        <button @click="toggleTheme">Cambiar tema</button>
+      </li>
     </ul>
   </nav>
 </template>
@@ -44,21 +57,28 @@ import { getAllPerfumes } from "../services/api";
 export default {
   name: "Menu",
   props: {
-
+    user: Object
   },
   data() {
     return {
       perfumes: [],
       busqueda: "",
-      userName: null,
-      userId: 0,
+
+
     }
   },
-  watch: {
 
-  },
-  computed: {},
+
   methods: {
+    logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user_email');
+      localStorage.removeItem('user_id');
+
+      this.$router.push('/');
+
+
+    },
 
     buscarPerfume() {
       if (!this.busqueda) return
@@ -70,6 +90,16 @@ export default {
       })
 
       this.busqueda = ""
+    }, toggleTheme() {
+      this.isDark = !this.isDark;
+      const root = document.documentElement;
+      if (this.isDark) {
+        root.classList.add('dark-theme');
+        root.classList.remove('light-theme');
+      } else {
+        root.classList.add('light-theme');
+        root.classList.remove('dark-theme');
+      }
     }
 
 
@@ -93,18 +123,29 @@ export default {
 
 
 
-    this.userName = localStorage.getItem('user_email');
-    this.userId = localStorage.getItem('user_id');
+
   },
 }
 </script>
 
 <style scoped>
+.busqueda {
+  display: flex;
+}
+
+.div-header {
+  display: flex;
+}
+
 /* Contenedor del menú */
 .menu {
-  background-color: blueviolet;
+  background: var(--menu-bg);
+  backdrop-filter: blur(10px);
   padding: 10px 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--menu-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 /* Lista horizontal */
@@ -115,40 +156,46 @@ export default {
   padding: 0;
   list-style: none;
   justify-content: center;
-  /* Centrar los enlaces */
   align-items: center;
 }
 
-/* Cada enlace */
-.menu li {}
-
-/* Estilo de router-link */
+/* Estilo de enlaces */
 .menu a {
-  color: white;
+  color: var(--menu-link);
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 500;
   padding: 8px 16px;
   border-radius: 8px;
-  transition: all 0.3s ease;
-  background-color: rgba(255, 255, 255, 0.1);
+  transition: all 0.25s ease;
 }
 
-/* Hover y estado activo */
+/* Hover */
 .menu a:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-  transform: scale(1.05);
+  background: var(--menu-link-hover-bg);
+  color: var(--menu-link-hover-color);
+  transform: translateY(-2px);
 }
 
-/* Link activo (resalta la página actual) */
+/* Link activo */
 .menu a.router-link-active {
-  background-color: white;
-  color: blueviolet;
+  background: var(--menu-link-active-bg);
+  color: var(--menu-link-active-color);
+  box-shadow: 0 0 10px rgba(124, 58, 237, 0.6);
 }
 
+/* Botón buscar */
 .btn_buscar {
-
+ 
   width: 24px;
   height: 24px;
   cursor: pointer;
+  filter: var(--btn-icon-filter);
+  opacity: 0.8;
+  transition: opacity 0.2s;
+ 
+}
+
+.btn_buscar:hover {
+  opacity: 1;
 }
 </style>

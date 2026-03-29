@@ -168,7 +168,7 @@ export default {
 
 
 
-      await addFavorito(token, userId, id);
+      await addFavorito(token, id);
       alert(`Asignado perfume con id: ${id} a favoritos del usuario con ID: ${userId} y con email: ${userEmail}`);
     }
   },
@@ -185,7 +185,9 @@ export default {
 </script>
 
 <style scoped>
-/* Contenedor principal */
+/* ================================
+   DETALLES PERFUMES
+================================ */
 .detalles-libro {
   padding: 20px;
   display: flex;
@@ -194,7 +196,7 @@ export default {
 }
 
 h1 {
-  color: #4b0082;
+  color: var(--form-text);
   margin-bottom: 30px;
   text-align: center;
   font-family: 'Segoe UI', sans-serif;
@@ -204,36 +206,37 @@ h1 {
 .card {
   display: flex;
   flex-direction: row;
-  /* Imagen izquierda, info derecha */
-  background: #a45ed8;
+  background: var(--card-bg);
+  color: var(--card-text);
+  backdrop-filter: blur(10px);
   padding: 20px;
   border-radius: 15px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
   margin: 30px 0 10px;
-  /* espacio abajo para la descripción */
   width: 90%;
   max-width: 900px;
   gap: 20px;
   align-items: flex-start;
+  border: 1px solid var(--table-border);
 }
 
-/* Imagen del perfume a la izquierda */
+/* Imagen del perfume */
 .imagen_card {
   flex: 0 0 40%;
-  /* ocupa 40% del ancho */
   height: 300px;
   border-radius: 12px;
   overflow: hidden;
-  border: 2px solid #fff;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--card-bg);
+  border: 1px solid var(--table-border);
 }
 
 .imagen_card img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 12px;
   transition: transform 0.3s ease;
 }
@@ -248,10 +251,9 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  color: #fff;
+  color: var(--card-text);
 }
 
-/* Info items */
 .info p {
   margin: 3px 0;
   font-size: 1rem;
@@ -274,8 +276,8 @@ h1 {
   display: flex;
   align-items: center;
   gap: 5px;
-  background: #fff;
-  color: #4b0082;
+  background: var(--pill-bg);
+  color: var(--pill-text);
   padding: 6px 12px;
   border-radius: 20px;
   cursor: pointer;
@@ -284,7 +286,7 @@ h1 {
 }
 
 .size-options label:hover {
-  background: #f0e6ff;
+  background: var(--pill-hover);
 }
 
 .size-options input[type="radio"] {
@@ -292,7 +294,7 @@ h1 {
   -webkit-appearance: none;
   width: 18px;
   height: 18px;
-  border: 2px solid #4b0082;
+  border: 2px solid var(--pill-text);
   border-radius: 50%;
   cursor: pointer;
   position: relative;
@@ -303,7 +305,7 @@ h1 {
   display: block;
   width: 10px;
   height: 10px;
-  background: #4b0082;
+  background: var(--radio-checked);
   border-radius: 50%;
   margin: 2px;
 }
@@ -311,45 +313,43 @@ h1 {
 /* Botones */
 button {
   margin: 5px 0;
-  background-color: #4b0082;
+  background: var(--primary-color);
   color: white;
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
-  transition: background 0.3s, transform 0.2s;
+  transition: all 0.2s;
 }
 
 button:hover {
-  background-color: #6a1aa6;
+  background: var(--primary-hover);
   transform: scale(1.05);
 }
 
 /* Descripción debajo de la card */
-/* Contenedor colapsado inicialmente */
 .descripcion {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.5s ease, padding 0.3s ease;
-  background: #f8f0ff;
-  color: #201b1b;
+  background: var(--desc-bg);
+  color: var(--desc-text);
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
   padding: 0 20px;
   margin-top: 10px;
+  border: 1px solid var(--table-border);
 }
 
-/* Cuando está abierto */
 .descripcion.abierto {
   max-height: 500px;
-  /* suficiente para tu contenido */
   padding: 20px;
 }
 
 /* Botón toggle */
 .toggle-desc {
-  background-color: #4b0082;
+  background: var(--primary-color);
   color: white;
   border: none;
   padding: 8px 20px;
@@ -357,11 +357,11 @@ button:hover {
   cursor: pointer;
   font-weight: bold;
   margin-bottom: 10px;
-  transition: background 0.3s, transform 0.2s;
+  transition: all 0.2s;
 }
 
 .toggle-desc:hover {
-  background-color: #6a1aa6;
+  background: var(--primary-hover);
   transform: scale(1.05);
 }
 
@@ -377,17 +377,25 @@ table {
   border-collapse: collapse;
   width: 100%;
   text-align: center;
+  background: var(--table-bg);
+  color: var(--card-text);
+  border: 1px solid var(--table-border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
 }
 
 th {
-  background-color: #f5deb3;
+  background: var(--table-header-bg);
+  color: var(--table-header-text);
   font-size: 1rem;
   padding: 10px;
+  border-bottom: 2px solid rgba(255,255,255,0.2);
 }
 
 td {
-  background-color: rgb(214, 213, 211);
-  border: solid 2px #fff;
+  background: var(--table-bg);
+  border: 1px solid var(--table-border);
   padding: 5px;
   max-width: 120px;
   vertical-align: middle;

@@ -1,0 +1,167 @@
+:root {
+  /* Tema claro por defecto */
+  --bg-color: #ffffff;
+  --text-color: #1f2937;
+  --bg-glow: #c4b5fd; /* color de glow en claro */
+
+  --menu-bg: rgba(255, 255, 255, 0.7); /* claro */
+  --menu-border: rgba(124, 58, 237, 0.3);
+  --menu-link: #1f2937;
+  --menu-link-hover-bg: rgba(124, 58, 237, 0.2);
+  --menu-link-hover-color: #7c3aed;
+  --menu-link-active-bg: #7c3aed;
+  --menu-link-active-color: white;
+
+  --card-border: rgba(124, 58, 237, 0.3);
+  --card-shadow: rgba(0, 0, 0, 0.2);
+  --card-title: #1f2937;
+  --card-marca: #7c3aed;
+  --card-price: #7c3aed;
+  --card-bg: #a45ed8;
+  --card-text: rgb(19, 19, 19);
+
+  --title-color: #1f2937;
+  --marca-color: #7c3aed;
+  --price-color: #7c3aed;
+  --select-bg: #7c3aed;
+  --select-color: white;
+
+  --banner-bg: linear-gradient(135deg, #a45ed8, #6a1aa6);
+  --banner-text: white;
+  --banner-input-bg: rgba(0, 0, 0, 0.05);
+  --banner-input-color: #1f2937;
+
+  --stat-bg: rgba(0, 0, 0, 0.05);
+  --stat-text: #1f2937;
+  --stat-title: #7c3aed;
+
+  --form-bg: rgba(0, 0, 0, 0.05);
+  --form-border: rgba(124, 58, 237, 0.3);
+  --form-text: #1f2937;
+  --form-label: #4b5563;
+  --form-input-bg: rgba(0, 0, 0, 0.08);
+  --form-input-text: #1f2937;
+  --form-input-placeholder: rgba(0, 0, 0, 0.5);
+
+  --btn-icon-filter: none;
+  --btn-bg: #7c3aed;
+  --btn-hover: #6d28d9;
+  --btn-text: white;
+
+  --table-bg: rgba(0, 0, 0, 0.05);
+  --table-text: #1f2937;
+  --table-row-odd: rgba(0, 0, 0, 0.02);
+  --table-row-even: rgba(0, 0, 0, 0.05);
+  --table-row-hover: rgba(124, 58, 237, 0.1);
+  --table-bg: rgba(255, 255, 255, 0.05);
+  --table-border: rgba(124, 58, 237, 0.3);
+  --table-header-bg: #7c3aed;
+  --table-header-text: white;
+
+  --primary-color: #4b0082;
+  --primary-hover: #6a1aa6;
+  --secondary-bg: #f8f0ff;
+  --secondary-text: #201b1b;
+
+  --pill-bg: white;
+  --pill-text: #4b0082;
+  --pill-hover: #f0e6ff;
+
+  --description-bg: #f8f0ff;
+  --description-text: #201b1b;
+
+  --primary-color: #7c3aed; /* botones y encabezados */
+  --radio-checked: #7c3aed;
+
+  --desc-bg: rgba(255, 255, 255, 0.05);
+  --desc-text: #000000;
+}
+
+.dark-theme {
+  --bg-color: #0f172a;
+  --text-color: #e5e7eb;
+
+  --title-color: #f1f5f9;
+  --marca-color: #c4b5fd;
+  --price-color: #a78bfa;
+
+  --select-bg: #7c3aed;
+  --select-color: white;
+
+  --menu-bg: rgba(15, 23, 42, 0.7); /* oscuro */
+  --menu-border: rgba(124, 58, 237, 0.3);
+  --menu-link: #e5e7eb;
+  --menu-link-hover-bg: rgba(124, 58, 237, 0.2);
+  --menu-link-hover-color: #c4b5fd;
+  --menu-link-active-bg: #7c3aed;
+  --menu-link-active-color: white;
+
+  --banner-bg: linear-gradient(135deg, #7c3aed, #4c1d95);
+  --banner-text: white;
+  --banner-input-bg: rgba(255, 255, 255, 0.1);
+  --banner-input-color: white;
+
+  --stat-bg: rgba(255, 255, 255, 0.05);
+  --stat-text: #e5e7eb;
+  --stat-title: #c4b5fd;
+
+  --card-border: rgba(124, 58, 237, 0.3);
+  --card-shadow: rgba(0, 0, 0, 0.4);
+  --card-title: #f1f5f9;
+  --card-marca: #c4b5fd;
+  --card-price: #a78bfa;
+  --card-bg: rgba(0, 0, 0, 0.7);
+  --card-text: #e5e7eb;
+
+  --form-bg: rgba(255, 255, 255, 0.05);
+  --form-border: rgba(124, 58, 237, 0.3);
+  --form-text: #e5e7eb;
+  --form-label: #cbd5f5;
+  --form-input-bg: rgba(255, 255, 255, 0.08);
+  --form-input-text: white;
+  --form-input-placeholder: rgba(255, 255, 255, 0.5);
+
+  --btn-icon-filter: brightness(0) invert(1);
+  --btn-bg: #7c3aed;
+  --btn-hover: #6d28d9;
+  --btn-text: white;
+
+  --table-bg: rgba(255, 255, 255, 0.05);
+  --table-text: #e5e7eb;
+  --table-border: rgba(124, 58, 237, 0.3);
+  --table-header-bg: #7c3aed;
+  --table-header-text: white;
+  --table-row-odd: rgba(255, 255, 255, 0.02);
+  --table-row-even: rgba(255, 255, 255, 0.05);
+  --table-row-hover: rgba(124, 58, 237, 0.1);
+  --table-bg: rgba(0, 0, 0, 0.5);
+  --table-border: rgba(124, 58, 237, 0.3);
+
+  --primary-color: #4b0082;
+  --primary-hover: #6a1aa6;
+  --secondary-bg: rgba(255, 255, 255, 0.05);
+  --secondary-text: #e5e7eb;
+
+  --pill-bg: #fff;
+  --pill-text: #4b0082;
+  --pill-hover: #f0e6ff;
+
+  --description-bg: rgba(255, 255, 255, 0.05);
+  --description-text: #e5e7eb;
+
+  --table-bg: rgba(255, 255, 255, 0.05);
+  --table-border: rgba(124, 58, 237, 0.3);
+  --table-header-bg: #7c3aed;
+  --table-header-text: white;
+
+  --primary-color: #7c3aed;
+  --primary-hover: #6d28d9;
+
+  --pill-bg: rgba(255, 255, 255, 0.1);
+  --pill-text: #c4b5fd;
+  --pill-hover: rgba(124, 58, 237, 0.2);
+
+  --radio-checked: #7c3aed;
+  --desc-bg: rgba(0, 0, 0, 0.6);
+  --desc-text: #e5e7eb;
+}
