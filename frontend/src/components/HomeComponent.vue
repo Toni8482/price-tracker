@@ -99,31 +99,29 @@ export default {
 </script>
 
 <style scoped>
-/* Reset simple */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-/* Contenedor Home */
+/* ================================
+   HOME
+================================ */
 .home {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  color: var(--text-color);
 }
 
-/* Banner */
+/* ================================
+   BANNER
+================================ */
 .banner {
   width: 90%;
   max-width: 900px;
-  background: linear-gradient(135deg, #a45ed8, #6a1aa6);
-  color: white;
+  background: var(--banner-bg);
+  color: var(--banner-text);
   border-radius: 20px;
   padding: 50px 20px;
   text-align: center;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
   margin-bottom: 30px;
 }
 
@@ -149,24 +147,32 @@ body {
   border-radius: 8px;
   border: none;
   min-width: 200px;
+  background: var(--banner-input-bg);
+  color: var(--banner-input-color);
+}
+
+.banner input::placeholder {
+  color: rgba(255,255,255,0.6);
 }
 
 .banner button {
   padding: 10px 20px;
   border-radius: 8px;
   border: none;
-  background-color: #fff;
-  color: #4b0082;
+  background: var(--btn-bg);
+  color: var(--banner-text);
   font-weight: bold;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .banner button:hover {
-  background-color: #f0e6ff;
+  background: var(--btn-hover);
 }
 
-/* Estadísticas */
+/* ================================
+   ESTADÍSTICAS
+================================ */
 .stats {
   display: flex;
   gap: 20px;
@@ -176,25 +182,30 @@ body {
 }
 
 .stat-card {
-  background-color: #f8f0ff;
-  color: #4b0082;
+  background: var(--stat-bg);
+  backdrop-filter: blur(10px);
+  color: var(--stat-text);
   padding: 20px;
   border-radius: 15px;
   text-align: center;
   width: 180px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
 }
 
 .stat-card h2 {
   font-size: 2rem;
   margin: 0;
+  color: var(--stat-title);
 }
 
 .stat-card p {
   margin: 5px 0 0 0;
 }
 
-/* Destacados */
+/* ================================
+   DESTACADOS / CARDS
+================================ */
 .destacados {
   width: 100%;
   max-width: 1000px;
@@ -202,7 +213,7 @@ body {
 }
 
 .destacados h2 {
-  color: #4b0082;
+  color: var(--stat-title);
   margin-bottom: 20px;
   text-align: center;
 }
@@ -215,15 +226,23 @@ body {
 }
 
 .card {
-  background: #f8f0ff;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
   border-radius: 15px;
   padding: 15px;
   text-align: center;
   width: 200px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 10px 25px var(--card-shadow);
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px var(--card-shadow);
 }
 
 .card img {
@@ -235,25 +254,25 @@ body {
 }
 
 .card .marca {
-  color: #af3030;
+  color: var(--card-marca);
   font-weight: bold;
 }
 
 .card .nombre {
   font-weight: bold;
-  color: #201b1b;
+  color: var(--card-title);
   margin: 5px 0;
 }
 
 .card .precio {
-  color: #4b0082;
+  color: var(--card-price);
   font-weight: bold;
 }
 
 .card button {
   margin-top: 10px;
-  background-color: #4b0082;
-  color: white;
+  background: var(--btn-bg);
+  color: var(--banner-text);
   border: none;
   padding: 8px 15px;
   border-radius: 8px;
@@ -262,12 +281,13 @@ body {
 }
 
 .card button:hover {
-  background-color: #6a1aa6;
+  background: var(--btn-hover);
 }
 
-/* Responsive */
+/* ================================
+   RESPONSIVE
+================================ */
 @media(max-width: 768px) {
-
   .cards,
   .stats {
     flex-direction: column;

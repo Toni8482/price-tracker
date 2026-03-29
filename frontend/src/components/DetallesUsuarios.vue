@@ -3,29 +3,29 @@
     <h1>Detalles de usuario</h1>
     <div v-if="usuario">
       <div class="card">
-       
+
 
         <div class="info">
-         
+
 
 
           <h2>{{ usuario.email }}</h2>
-          <p> {{usuario.password}}</p>
-          <p> {{usuario.id}}</p>
-
-
          
+          <p> {{ usuario.id }}</p>
+
+
+
 
 
         </div>
 
       </div>
-    
+
     </div>
     <div v-else>
       <p>Cargando...</p>
     </div>
-   
+
   </div>
 
 
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import {getUser } from "../services/api";
+import { editarUsuario, getUsers } from "../services/api";
 
 export default {
   name: "DetallesUsuario",
@@ -41,12 +41,13 @@ export default {
   data() {
     return {
       usuario: null,
-   
+      token: "",
+
     };
   },
 
   watch: {
-  
+
     "$route.params.id": {
       immediate: true,
       handler(newId) {
@@ -54,23 +55,28 @@ export default {
 
       },
     },
-   
+
   },
   computed: {
-   
+
   },
   methods: {
 
-   async cargarUsuario(id){
-        this.usuario = await getUser(id);
-          
+    async cargarUsuario(id) {
+      this.token = localStorage.getItem('token');
+      let usuarios = await getUsers(this.token);
+
+     this.usuario = usuarios.find(u => u.id == id);
+
     }
   }
 };
 </script>
 
 <style scoped>
-/* Contenedor principal */
+/* ================================
+   DETALLES PERFUMES
+================================ */
 .detalles-libro {
   padding: 20px;
   display: flex;
@@ -79,7 +85,7 @@ export default {
 }
 
 h1 {
-  color: #4b0082;
+  color: var(--primary-color);
   margin-bottom: 30px;
   text-align: center;
   font-family: 'Segoe UI', sans-serif;
@@ -89,27 +95,26 @@ h1 {
 .card {
   display: flex;
   flex-direction: row;
-  /* Imagen izquierda, info derecha */
-  background: #a45ed8;
+  background: var(--card-bg);
+  color: var(--card-text);
   padding: 20px;
   border-radius: 15px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
   margin: 30px 0 10px;
-  /* espacio abajo para la descripción */
   width: 90%;
   max-width: 900px;
   gap: 20px;
   align-items: flex-start;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 /* Imagen del perfume a la izquierda */
 .imagen_card {
   flex: 0 0 40%;
-  /* ocupa 40% del ancho */
   height: 300px;
   border-radius: 12px;
   overflow: hidden;
-  border: 2px solid #fff;
+  border: 2px solid var(--table-border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -133,10 +138,9 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  color: #fff;
+  color: var(--card-text);
 }
 
-/* Info items */
 .info p {
   margin: 3px 0;
   font-size: 1rem;
@@ -159,8 +163,8 @@ h1 {
   display: flex;
   align-items: center;
   gap: 5px;
-  background: #fff;
-  color: #4b0082;
+  background: var(--pill-bg);
+  color: var(--pill-text);
   padding: 6px 12px;
   border-radius: 20px;
   cursor: pointer;
@@ -169,7 +173,7 @@ h1 {
 }
 
 .size-options label:hover {
-  background: #f0e6ff;
+  background: var(--pill-hover);
 }
 
 .size-options input[type="radio"] {
@@ -177,7 +181,7 @@ h1 {
   -webkit-appearance: none;
   width: 18px;
   height: 18px;
-  border: 2px solid #4b0082;
+  border: 2px solid var(--primary-color);
   border-radius: 50%;
   cursor: pointer;
   position: relative;
@@ -188,7 +192,7 @@ h1 {
   display: block;
   width: 10px;
   height: 10px;
-  background: #4b0082;
+  background: var(--primary-color);
   border-radius: 50%;
   margin: 2px;
 }
@@ -196,8 +200,8 @@ h1 {
 /* Botones */
 button {
   margin: 5px 0;
-  background-color: #4b0082;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--card-text);
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
@@ -207,35 +211,32 @@ button {
 }
 
 button:hover {
-  background-color: #6a1aa6;
+  background-color: var(--primary-hover);
   transform: scale(1.05);
 }
 
 /* Descripción debajo de la card */
-/* Contenedor colapsado inicialmente */
 .descripcion {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.5s ease, padding 0.3s ease;
-  background: #f8f0ff;
-  color: #201b1b;
+  background: var(--description-bg);
+  color: var(--description-text);
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   padding: 0 20px;
   margin-top: 10px;
 }
 
-/* Cuando está abierto */
 .descripcion.abierto {
   max-height: 500px;
-  /* suficiente para tu contenido */
   padding: 20px;
 }
 
 /* Botón toggle */
 .toggle-desc {
-  background-color: #4b0082;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--card-text);
   border: none;
   padding: 8px 20px;
   border-radius: 8px;
@@ -246,7 +247,7 @@ button:hover {
 }
 
 .toggle-desc:hover {
-  background-color: #6a1aa6;
+  background-color: var(--primary-hover);
   transform: scale(1.05);
 }
 
@@ -262,17 +263,21 @@ table {
   border-collapse: collapse;
   width: 100%;
   text-align: center;
+  background: var(--table-bg);
+  color: var(--secondary-text);
+  border-radius: 12px;
 }
 
 th {
-  background-color: #f5deb3;
+  background-color: var(--table-header-bg);
+  color: var(--table-header-text);
   font-size: 1rem;
   padding: 10px;
 }
 
 td {
-  background-color: rgb(214, 213, 211);
-  border: solid 2px #fff;
+  background-color: var(--table-bg);
+  border: solid 2px var(--table-border);
   padding: 5px;
   max-width: 120px;
   vertical-align: middle;

@@ -1,8 +1,12 @@
 import axios from "axios";
 
-
 const BASE_URL = "http://localhost:8000/";
 const BASE_URL_JSON = "http://localhost:4000/";
+
+/**
+ *
+ * Todos los perfumes
+ */
 
 export async function getAllPerfumes() {
   try {
@@ -14,6 +18,11 @@ export async function getAllPerfumes() {
   }
 }
 
+/**
+ *
+ * Perfume buscado por su id
+ *
+ */
 export async function getPerfume(id) {
   try {
     const response = await axios.get(`${BASE_URL}api/perfumes/${id}`);
@@ -24,10 +33,13 @@ export async function getPerfume(id) {
   }
 }
 
+/**
+ * Crear usuario
+ */
 export async function CreateUser(user) {
   try {
     await axios
-      .post(`${BASE_URL_JSON}register`, {
+      .post(`${BASE_URL}users`, {
         email: user.email,
         password: user.password,
       })
@@ -44,6 +56,10 @@ export async function CreateUser(user) {
     throw error;
   }
 }
+
+/**
+ * Login de usuario
+ */
 export async function Login(user) {
   try {
     const response = await axios.post(`${BASE_URL}login`, {
@@ -55,10 +71,19 @@ export async function Login(user) {
     return response.data; // o return response si necesitas todo
   } catch (error) {
     console.error("Error en login:", error);
+    alert(error.response.data.message);
     throw error;
   }
 }
 
+
+
+
+
+
+/**
+ * Datos de usuario logueado
+ */
 export async function getMe(token) {
   try {
     const response = await axios.get(`${BASE_URL}api/me`, {
@@ -73,12 +98,14 @@ export async function getMe(token) {
   }
 }
 
-export async function addFavorito(token, user_id, perfume_id) {
+/**
+ * Añadir perfume favorito a usuario
+ */
+export async function addFavorito(token, perfume_id) {
   try {
     const response = await axios.post(
-      `${BASE_URL}api/favorites`,
+      `${BASE_URL}api/favorites/${perfume_id}`,
       {
-        user_id: user_id,
         perfume_id: perfume_id,
       },
       {
@@ -95,33 +122,96 @@ export async function addFavorito(token, user_id, perfume_id) {
   }
 }
 
-export async function getUser(id) {
+/**
+ *
+ *
+ * Lista de usuarios
+ *
+ */
+export async function getUsers(token) {
   try {
-    const response = await axios.get(`${BASE_URL_JSON}users/${id}`);
+    const response = await axios.get(`${BASE_URL}api/all/users`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+      console.log(response.data);
     return response.data;
+  
   } catch (error) {
-    console.error("Error al obtener el usuario:", error);
+    console.error("Error al obtener lista de usuarios:", error);
     throw error;
   }
 }
-export async function getFavoritosUser(idUser) {
+
+/**
+ * Listar perfumes favoritos de usuario
+ */
+export async function getFavoritosUser(token) {
   try {
-    const response = await axios.get(`${BASE_URL_JSON}favoritos`);
-    const perfumes = response.data;
-
-    const favoritosId = perfumes.filter(p => p.user_id == idUser);
-
-    const favoritos = await Promise.all(
-      favoritosId.map(async (element) => {
-        const response = await axios.get(`${BASE_URL_JSON}perfumes/${element.perfume_id}`);
+    const response = await axios.get(`${BASE_URL}api/favorites/users`,{
+      headers:{
+        Authorization: `Bearer ${token}`,
+      }
+    });
+   
         return response.data;
-      })
-    );
-
-    return favoritos;
-
+    
   } catch (error) {
     console.error("Error al obtener favoritos:", error);
+    throw error;
+  }
+}
+
+export async function editarUsuario(token, user) {
+  try {
+
+      const response = await axios.put(`${BASE_URL}api/user/${user.id}`,
+      {
+        password: user.password,
+        email: user.email,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },);
+    const data = response.data;
+    console.log(data);
+  } catch (error) {
+    console.error("Error al editar usuario:", error);
+    throw error;
+  }
+}
+
+export async function eliminarUsuario(token,id) {
+  try {
+     const response = await axios.delete(`${BASE_URL}api/user/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },);
+    const data = response.data;
+    console.log(data);
+  } catch (error) {
+    console.error("Error al eliminar usuario:", error);
+    throw error;
+  }
+}
+
+export async function eliminarFavorito(token,id) {
+  try {
+         const response = await axios.delete(`${BASE_URL}api/favorites/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },);
+    const data = response.data;
+    console.log(data);
+  } catch (error) {
+    console.error("Error al eliminar favorito:", error);
     throw error;
   }
 }

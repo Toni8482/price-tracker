@@ -47,6 +47,12 @@ const routes = [
     name: "form-user",
     component: FormUser,
   },
+
+  {
+    path: "/form-user/:id",
+    name: "edit-user",
+    component: FormUser,
+  },
    {
     path: "/user/:id",
     name: "user",

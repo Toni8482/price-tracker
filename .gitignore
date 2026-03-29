@@ -2,12 +2,12 @@
 # Backend Symfony
 # ============================================
 ###> symfony/framework-bundle ###
-/.env.local
-/.env.*.local
-/config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
-/var/
-/vendor/
+backend/.env.local
+backend/.env.*.local
+backend/config/secrets/prod/prod.decrypt.private.php
+backend/public/bundles/
+backend/var/
+backend/vendor/
 ###< symfony/framework-bundle ###
 
 # Logs
