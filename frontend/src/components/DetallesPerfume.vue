@@ -10,7 +10,7 @@
         <div class="info">
           <div>
             <img :src="perfume.store_logo">
-            <button @click="asignarPerfume(perfume.id)">🤍</button>
+          
           </div>
 
 
@@ -25,7 +25,7 @@
             {{ precioContenido.contenido }}
             {{ precioContenido.precio }}
 
-
+              <button @click="asignarPerfume(precioContenido.id_contenido)">🤍</button>
           </label>
 
 
@@ -166,7 +166,7 @@ export default {
       const userId = parseInt(localStorage.getItem("user_id")) ;
       const userEmail = localStorage.getItem("user_email");
 
-
+      console.log("Precio contenido"+JSON.stringify(id));
 
       await addFavorito(token, id);
       alert(`Asignado perfume con id: ${id} a favoritos del usuario con ID: ${userId} y con email: ${userEmail}`);

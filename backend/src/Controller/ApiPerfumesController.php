@@ -32,6 +32,7 @@ final class ApiPerfumesController extends AbstractController
             foreach ($precioContenido as $preCont) {
 
                 $result[] = [
+                    "id_contenido" => $preCont->getId(),
                     "precio" => $preCont->getPrecio(),
                     "contenido" => $preCont->getContenido(),
                     "image_url_precio_contenido" => $preCont->getImageUrl(),
@@ -78,6 +79,7 @@ final class ApiPerfumesController extends AbstractController
         foreach ($precioContenido as $preCont) {
 
             $result[] = [
+                "id_contenido" => $preCont->getId(),
                 "precio" => $preCont->getPrecio(),
                 "contenido" => $preCont->getContenido(),
                 "image_url_precio_contenido" => $preCont->getImageUrl(),

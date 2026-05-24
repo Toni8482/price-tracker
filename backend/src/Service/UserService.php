@@ -5,6 +5,7 @@ namespace App\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Entity\Perfumes;
+use App\Entity\PrecioContenido;
 use App\Repository\UserRepository;
 use App\Repository\PerfumesRepository;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -90,6 +91,25 @@ class UserService
 
     
         $user->deletePerfume($perfume);
+
+        $this->em->flush();
+    }
+
+
+     public function saveFavoritesVariable(User $user, PrecioContenido $perfume)
+    {
+
+    
+        $user->addPerfumeVariable($perfume);
+
+        $this->em->flush();
+    }
+
+      public function deleteFavoritesVariable(User $user, PrecioContenido $perfume)
+    {
+
+    
+        $user->deletePerfumeVariable($perfume);
 
         $this->em->flush();
     }

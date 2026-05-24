@@ -8,6 +8,7 @@
 return [
     false, // $matchHost
     [ // $staticRoutes
+        '/api/favorites/variables/users' => [[['_route' => 'api_favorites_variable_users', '_controller' => 'App\\Controller\\ApiFavoritesController::favoritesVariableUsers'], null, ['GET' => 0], null, false, false, null]],
         '/api/perfumes' => [[['_route' => 'app_api_perfumes', '_controller' => 'App\\Controller\\ApiPerfumesController::index'], null, null, null, false, false, null]],
         '/users' => [[['_route' => 'app_api_users', '_controller' => 'App\\Controller\\ApiUsersController::index'], null, ['POST' => 0], null, false, false, null]],
         '/api/me' => [[['_route' => 'api_me', '_controller' => 'App\\Controller\\ApiUsersController::me'], null, ['GET' => 0], null, false, false, null]],

@@ -96,7 +96,7 @@ class PeticionesUrlsService
                     continue;
                 }
 
-                $resultados[] = $data;
+                $resultados[] = $data['data'];
             } else {
                 echo "❌ Error HTTP / Promise rechazada\n";
                 $resultados[] = ['error' => $res['reason']];
@@ -146,12 +146,12 @@ class PeticionesUrlsService
 
         $marca = 'h1.titleProduct > a';
         $nombre = 'h1.titleProduct > span';
-        $precio = 'div.contPrecioNuevo';
-        $urlImagen = 'img.zoom';
+     //   $precio = 'div.contPrecioNuevo';
+      //  $urlImagen = 'img.zoom';
         $descripcion = 'div#descriptionPFCPropio';
         $concentracion = 'h2.titleProduct';
-        $contenido = 'div.font-16.font-w-700.tM1';
-
+      //  $contenido = 'div > div.col-md-2.col-lg-2.col-xl-2.hackName.align-self-center > div';
+ 
         $promises[] = $this->client->postAsync($this->scraperUrl, [
             'json' => [
                 'url' => $url,
@@ -159,11 +159,11 @@ class PeticionesUrlsService
                 'selectors' => [
                     'marca' => $marca,
                     'nombre' => $nombre,
-                    'precio' => $precio,
-                    'url_imagen' => $urlImagen,
+                    'precio' => "",
+                    'url_imagen' => "",
                     'descripcion' => $descripcion,
                     'concentracion' => $concentracion,
-                    'contenido' => $contenido,
+                   'contenido' => "",
 
                 ],
             ]

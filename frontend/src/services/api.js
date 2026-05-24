@@ -163,6 +163,28 @@ export async function getFavoritosUser(token) {
   }
 }
 
+
+
+
+
+
+export async function getFavoritosVariableUser(token) {
+  try {
+    const response = await axios.get(`${BASE_URL}api/favorites/variables/users`,{
+      headers:{
+        Authorization: `Bearer ${token}`,
+      }
+    });
+   
+        return response.data;
+    
+  } catch (error) {
+    console.error("Error al obtener favoritos:", error);
+    throw error;
+  }
+}
+
+
 export async function editarUsuario(token, user) {
   try {
 

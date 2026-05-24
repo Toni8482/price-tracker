@@ -54,7 +54,7 @@ class PerfumesServices
 
             foreach ($perfume['precio_contenido'] as $precio) {
 
-
+              $precio['image_url'] = str_replace("thumbnail", "product_info", $precio['image_url']);
                 $newPrecioContenido = new PrecioContenido();
                 $newPrecioContenido->setPerfumes($newPerfume);
                 $newPrecioContenido->setPrecio($precio['precio']);
