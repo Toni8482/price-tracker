@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Entity\Perfumes;
+use App\Entity\PrecioContenido;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
@@ -39,15 +40,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinTable(name: 'favorites_perfumes')]
     private Collection $perfumes;
 
-    public function __construct()
-    {
-        $this->perfumes = new ArrayCollection();
-    }
+
 
     /** @return Collection<int, Perfumes> */
     public function getPerfumes(): Collection
     {
         return $this->perfumes;
+    }
+
+    #[ORM\ManyToMany(targetEntity: PrecioContenido::class, inversedBy: 'user')]
+    #[ORM\JoinTable(name: 'favorites_perfum')]
+    private Collection $perfumesVariable;
+
+    public function __construct()
+    {
+        $this->perfumes = new ArrayCollection();
+        $this->perfumesVariable = new ArrayCollection();
+    }
+
+    /** @return Collection<int, PrecioContenido> */
+    public function getPerfumesVariable(): Collection
+    {
+        return $this->perfumesVariable;
     }
 
 
@@ -142,13 +156,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-      public function deletePerfume(Perfumes $perfume): self
+    public function deletePerfume(Perfumes $perfume): self
     {
         if ($this->perfumes->contains($perfume)) {
-             $this->perfumes->removeElement($perfume);
+            $this->perfumes->removeElement($perfume);
         }
 
         return $this;
     }
 
+      public function addPerfumeVariable(PrecioContenido $perfumeVariable): self
+    {
+        if (!$this->perfumesVariable->contains($perfumeVariable)) {
+            $this->perfumesVariable->add($perfumeVariable);
+        }
+
+        return $this;
+    }
+    public function deletePerfumeVariable(PrecioContenido $perfumeVariable): self
+    {
+        if ($this->perfumesVariable->contains($perfumeVariable)) {
+            $this->perfumesVariable->removeElement($perfumeVariable);
+        }
+
+        return $this;
+    }
 }

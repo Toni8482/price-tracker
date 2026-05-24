@@ -4,28 +4,37 @@
   <table>
 
     <tr>
+      <th>image</th>
       <th>Marca</th>
       <th>Nombre</th>
-      <th>Concentracion</th>
+      <th>Contenido</th>
 
       <th>Tienda</th>
+
+      <th>Precio</th>
       <th></th>
       <th></th>
-     
 
     </tr>
     <tr v-for="perfume in perfumesFavoritos">
+      <td><img :src="perfume.image_url_precio_contenido" /></td>
       <td>{{ perfume.marca }}</td>
       <td>{{ perfume.nombre }}</td>
-      <td>{{ perfume.concentracion }}</td>
-      <td>{{ perfume.tienda }}</td>
-      <td><button>Ver detallle</button></td>
-      <td><button>Eliminar</button></td>
+      <td>{{ perfume.contenido }}</td>
+      <td>{{ perfume.store_name }}</td>
+      <td>{{ perfume.precio }}</td>
+
+      <td><button @click="detallePerfume(perfume.id)">Ver detallle</button></td>
+      <td><button @click="eliminarFavorito(perfume.id_variable)">Eliminar</button></td>
+
+
+
+
     </tr>
   </table>
 </template>
 <script>
-import {getFavoritosUser } from "../services/api";
+import { eliminarFavorito, getFavoritosUser, getFavoritosVariableUser } from "../services/api";
 
 
 export default {
@@ -35,27 +44,30 @@ export default {
   },
   data() {
     return {
-      perfumesFavoritos:null,
-      token:null,
+      perfumesFavoritos: null,
+      token: null,
       userId: null,
     }
   },
-   watch: {
-  
-  
-  
-   
-  },
-  computed: {},
-  methods: {
 
+  methods: {
+    detallePerfume(id) {
+      this.$router.push({ name: "detalle-perfume", params: { id } });
+    },
+  async eliminarFavorito(id) {
+     await eliminarFavorito(this.token, id);
+     alert(`Perfume con id ${id} eliminado `);
+
+
+     this.perfumesFavoritos = await getFavoritosVariableUser(this.token);
+    }
   },
   async mounted() {
     this.userId = localStorage.getItem('id');
     this.token = localStorage.getItem('token');
 
 
-    this.perfumesFavoritos =await getFavoritosUser(this.token);
+    this.perfumesFavoritos = await getFavoritosVariableUser(this.token);
   },
 }
 </script>
@@ -78,7 +90,7 @@ table {
   backdrop-filter: blur(10px);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
   color: var(--table-text);
   display: table;
 }
@@ -89,7 +101,7 @@ th {
   background: var(--table-header-bg);
   color: var(--table-header-text);
   font-weight: bold;
-  border-bottom: 2px solid rgba(255,255,255,0.2);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
   text-align: center;
 }
 
@@ -97,7 +109,7 @@ th {
 td {
   padding: 10px 15px;
   text-align: center;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   border: 1px solid var(--table-border);
 }
 
@@ -122,7 +134,8 @@ tr:hover td {
     width: 100%;
   }
 
-  th, td {
+  th,
+  td {
     padding: 8px 10px;
   }
 }

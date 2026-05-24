@@ -401,7 +401,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" priority="-50">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.U0Vxkw5"/>
+      <argument type="service" id=".service_locator.P8UFLlj"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" priority="-100">controller.argument_value_resolver</tag>
@@ -1780,7 +1780,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.U0Vxkw5"/>
+      <argument type="service" id=".service_locator.P8UFLlj"/>
     </service>
     <service id="routing.resolver" class="Symfony\Component\Config\Loader\LoaderResolver">
       <call method="addLoader">
@@ -4910,24 +4910,24 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.1vYpZ1B" method="withContext"/>
     </service>
-    <service id=".service_locator.fX4VlkY" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.Z8byftM" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="perfume" type="service_closure" id=".errored..service_locator.fX4VlkY.App\Entity\Perfumes"/>
+        <argument key="precioContenido" type="service_closure" id=".errored..service_locator.Z8byftM.App\Entity\PrecioContenido"/>
         <argument key="userService" type="service_closure" id="App\Service\UserService"/>
       </argument>
     </service>
-    <service id=".service_locator.fX4VlkY.App\Controller\ApiFavoritesController::favorites()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.Z8byftM.App\Controller\ApiFavoritesController::favorites()" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\ApiFavoritesController::favorites()"/>
       <argument>App\Controller\ApiFavoritesController::favorites()</argument>
       <argument type="service" id="service_container"/>
-      <factory service=".service_locator.fX4VlkY" method="withContext"/>
+      <factory service=".service_locator.Z8byftM" method="withContext"/>
     </service>
-    <service id=".service_locator.fX4VlkY.App\Controller\ApiFavoritesController::deleteFavorites()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.Z8byftM.App\Controller\ApiFavoritesController::deleteFavorites()" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\ApiFavoritesController::deleteFavorites()"/>
       <argument>App\Controller\ApiFavoritesController::deleteFavorites()</argument>
       <argument type="service" id="service_container"/>
-      <factory service=".service_locator.fX4VlkY" method="withContext"/>
+      <factory service=".service_locator.Z8byftM" method="withContext"/>
     </service>
     <service id=".service_locator.2ccF7sE" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
@@ -4940,6 +4940,18 @@
       <argument>App\Controller\ApiFavoritesController::favoritesUsers()</argument>
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.2ccF7sE" method="withContext"/>
+    </service>
+    <service id=".service_locator.q5GA76U" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="perfumesRepository" type="service_closure" id="App\Repository\PerfumesRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.q5GA76U.App\Controller\ApiFavoritesController::favoritesVariableUsers()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\ApiFavoritesController::favoritesVariableUsers()"/>
+      <argument>App\Controller\ApiFavoritesController::favoritesVariableUsers()</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.q5GA76U" method="withContext"/>
     </service>
     <service id=".service_locator.2KKAeja" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
@@ -5006,16 +5018,17 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.j83KHed" method="withContext"/>
     </service>
-    <service id=".service_locator.U0Vxkw5" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.P8UFLlj" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.1vYpZ1B.kernel::registerContainerConfiguration()"/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.1vYpZ1B.kernel::registerContainerConfiguration()"/>
         <argument key="kernel::loadRoutes" type="service_closure" id=".service_locator.1vYpZ1B.kernel::loadRoutes()"/>
         <argument key="App\Kernel::loadRoutes" type="service_closure" id=".service_locator.1vYpZ1B.kernel::loadRoutes()"/>
-        <argument key="App\Controller\ApiFavoritesController::favorites" type="service_closure" id=".service_locator.fX4VlkY.App\Controller\ApiFavoritesController::favorites()"/>
-        <argument key="App\Controller\ApiFavoritesController::deleteFavorites" type="service_closure" id=".service_locator.fX4VlkY.App\Controller\ApiFavoritesController::deleteFavorites()"/>
+        <argument key="App\Controller\ApiFavoritesController::favorites" type="service_closure" id=".service_locator.Z8byftM.App\Controller\ApiFavoritesController::favorites()"/>
+        <argument key="App\Controller\ApiFavoritesController::deleteFavorites" type="service_closure" id=".service_locator.Z8byftM.App\Controller\ApiFavoritesController::deleteFavorites()"/>
         <argument key="App\Controller\ApiFavoritesController::favoritesUsers" type="service_closure" id=".service_locator.2ccF7sE.App\Controller\ApiFavoritesController::favoritesUsers()"/>
+        <argument key="App\Controller\ApiFavoritesController::favoritesVariableUsers" type="service_closure" id=".service_locator.q5GA76U.App\Controller\ApiFavoritesController::favoritesVariableUsers()"/>
         <argument key="App\Controller\ApiPerfumesController::index" type="service_closure" id=".service_locator.2KKAeja.App\Controller\ApiPerfumesController::index()"/>
         <argument key="App\Controller\ApiPerfumesController::show" type="service_closure" id=".service_locator.2KKAeja.App\Controller\ApiPerfumesController::show()"/>
         <argument key="App\Controller\ApiUsersController::index" type="service_closure" id=".service_locator.j83KHed.App\Controller\ApiUsersController::index()"/>
@@ -5024,9 +5037,10 @@
         <argument key="App\Controller\ApiUsersController::deleteUser" type="service_closure" id=".service_locator.j83KHed.App\Controller\ApiUsersController::deleteUser()"/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.1vYpZ1B.kernel::registerContainerConfiguration()"/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.1vYpZ1B.kernel::loadRoutes()"/>
-        <argument key="App\Controller\ApiFavoritesController:favorites" type="service_closure" id=".service_locator.fX4VlkY.App\Controller\ApiFavoritesController::favorites()"/>
-        <argument key="App\Controller\ApiFavoritesController:deleteFavorites" type="service_closure" id=".service_locator.fX4VlkY.App\Controller\ApiFavoritesController::deleteFavorites()"/>
+        <argument key="App\Controller\ApiFavoritesController:favorites" type="service_closure" id=".service_locator.Z8byftM.App\Controller\ApiFavoritesController::favorites()"/>
+        <argument key="App\Controller\ApiFavoritesController:deleteFavorites" type="service_closure" id=".service_locator.Z8byftM.App\Controller\ApiFavoritesController::deleteFavorites()"/>
         <argument key="App\Controller\ApiFavoritesController:favoritesUsers" type="service_closure" id=".service_locator.2ccF7sE.App\Controller\ApiFavoritesController::favoritesUsers()"/>
+        <argument key="App\Controller\ApiFavoritesController:favoritesVariableUsers" type="service_closure" id=".service_locator.q5GA76U.App\Controller\ApiFavoritesController::favoritesVariableUsers()"/>
         <argument key="App\Controller\ApiPerfumesController:index" type="service_closure" id=".service_locator.2KKAeja.App\Controller\ApiPerfumesController::index()"/>
         <argument key="App\Controller\ApiPerfumesController:show" type="service_closure" id=".service_locator.2KKAeja.App\Controller\ApiPerfumesController::show()"/>
         <argument key="App\Controller\ApiUsersController:index" type="service_closure" id=".service_locator.j83KHed.App\Controller\ApiUsersController::index()"/>
@@ -5419,8 +5433,8 @@
     <service id=".errored..service_locator.1vYpZ1B.Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface">
       <tag name="container.error" message="Cannot autowire service &quot;.service_locator.1vYpZ1B&quot;: it needs an instance of &quot;Symfony\Component\Config\Loader\LoaderInterface&quot; but this type has been excluded from autowiring."/>
     </service>
-    <service id=".errored..service_locator.fX4VlkY.App\Entity\Perfumes" class="App\Entity\Perfumes">
-      <tag name="container.error" message="Cannot autowire service &quot;.service_locator.fX4VlkY&quot;: it needs an instance of &quot;App\Entity\Perfumes&quot; but this type has been excluded because it's a Doctrine entity."/>
+    <service id=".errored..service_locator.Z8byftM.App\Entity\PrecioContenido" class="App\Entity\PrecioContenido">
+      <tag name="container.error" message="Cannot autowire service &quot;.service_locator.Z8byftM&quot;: it needs an instance of &quot;App\Entity\PrecioContenido&quot; but this type has been excluded because it's a Doctrine entity."/>
     </service>
     <service id=".App\Command\ScrapePerfumesCommand.lazy" class="Symfony\Component\Console\Command\LazyCommand">
       <argument>app:scrape-perfumes</argument>
@@ -6274,7 +6288,7 @@
     <service id="Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface" alias="lexik_jwt_authentication.encoder.lcobucci"/>
     <service id="lexik_jwt_authentication.key_loader" alias="lexik_jwt_authentication.key_loader.raw" public="true"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.ryAvHi4" public="true"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.U0Vxkw5"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.P8UFLlj"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.W55Po6X"/>
     <service id="Psr\Log\LoggerInterface" alias="logger"/>
     <service id="http_client" alias="http_client.uri_template"/>
@@ -6290,8 +6304,9 @@
     <service id="security.event_dispatcher.main" alias="debug.security.event_dispatcher.main"/>
     <service id="doctrine.orm.default_metadata_driver" alias=".doctrine.orm.default_metadata_driver"/>
     <service id=".service_locator.c0wzfI4" alias=".service_locator.1vYpZ1B"/>
-    <service id=".service_locator.CyrQ1Xy" alias=".service_locator.fX4VlkY"/>
+    <service id=".service_locator.NQks3R7" alias=".service_locator.Z8byftM"/>
     <service id=".service_locator.P90.uKM" alias=".service_locator.2ccF7sE"/>
+    <service id=".service_locator.YBApGjr" alias=".service_locator.q5GA76U"/>
     <service id=".service_locator.BF9Zx1B" alias=".service_locator.2KKAeja"/>
     <service id=".service_locator.kA3Zayj" alias=".service_locator.j83KHed"/>
     <service id=".service_locator.yZty4YD" alias=".service_locator.PtMLGj3"/>
