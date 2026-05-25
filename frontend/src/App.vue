@@ -43,10 +43,17 @@ export default {
 </script>
 
 <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   background: var(--bg-color);
   color: var(--text-color);
   margin: 0;
+  padding: 0;
   transition: background 0.3s, color 0.3s;
   /* animación suave */
 }

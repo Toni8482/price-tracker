@@ -190,4 +190,135 @@ export default {
 .btn_buscar:hover {
   opacity: 1;
 }
+/* ================================
+   BUSCADOR PREMIUM
+================================ */
+
+.busqueda {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.busqueda input[type="search"] {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 50px;
+  padding: 10px 18px;
+  width: 250px;
+  color: #f5e6d3;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.busqueda input[type="search"]:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+  width: 300px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.busqueda input[type="search"]::placeholder {
+  color: rgba(245, 230, 211, 0.5);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+}
+
+/* Datalist personalizado (solo afecta al dropdown) */
+.busqueda input[list]::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(0.8);
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.busqueda input[list]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* Botón buscar premium */
+.btn_buscar {
+  background: linear-gradient(135deg, #d4af37, #b8942e);
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn_buscar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.4s ease;
+}
+
+.btn_buscar:hover::before {
+  left: 100%;
+}
+
+.btn_buscar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+  background: linear-gradient(135deg, #e6c856, #c4a22a);
+}
+
+.btn_buscar:active {
+  transform: translateY(1px);
+}
+
+.btn_buscar span {
+  font-size: 1.1rem;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));
+}
+
+/* ================================
+   RESPONSIVE BUSCADOR
+================================ */
+@media (max-width: 768px) {
+  .busqueda input[type="search"] {
+    width: 160px;
+    padding: 8px 14px;
+    font-size: 0.8rem;
+  }
+
+  .busqueda input[type="search"]:focus {
+    width: 200px;
+  }
+
+  .btn_buscar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .btn_buscar span {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .busqueda input[type="search"] {
+    width: 120px;
+  }
+
+  .busqueda input[type="search"]:focus {
+    width: 150px;
+  }
+}
+
 </style>

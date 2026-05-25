@@ -1,13 +1,12 @@
 <template>
   <div class="home">
-
-    <!-- Banner de bienvenida -->
-    <div class="banner">
-      <h1>Bienvenido a PerfumeScraper</h1>
+    <div class="parallax-section">
+      <div class="parallax-content">
+         <h1>Bienvenido a PerfumeScraper</h1>
       <p>Encuentra tus perfumes favoritos al mejor precio</p>
-
-
+      </div>
     </div>
+  
 
     <!-- Estadísticas rápidas -->
     <div class="stats">
@@ -35,10 +34,10 @@
       <h2>Perfumes destacados</h2>
       <div class="cards">
         <div v-for="perfume in perfumesDestacados" :key="perfume.id" class="card">
-         <img :src="obtenerPrecioSeleccionado(perfume)?.image_url_precio_contenido" />
+          <img :src="obtenerPrecioSeleccionado(perfume)?.image_url_precio_contenido" />
           <p class="marca">{{ perfume.marca }}</p>
           <p class="nombre">{{ perfume.nombre }}</p>
-          <p class="precio">  {{ obtenerPrecioSeleccionado(perfume)?.precio || 0 }} € €</p>
+          <p class="precio"> {{ obtenerPrecioSeleccionado(perfume)?.precio || 0 }} € €</p>
           <button @click="verDetalle(perfume.id)">Ver detalles</button>
         </div>
       </div>
@@ -122,8 +121,9 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  
   color: var(--text-color);
+  
 }
 
 /* ================================
@@ -299,7 +299,31 @@ export default {
 .card button:hover {
   background: var(--btn-hover);
 }
+.parallax-section {
+  background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601');
+  background-attachment: fixed;  /* ← Clave del parallax */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  top:0;
+  margin-bottom: 50px;
+}
 
+.parallax-content {
+  color: white;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.parallax-content h1 {
+  font-size: 3rem;
+  font-family: 'Cormorant Garamond', serif;
+}
 /* ================================
    RESPONSIVE
 ================================ */

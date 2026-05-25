@@ -75,6 +75,7 @@
 
   --desc-bg: rgba(255, 255, 255, 0.05);
   --desc-text: #000000;
+  --semiyelow-text:#cdb983;
 }
 
 .dark-theme {
@@ -164,4 +165,6 @@
   --radio-checked: #7c3aed;
   --desc-bg: rgba(0, 0, 0, 0.6);
   --desc-text: #e5e7eb;
+
+  --semiyelow-text: #f5e6d3;
 }
