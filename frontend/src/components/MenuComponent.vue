@@ -106,20 +106,12 @@ export default {
 
 
   },
-  async mounted() {
-    try {
-      this.perfumes = await getAllPerfumes();
-      this.perfumes = this.perfumes.map(p => ({
-        ...p,
-        precioSeleccionado: {
-          precio: p.precio_contenido?.[0]?.precio || 0,
-          image_url_precio_contenido: p.precio_contenido?.[0].image_url_precio_contenido || "",
-        },
-      }));
-
-    } catch (error) {
-      console.error(error);
-    }
+ async mounted() {
+  try {
+    this.perfumes = await getAllPerfumes();
+  } catch (error) {
+    console.error(error);
+  }
 
 
 

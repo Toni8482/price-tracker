@@ -1,7 +1,9 @@
 <template>
   <div class="detalles-libro">
     <h1>Detalles de perfume</h1>
+
     <div v-if="perfume">
+      <!-- CARD -->
       <div class="card">
         <div class="imagen_card">
           <img :src="imagenCard" alt="Imagen perfume" />
@@ -9,86 +11,156 @@
 
         <div class="info">
           <div>
-            <img :src="perfume.store_logo">
-          
+            <img :src="perfume.store_logo" alt="Logo tienda" />
           </div>
 
-
           <h2>{{ perfume.marca }}</h2>
-          <p> {{ perfume.nombre }}</p>
-          <p> {{ perfume.concentracion }}</p>
-
+          <p>{{ perfume.nombre }}</p>
+          <p>{{ perfume.concentracion }}</p>
 
           <p>Elige tamaño:</p>
-          <label v-for="precioContenido in perfume.precio_contenido" :key="precioContenido.contenido">
-            <input type="radio" v-model="cantidadSeleccionada" name="tamano" :value="precioContenido.contenido">
-            {{ precioContenido.contenido }}
-            {{ precioContenido.precio }}
 
-              <button @click="asignarPerfume(precioContenido.id_contenido)">🤍</button>
+          <label v-for="precioContenido in perfume.precio_contenido" :key="precioContenido.id_contenido">
+            <input type="radio" v-model="contenidoSeleccionadoId" :value="Number(precioContenido.id_contenido)" />
+
+            {{ precioContenido.contenido }}
+            - {{ precioContenido.precio }} €
+
+            <button @click="asignarPerfume(precioContenido.id_contenido)">
+              🤍
+            </button>
           </label>
 
+          <button @click="$router.back()">
+            Volver a la lista
+          </button>
 
-          <button @click="$router.back()">Volver a la lista</button><br>
-          <button @click="abrirNuevaPestana(perfume.perfume_url)">Ir a tienda</button>
+          <button @click="abrirNuevaPestana(perfume.perfume_url)">
+            Ir a tienda
+          </button>
         </div>
-
       </div>
-      <!-- Botón para mostrar/ocultar descripción -->
+
+      <!-- DESCRIPCIÓN -->
       <button @click="mostrarDescripcion = !mostrarDescripcion" class="toggle-desc">
         {{ mostrarDescripcion ? 'Ocultar descripción' : 'Ver descripción' }}
       </button>
+
       <div class="descripcion" :class="{ abierto: mostrarDescripcion }">
-        <p v-html="perfume.descripcion"> </p>
+        <p v-html="perfume.descripcion"></p>
+      </div>
+
+      <!-- COMPARAR PRECIOS -->
+      <h2>Comparar precios</h2>
+
+      <div class="table_perfumes">
+        <table v-if="perfumesComparados.length">
+          <tr>
+            <th>Imagen</th>
+            <th>Marca</th>
+            <th>Nombre</th>
+            <th>Concentración</th>
+            <th>Precio</th>
+            <th>Tienda</th>
+            <th></th>
+            <th></th>
+          </tr>
+
+          <tr v-for="perfume in perfumesComparados" :key="perfume.id">
+            <td>
+              <img :src="perfume.precio_contenido?.[0]?.image_url_precio_contenido" alt="Imagen perfume" />
+            </td>
+
+            <td>{{ perfume.marca }}</td>
+
+            <td>{{ perfume.nombre }}</td>
+
+            <td>{{ perfume.concentracion }}</td>
+
+            <td>
+              {{ perfume.precio_contenido?.[0]?.precio || 0 }} €
+            </td>
+
+            <td>
+              <img :src="perfume.store_logo" alt="Imagen logo" />
+            </td>
+
+            <td>
+              <button @click="cargarPerfume(perfume.id)">
+                Detalles
+              </button>
+            </td>
+
+            <td>
+              <button @click="abrirNuevaPestana(perfume.perfume_url)">
+                Ir a tienda
+              </button>
+            </td>
+          </tr>
+        </table>
+
+        <span v-else>
+          No hay perfumes para comparar
+        </span>
+      </div>
+
+      <!-- MISMA MARCA -->
+      <h2>
+        Más perfumes de {{ perfume.marca }}
+      </h2>
+
+      <div class="carrusel-container" v-if="perfumesMismaMarca.length">
+
+        <swiper :slides-per-view="4" :space-between="20" :breakpoints="{
+          320: {
+            slidesPerView: 1
+          },
+          640: {
+            slidesPerView: 2
+          },
+          1024: {
+            slidesPerView: 4
+          }
+        }">
+
+          <swiper-slide v-for="perfume in perfumesMismaMarca" :key="perfume.id">
+
+            <div class="perfume-card">
+
+              <img :src="perfume.precio_contenido?.[0]?.image_url_precio_contenido ||
+                perfume.imagen_url
+                " class="perfume-img" />
+
+              <img :src="perfume.store_logo" class="logo-tienda">
+
+              <h3>{{ perfume.nombre }}</h3>
+
+              <p>{{ perfume.concentracion }}</p>
+
+              <button @click="cargarPerfume(perfume.id)">
+                Detalles
+              </button>
+
+            </div>
+
+          </swiper-slide>
+
+        </swiper>
+
       </div>
     </div>
-    <div v-else>
-      <p>Cargando...</p>
-    </div>
-    <div class="table_perfumes">
-      <table v-if="perfumesComparados.length">
-        <tr>
-          <th>Imagen</th>
-          <th>Marca</th>
-          <th>Nombre</th>
-          <th>Concentracion</th>
-
-          <th>Tienda</th>
-          <th></th>
-          <th></th>
-        </tr>
-        <tr v-for="perfume in perfumesComparados" :key="perfume.id">
-          <td> <img :src="perfume.imagen_url" alt="Imagen perfume" /></td>
-          <td>{{ perfume.marca }}</td>
-          <td>{{ perfume.nombre }}</td>
-          <td>{{ perfume.concentracion }}</td>
-          <!--
-        <td>{{ perfume.precio_contenido.contenido }}</td>
-          <td>{{ perfume.precio_contenido.precio }}
-            €
-           </td>   -->
-
-          <td><img :src="perfume.store_logo" alt="Imagen logo"></td>
-
-          <td> <button @click="cargarPerfume(perfume.id)">Detalles</button></td>
-          <td> <button @click="abrirNuevaPestana(perfume.perfume_url)">Ir a tienda</button></td>
-
-        </tr>
-
-      </table>
-
-      <span v-else>Cargando tabla ...</span>
-
-
-    </div>
   </div>
-
-
-
 </template>
 
 <script>
-import { getPerfume, getAllPerfumes, addFavorito } from "../services/api";
+
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import 'swiper/css';
+import {
+  getPerfume,
+  getAllPerfumes,
+  addFavorito
+} from "../services/api";
 
 export default {
   name: "DetallesPerfume",
@@ -98,79 +170,132 @@ export default {
       perfume: null,
       mostrarDescripcion: false,
       perfumesComparados: [],
+      perfumesMismaMarca: [],
       perfumes: [],
-      cantidadSeleccionada: "",
+      contenidoSeleccionadoId: null,
     };
   },
-
+  components: {
+    Swiper,
+    SwiperSlide
+  },
   watch: {
+    perfumes: {
+      deep: true,
+      handler() {
+        this.PerfumesIguales();
+        this.MismaMarca();
+      }
+    },
+
     "$route.params.id": {
       immediate: true,
-      handler(newId) {
-        this.cargarPerfume(newId);
+      async handler(newId) {
+        await this.cargarPerfume(newId);
 
+        // si perfumes ya está cargado
+        if (this.perfumes.length) {
+          this.PerfumesIguales();
+          this.MismaMarca();
+        }
       },
     },
-    perfumes() {
-      this.PerfumesIguales();
-    }
   },
+
   computed: {
     imagenCard() {
-      let result = "";
-      if (this.cantidadSeleccionada !== "") {
-
-        this.perfume.precio_contenido.forEach(p => {
-
-          if (p.contenido == this.cantidadSeleccionada) {
-
-            result = p.image_url_precio_contenido;
-          }
-        });
-
+      if (!this.perfume || !this.contenidoSeleccionadoId) {
+        return "";
       }
-      return result;
-    }
+
+      const precioSeleccionado =
+        this.perfume.precio_contenido.find(
+          p =>
+            p.id_contenido ===
+            this.contenidoSeleccionadoId
+        );
+
+      return (
+        precioSeleccionado?.image_url_precio_contenido ||
+        ""
+      );
+    },
   },
+
   methods: {
     PerfumesIguales() {
       if (!this.perfume) return;
 
-      this.perfumesComparados = this.perfumes.filter((p) =>
-        p.nombre.includes(this.perfume.nombre)
-      );
+      this.perfumesComparados = this.perfumes
+        .filter(
+          p =>
+            p.id !== this.perfume.id &&
+            p.nombre.toLowerCase() ===
+            this.perfume.nombre.toLowerCase()
+        )
+        .sort((a, b) => {
+          const precioA =
+            a.precio_contenido?.[0]?.precio || 0;
+
+          const precioB =
+            b.precio_contenido?.[0]?.precio || 0;
+
+          return precioA - precioB;
+        });
+    },
+
+    MismaMarca() {
+      if (!this.perfume || !this.perfumes.length) return;
+
+      const marcaActual = this.perfume.marca
+        ?.trim()
+        .toLowerCase();
+
+      this.perfumesMismaMarca = this.perfumes.filter(p => {
+        return (
+          p.id !== this.perfume.id &&
+          p.marca &&
+          p.marca.trim().toLowerCase() === marcaActual
+        );
+      });
+
+      console.log(this.perfumesMismaMarca);
     },
 
     async cargarPerfume(id) {
       try {
         this.perfume = await getPerfume(id);
 
-        // Seleccionar automáticamente el primer tamaño
         if (this.perfume.precio_contenido?.length) {
-          this.cantidadSeleccionada =
-            this.perfume.precio_contenido[0].contenido;
+          this.contenidoSeleccionadoId = Number(
+            this.perfume.precio_contenido[0]
+              .id_contenido
+          );
         }
-
-
       } catch (error) {
         console.error(error);
       }
     },
 
     abrirNuevaPestana(urlTienda) {
-      window.open(urlTienda, "_blank", "noopener,noreferrer");
+      window.open(
+        urlTienda,
+        "_blank",
+        "noopener,noreferrer"
+      );
     },
 
     async asignarPerfume(id) {
-      const token = localStorage.getItem("token");
-      const userId = parseInt(localStorage.getItem("user_id")) ;
-      const userEmail = localStorage.getItem("user_email");
+      try {
+        const token = localStorage.getItem("token");
 
-      console.log("Precio contenido"+JSON.stringify(id));
+        await addFavorito(token, id);
 
-      await addFavorito(token, id);
-      alert(`Asignado perfume con id: ${id} a favoritos del usuario con ID: ${userId} y con email: ${userEmail}`);
-    }
+        alert("Perfume añadido a favoritos");
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
 
   async mounted() {
@@ -180,10 +305,8 @@ export default {
       console.error(error);
     }
   },
-
 };
 </script>
-
 <style scoped>
 /* ================================
    DETALLES PERFUMES
@@ -211,7 +334,7 @@ h1 {
   backdrop-filter: blur(10px);
   padding: 20px;
   border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
   margin: 30px 0 10px;
   width: 90%;
   max-width: 900px;
@@ -336,7 +459,7 @@ button:hover {
   background: var(--desc-bg);
   color: var(--desc-text);
   border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
   padding: 0 20px;
   margin-top: 10px;
   border: 1px solid var(--table-border);
@@ -382,7 +505,7 @@ table {
   border: 1px solid var(--table-border);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 
 th {
@@ -390,7 +513,7 @@ th {
   color: var(--table-header-text);
   font-size: 1rem;
   padding: 10px;
-  border-bottom: 2px solid rgba(255,255,255,0.2);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 td {
@@ -406,6 +529,33 @@ td img {
   height: 80px;
   object-fit: contain;
   border-radius: 8px;
+}
+
+.carrusel-container {
+  width: 95%;
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+.perfume-card {
+  background: var(--card-bg);
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--table-border);
+}
+
+.perfume-img {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+}
+
+.logo-tienda {
+  height: 40px;
+  margin: 10px auto;
+  display: block;
 }
 
 /* Responsive */

@@ -21,7 +21,7 @@
       </div>
       <div class="stat-card">
         <h2 v-if="perfumeMasCaro">
-          {{ perfumeMasCaro.precioSeleccionado.precio }}€
+          {{ obtenerPrecioSeleccionado(perfumeMasCaro)?.precio || 0 }}€
         </h2>
         <h2 v-else>
           0€
@@ -35,10 +35,10 @@
       <h2>Perfumes destacados</h2>
       <div class="cards">
         <div v-for="perfume in perfumesDestacados" :key="perfume.id" class="card">
-          <img :src="perfume.imagen_url" />
+         <img :src="obtenerPrecioSeleccionado(perfume)?.image_url_precio_contenido" />
           <p class="marca">{{ perfume.marca }}</p>
           <p class="nombre">{{ perfume.nombre }}</p>
-          <p class="precio">{{ perfume.precio }} €</p>
+          <p class="precio">  {{ obtenerPrecioSeleccionado(perfume)?.precio || 0 }} € €</p>
           <button @click="verDetalle(perfume.id)">Ver detalles</button>
         </div>
       </div>
@@ -62,12 +62,26 @@ export default {
   },
   computed: {
     perfumesDestacados() {
-      // Devuelve los 4 perfumes con mayor precio
-      return [...this.perfumes].sort((a, b) => b.precioSeleccionado.precio - a.precioSeleccionado.precio).slice(0, 4);
+      return [...this.perfumes]
+        .sort((a, b) => {
+          const precioA = this.obtenerPrecioSeleccionado(a)?.precio || 0;
+          const precioB = this.obtenerPrecioSeleccionado(b)?.precio || 0;
+
+          return precioB - precioA;
+        })
+        .slice(0, 4);
     },
     perfumeMasCaro() {
-      return this.perfumes.reduce((max, p) => p.precioSeleccionado.precio > max.precioSeleccionado.precio ? p : max, this.perfumes[0]);
-    }
+      return this.perfumes.reduce((max, p) => {
+        const precioMax =
+          this.obtenerPrecioSeleccionado(max)?.precio || 0;
+
+        const precioActual =
+          this.obtenerPrecioSeleccionado(p)?.precio || 0;
+
+        return precioActual > precioMax ? p : max;
+      }, this.perfumes[0]);
+    },
   },
   methods: {
     buscarPerfume() {
@@ -77,6 +91,11 @@ export default {
     verDetalle(id) {
       alert(`Ir al detalle del perfume con ID: ${id}`);
       // Aquí iría la navegación real: this.$router.push({name:'detalle-perfume', params:{id}})
+    },
+    obtenerPrecioSeleccionado(perfume) {
+      return perfume.precio_contenido.find(
+        p => p.id_contenido === perfume.precioSeleccionadoId
+      );
     }
   },
   async mounted() {
@@ -84,10 +103,7 @@ export default {
       this.perfumes = await getAllPerfumes();
       this.perfumes = this.perfumes.map(p => ({
         ...p,
-        precioSeleccionado: {
-          precio: p.precio_contenido?.[0]?.precio || 0,
-          image_url_precio_contenido: p.precio_contenido?.[0].image_url_precio_contenido || "",
-        },
+        precioSeleccionadoId: p.precio_contenido?.[0]?.id_contenido || null,
       }));
 
     } catch (error) {
@@ -152,7 +168,7 @@ export default {
 }
 
 .banner input::placeholder {
-  color: rgba(255,255,255,0.6);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .banner button {
@@ -190,7 +206,7 @@ export default {
   text-align: center;
   width: 180px;
   border: 1px solid rgba(124, 58, 237, 0.3);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 
 .stat-card h2 {
@@ -288,6 +304,7 @@ export default {
    RESPONSIVE
 ================================ */
 @media(max-width: 768px) {
+
   .cards,
   .stats {
     flex-direction: column;
