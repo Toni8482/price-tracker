@@ -1,80 +1,77 @@
 <template>
-  <h1>Login</h1>
+  <form @submit.prevent="crearUser">
 
-  <form @submit.prevent="login">
+
+
+
     <label>
       Email:
       <input type="email" v-model="user.email">
     </label>
+
     <label>
       Password:
       <input type="password" v-model="user.password">
     </label>
 
-    <button type="submit">Login</button>
+    <label>
+      Repetir password:
+      <input type="password" v-model="repeatPassword">
 
+    </label>
+    <button type="submit">{{ btnSubmit }}</button>
   </form>
 </template>
+
 <script>
-
-import { Login, getMe } from '@/services/api';
-
-
-
 export default {
-  name: "LoginComponent",
+  name: 'FormRegister',
   props: {
-
+    btnSubmit: String,
+    user: Object,
   },
   data() {
     return {
-      user: {
-        email: '',
-        password: ''
-      }
+      repeatPassword: "",
     }
   },
-  computed: {},
+
+  computed: {
+
+  },
+
   methods: {
+    crearUser() {
 
-    async login() {
+      if (!this.user.email?.trim()) {
+        alert("Introduce un email");
+        return;
+      }
 
-      const data = await Login(this.user);
-
-     
-
-        console.log(`Token: ${data.token}`);
-        localStorage.setItem('token', data.token);
-
-        const usuario = await getMe(data.token);
-
-        console.log(usuario);
-        localStorage.setItem('user_email', usuario.email);
-        localStorage.setItem('user_id', usuario.id);
-
-      
-
-  this.$router.push({ name: "Home" });
+      if (!this.user.password) {
+        alert("Introduce una contraseña");
+        return;
+      }
 
 
+      if (this.user.password != this.repeatPassword) {
+        alert("Password no coincide.");
+        return;
+      }
 
-
+      this.$emit("new-user", this.user);
+    
+ this.repeatPassword = "";
     }
-
   },
-  async mounted() {
 
-  },
+  mounted() {
+
+  }
 }
 </script>
 
 <style scoped>
-h1 {
-  text-align: center;
-  color: var(--form-text);
-}
-
-/* FORMULARIO */
 form {
   display: flex;
   flex-direction: column;
@@ -82,7 +79,7 @@ form {
   gap: 12px;
   background: var(--form-bg);
   backdrop-filter: blur(10px);
-  border:1px solid var(--form-border);
+  border: 1px solid var(--form-border);
   padding: 30px;
   border-radius: 14px;
   width: 300px;
@@ -97,13 +94,13 @@ label {
   font-weight: 500;
 }
 
-/* INPUTS */
-input {
+/* INPUTS y SELECT */
+input,
+select {
   width: 100%;
   padding: 10px;
   border-radius: 8px;
-  border: none;
- background: var(--form-input-bg);
+  background: var(--form-input-bg);
   color: var(--form-input-text);
 }
 
@@ -126,7 +123,14 @@ button {
 }
 
 button:hover {
-   background: var(--btn-hover);
+  background: var(--btn-hover);
   transform: translateY(-2px);
+}
+
+/* INPUT FOCUS */
+input:focus,
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.6);
 }
 </style>

@@ -38,21 +38,14 @@ export async function getPerfume(id) {
  */
 export async function CreateUser(user) {
   try {
-    await axios
-      .post(`${BASE_URL}users`, {
-        email: user.email,
-        password: user.password,
-      })
-      .then(function (response) {
-        console.log(response);
-        return response.data;
-      })
-      .catch(function (error) {
-        console.log(error);
-        return error;
-      });
+    const response = await axios.post(`${BASE_URL}users`, {
+      email: user.email,
+      password: user.password,
+    });
+
+    return response.data;
+
   } catch (error) {
-    console.error("Error en crear usuario: ", error);
     throw error;
   }
 }
@@ -68,7 +61,7 @@ export async function Login(user) {
     });
 
     console.log(response.data);
-    return response.data; // o return response si necesitas todo
+    return response.data;
   } catch (error) {
     console.error("Error en login:", error);
     alert(error.response.data.message);
@@ -93,6 +86,15 @@ export async function getMe(token) {
     });
     return response.data;
   } catch (error) {
+
+    if (error.response?.status === 401) {
+      logout();
+      alert("Tu sesión ha expirado");
+
+      window.location.href = "/login";
+      return;
+    }
+
     console.error("Error al obtener el usuario:", error);
     throw error;
   }
@@ -135,11 +137,20 @@ export async function getUsers(token) {
         Authorization: `Bearer ${token}`,
       },
     });
-      console.log(response.data);
+    console.log(response.data);
     return response.data;
-  
+
   } catch (error) {
     console.error("Error al obtener lista de usuarios:", error);
+
+
+     if (error.response?.status === 401) {
+      logout();
+      alert("Tu sesión ha expirado");
+
+      window.location.href = "/login";
+      return;
+    }
     throw error;
   }
 }
@@ -149,14 +160,14 @@ export async function getUsers(token) {
  */
 export async function getFavoritosUser(token) {
   try {
-    const response = await axios.get(`${BASE_URL}api/favorites/users`,{
-      headers:{
+    const response = await axios.get(`${BASE_URL}api/favorites/users`, {
+      headers: {
         Authorization: `Bearer ${token}`,
       }
     });
-   
-        return response.data;
-    
+
+    return response.data;
+
   } catch (error) {
     console.error("Error al obtener favoritos:", error);
     throw error;
@@ -170,14 +181,14 @@ export async function getFavoritosUser(token) {
 
 export async function getFavoritosVariableUser(token) {
   try {
-    const response = await axios.get(`${BASE_URL}api/favorites/variables/users`,{
-      headers:{
+    const response = await axios.get(`${BASE_URL}api/favorites/variables/users`, {
+      headers: {
         Authorization: `Bearer ${token}`,
       }
     });
-   
-        return response.data;
-    
+
+    return response.data;
+
   } catch (error) {
     console.error("Error al obtener favoritos:", error);
     throw error;
@@ -188,7 +199,7 @@ export async function getFavoritosVariableUser(token) {
 export async function editarUsuario(token, user) {
   try {
 
-      const response = await axios.put(`${BASE_URL}api/user/${user.id}`,
+    const response = await axios.put(`${BASE_URL}api/user/${user.id}`,
       {
         password: user.password,
         email: user.email,
@@ -206,9 +217,9 @@ export async function editarUsuario(token, user) {
   }
 }
 
-export async function eliminarUsuario(token,id) {
+export async function eliminarUsuario(token, id) {
   try {
-     const response = await axios.delete(`${BASE_URL}api/user/${id}`,
+    const response = await axios.delete(`${BASE_URL}api/user/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -222,9 +233,9 @@ export async function eliminarUsuario(token,id) {
   }
 }
 
-export async function eliminarFavorito(token,id) {
+export async function eliminarFavorito(token, id) {
   try {
-         const response = await axios.delete(`${BASE_URL}api/favorites/${id}`,
+    const response = await axios.delete(`${BASE_URL}api/favorites/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -236,4 +247,24 @@ export async function eliminarFavorito(token,id) {
     console.error("Error al eliminar favorito:", error);
     throw error;
   }
+
+}
+
+export function getToken() {
+  return localStorage.getItem("token");
+}
+
+export function logout() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user_id");
+  localStorage.removeItem("user_email");
+  localStorage.removeItem("roles");
+}
+
+export function getRoles() {
+  return JSON.parse(localStorage.getItem("roles") || "[]");
+}
+
+export function isAdmin() {
+  return getRoles().includes("ROLE_ADMIN");
 }
