@@ -1,69 +1,78 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import ListaPerfumes from "@/components/ListaPerfumes.vue";
-import DetallesPerfumes from "@/components/DetallesPerfume.vue";
-import Home from "@/components/HomeComponent.vue"
-import ListaUsers from "@/components/ListUsersComponent.vue"
-import Login from "@/components/LoginComponent.vue"
-import ListaFavoritos from "@/components/FavoritosComponent.vue"
-import FormUser from "@/components/FormUserComponent.vue"
-import DetalleUsuario from "@/components/DetallesUsuarios.vue";
+import HomeView from "@/views/HomeView.vue";
+import FavoriteView from "@/views/FavoriteView.vue";
+import PerfumesView from "@/views/PerfumesView.vue";
+import PerfumeView from "@/views/PerfumeView.vue";
+import RegisterView from "@/views/RegisterView.vue";
+import LoginView from "@/views/LoginView.vue";
+import UsersView from "@/views/UsersView.vue";
+import UserView from "@/views/UserView.vue";
 import { authMiddleware } from '../middleware/auth.js';
 
 const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
-  },
  
-  
    {
+    path: "/",
+    name: "HomeView",
+    component: HomeView,
+  },
+  {
     path: "/perfumes",
     name: "lista-perfume",
-    component: ListaPerfumes,
-  },
+    component: PerfumesView,
+  }, 
    {
     path: "/perfume/:id",
     name: "detalle-perfume",
-    component: DetallesPerfumes,
+    component: PerfumeView,
+  },
+    {
+    path: "/perfume/:id/:idVariante",
+    name: "detalle-perfume-variante",
+    component: PerfumeView,
   },
    {
     path: "/users",
     name: "lista-users",
-    component: ListaUsers,
-  }, {
+    component: UsersView,
+     beforeEnter: authMiddleware,
+  }, 
+  {
     path: "/login",
     name: "login",
-    component: Login,
-  }, {
+    component: LoginView,
+  },  
+   {
     path: "/favoritos/:id",
     name: "lista-favoritos",
-    component: ListaFavoritos,
-  //  beforeEnter: authMiddleware,
+    component: FavoriteView,
+    beforeEnter: authMiddleware,
+  }, 
+  {
+    path: "/register",
+    name: "register",
+    component: RegisterView,
   },
   {
-    path: "/form-user",
-    name: "form-user",
-    component: FormUser,
-  },
-
-  {
-    path: "/form-user/:id",
-    name: "edit-user",
-    component: FormUser,
-  },
+    path: "/register/:id",
+    name: "edit-register",
+    component: RegisterView,
+  }, 
    {
     path: "/user/:id",
     name: "user",
-    component: DetalleUsuario,
-   // beforeEnter: authMiddleware,
+    component: UserView,
+    beforeEnter: authMiddleware,
   },
 ];
-
 const router = createRouter({
   history: createWebHistory(),
   routes,
+
+  scrollBehavior() {
+    return { top: 0 };
+  }
 });
 
 export default router;

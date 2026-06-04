@@ -1,20 +1,28 @@
 <template>
-  <MenuComponent :user="userData"></MenuComponent>
-  <router-view></router-view>
+  <div id="app">
+    <MenuComponent :user="userData" @logout="cerrarSesion" />
 
+    <main class="main-content">
+      <router-view />
+    </main>
+
+    <Footer />
+  </div>
 </template>
 
 <script>
 
 
 import MenuComponent from './components/MenuComponent.vue';
-
+import Footer from './components/FooterComponent.vue';
+import { logout } from "./services/api";
 
 export default {
   name: "App",
   components: {
 
-    MenuComponent
+    MenuComponent,
+    Footer
   },
   data() {
     return {
@@ -30,6 +38,14 @@ export default {
     }
   },
   methods: {
+    cerrarSesion() {
+      logout();
+      this.$router.push('/');
+      this.userData = {
+        userName: "",
+        userId: null
+      };
+    },
     loadUser() {
       this.userData.userName = localStorage.getItem('user_email');
       this.userData.userId = localStorage.getItem('user_id');
@@ -43,10 +59,19 @@ export default {
 </script>
 
 <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   background: var(--bg-color);
   color: var(--text-color);
   margin: 0;
+
+  padding: 0;
+  padding-top: 200px;
   transition: background 0.3s, color 0.3s;
   /* animación suave */
 }
@@ -63,5 +88,15 @@ body::before {
   z-index: -1;
   transition: background 0.3s;
   /* animación suave al cambiar tema */
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
 }
 </style>

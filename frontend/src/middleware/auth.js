@@ -1,7 +1,7 @@
-import { authService } from '../services/auth.js';
+import { getToken } from '../services/api.js';
 
 export const authMiddleware = async (to, from, next) => {
-  const token = authService.getToken();
+  const token = getToken();
 
   if (!token) {
     // No hay token, redirigir a la página de inicio de sesión
