@@ -41,6 +41,7 @@ export async function CreateUser(user) {
     const response = await axios.post(`${BASE_URL}users`, {
       email: user.email,
       password: user.password,
+      roles: user.roles
     });
 
     return response.data;
@@ -144,7 +145,7 @@ export async function getUsers(token) {
     console.error("Error al obtener lista de usuarios:", error);
 
 
-     if (error.response?.status === 401) {
+    if (error.response?.status === 401) {
       logout();
       alert("Tu sesión ha expirado");
 
@@ -203,6 +204,7 @@ export async function editarUsuario(token, user) {
       {
         password: user.password,
         email: user.email,
+        roles: user.roles
       },
       {
         headers: {
@@ -267,4 +269,24 @@ export function getRoles() {
 
 export function isAdmin() {
   return getRoles().includes("ROLE_ADMIN");
+}
+
+
+export async function getAllStores() {
+  try {
+    const response = await axios.get(BASE_URL + "all/stores");
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener tiendas:", error);
+    throw error;
+  }
+}
+
+
+export async function getPerfumesPage(page = 2) {
+  const response = await axios.get(
+    `${BASE_URL}perfumes/page?page=${page}`
+  );
+
+  return response.data.datos;
 }

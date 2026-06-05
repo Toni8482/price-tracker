@@ -20,7 +20,10 @@
           <strong>Favoritos:</strong> 
         </p>
 
+
+           <button @click="eliminarUsuario(usuario.id)">Eliminar</button>
       </div>
+
 
     </BaseCard>
 
@@ -55,7 +58,10 @@ export default {
   },
 
   methods: {
+   eliminarUsuario(id) {
 
+            this.$emit("id", id);
+        }
   },
 
   mounted() {

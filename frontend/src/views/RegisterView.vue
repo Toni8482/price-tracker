@@ -21,12 +21,13 @@ export default {
         id: '',
         email: '',
         password: '',
+        roles: ['ROLE_USER']
       },
 
       idRoute: null,
       token: null,
       btnSubmit: 'Crear usuario',
-      titulo:'REGISTRO'
+      titulo: 'REGISTRO'
     }
   },
 
@@ -40,14 +41,20 @@ export default {
 
 
       if (this.idRoute) {
-        await editarUsuario(this.token, newUser);
-        alert("Usuario editado");
+        try {
+          await editarUsuario(this.token, newUser);
+          alert("Usuario editado");
 
-        this.user.id = "";
-        this.user.nombre = "";
-        this.user.email = "";
-        this.user.password = "";
-      
+          this.user.id = "";
+          this.user.nombre = "";
+          this.user.email = "";
+          this.user.password = "";
+          this.user.roles = ['ROLE_USER'];
+        } catch (error) {
+          alert("Error al actualizar el usuario");
+        }
+
+
       } else {
 
         try {
@@ -62,10 +69,10 @@ export default {
           this.user.nombre = "";
           this.user.email = "";
           this.user.password = "";
-         
+          this.user.roles = ['ROLE_USER'];
         } catch (error) {
 
-          alert("Error al crear usuario");
+          alert("Error al crear el usuario");
 
           console.error(error);
         }
@@ -85,8 +92,10 @@ export default {
       let usuarios = await getUsers(this.token);
 
       this.user = usuarios.find(u => u.id == this.idRoute);
+      console.log("Usuario: "+JSON.stringify(this.user));
 
     }
+
   },
 }
 </script>

@@ -27,8 +27,8 @@ class UserService
 
     $newUser->setEmail($user['email']);
 
-    // asignar rol por defecto
-    $newUser->setRoles(['ROLE_USER']);
+   
+    $newUser->setRoles($user['roles']);
 
     $hashedPassword = $this->passwordHasher->hashPassword(
         $newUser,
@@ -60,6 +60,10 @@ class UserService
             );
 
             $user->setPassword($hashedPassword);
+        }
+
+         if (isset($data['roles'])) {
+            $user->setRoles($data['roles']);
         }
 
         $this->em->flush();

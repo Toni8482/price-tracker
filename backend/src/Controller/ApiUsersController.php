@@ -57,6 +57,7 @@ final class ApiUsersController extends AbstractController
     #[Route('/api/all/users', name: 'api_all_users', methods: ['GET'])]
     public function users(UserRepository $userRepository): JsonResponse
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $users = $userRepository->findAll();
         $data = [];
 
@@ -64,6 +65,7 @@ final class ApiUsersController extends AbstractController
             $data[] = [
                 'id' => $user->getId(),
                 'email' => $user->getEmail(),
+                'roles' => $user->getRoles()
             ];
         }
         return $this->json($data);
@@ -78,6 +80,7 @@ final class ApiUsersController extends AbstractController
         Request $request,
         UserService $userService
     ): JsonResponse {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $data = json_decode($request->getContent(), true);
 
@@ -96,9 +99,16 @@ final class ApiUsersController extends AbstractController
     #[Route('/api/user/{id}', name: 'api_delete_user', methods: ['DELETE'])]
     public function deleteUser(
         int $id,
-
-        UserService $userService
+        UserService $userService,
+        #[CurrentUser] ?User $currentUser
     ): JsonResponse {
+
+        if (
+            !$this->isGranted('ROLE_ADMIN')
+            && $currentUser?->getId() !== $id
+        ) {
+            throw $this->createAccessDeniedException();
+        }
 
         $userService->deleteUser($id);
 

@@ -40,4 +40,5 @@ security:
          - { path: ^/api/perfumes, roles: PUBLIC_ACCESS }
          - { path: ^/api/perfumes/^, roles: PUBLIC_ACCESS }
          - { path: ^/api/favorites, roles: PUBLIC_ACCESS }
+         - { path: ^/api/all/users, roles: ROLE_ADMIN }
          - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }

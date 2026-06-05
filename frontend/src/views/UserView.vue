@@ -1,27 +1,27 @@
 <template>
   <div class="detalles-user">
     <h1>Detalles de usuario</h1>
-    <UserCard :usuario="usuario"/>
+    <UserCard :usuario="usuario" @id="deleteUser" />
   </div>
 </template>
 
 <script>
 import UserCard from "@/components/detailsUser/UserCard.vue";
-import { getMe, getUsers } from "../services/api";
+import { getMe, getUsers, eliminarUsuario,logout } from "../services/api";
 
 
 export default {
   name: 'UserView',
   components: {
-   UserCard
+    UserCard
   },
   data() {
     return {
-     usuario: null,
+      usuario: null,
       token: "",
     }
   },
- watch: {
+  watch: {
 
     "$route.params.id": {
       immediate: true,
@@ -39,15 +39,28 @@ export default {
 
     async cargarUsuario(id) {
       this.token = localStorage.getItem('token');
-       this.usuario = await getMe(this.token);
+      this.usuario = await getMe(this.token);
 
-    
+
+
+    },
+
+    async deleteUser(id) {
+      if (confirm("¿Estás seguro de que quieres eliminar la cuenta?")) {
+        await eliminarUsuario( this.token, id);
+        alert("Usuario eliminado");
+        logout();
+        this.$router.push({ name:'HomeView'});
+      }
+
 
     }
+
+
   },
 
   mounted() {
-   
+
   },
 }
 </script>
@@ -66,5 +79,4 @@ h1 {
   text-align: center;
   font-family: 'Segoe UI', sans-serif;
 }
-
 </style>

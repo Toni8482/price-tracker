@@ -9,6 +9,7 @@ import LoginView from "@/views/LoginView.vue";
 import UsersView from "@/views/UsersView.vue";
 import UserView from "@/views/UserView.vue";
 import { authMiddleware } from '../middleware/auth.js';
+import { adminMiddleware } from '../middleware/admin.js';
 
 const routes = [
  
@@ -37,6 +38,7 @@ const routes = [
     name: "lista-users",
     component: UsersView,
      beforeEnter: authMiddleware,
+     beforeEnter: adminMiddleware,
   }, 
   {
     path: "/login",
@@ -58,6 +60,7 @@ const routes = [
     path: "/register/:id",
     name: "edit-register",
     component: RegisterView,
+     beforeEnter: adminMiddleware,
   }, 
    {
     path: "/user/:id",

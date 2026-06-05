@@ -26,8 +26,9 @@
       <ul>
         <li><router-link to="/">INICIO</router-link></li>
         <li><router-link to="/perfumes">PERFUMES</router-link></li>
+
         <div class="div-header" v-if="user.userName && user.userId">
-          <li><router-link to="/users">USERS</router-link></li>
+          <li v-if="esAdmin"><router-link to="/users">USERS</router-link></li>
         </div>
       </ul>
     </div>
@@ -39,7 +40,7 @@
         </span>
 
         <span v-else>
-          <img :src=userSesion alt="user">
+          <img :src="userSesion" alt="user">
         </span>
       </button>
 
@@ -78,7 +79,7 @@
   </nav>
 </template>
 <script>
-import { getAllPerfumes } from "../services/api";
+import { getAllPerfumes  } from "../services/api";
 import logoDark from '../assets/images/flower_white.svg'
 import logoLight from '../assets/images/flower_black.svg'
 import lupa from '../assets/images/lupa.svg'
@@ -87,7 +88,8 @@ import userSesion from '../assets/images/user_sin_sesion.svg'
 export default {
   name: "Menu",
   props: {
-    user: Object
+    user: Object,
+    esAdmin: Boolean
   },
   data() {
     return {
@@ -103,7 +105,8 @@ export default {
   computed: {
     logoSrc() {
       return this.isDark ? logoDark : logoLight
-    }
+    },
+   
   },
 
   methods: {

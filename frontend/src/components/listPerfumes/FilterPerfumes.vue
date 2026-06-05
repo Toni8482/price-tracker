@@ -7,11 +7,11 @@
                 Todos
             </label>
             <label>
-                <input type="radio" v-model="selectedGenre" name="genero" value="Mujeres">
+                <input type="radio" v-model="selectedGenre" name="genero" value="Mujer">
                 Mujeres {{ quantityWomen }}
             </label>
             <label>
-                <input type="radio" v-model="selectedGenre" name="genero" value="Hombres">
+                <input type="radio" v-model="selectedGenre" name="genero" value="Hombre">
                 Hombres {{ quantityMen }}
             </label>
         </div>
@@ -22,13 +22,10 @@
                 <input type="radio" v-model="selectedWebSite" name="tienda" value="todos">
                 Todos
             </label>
-            <label>
-                <input type="radio" v-model="selectedWebSite" name="tienda" value="perfumerias">
-                Perfumerias
-            </label>
-            <label>
-                <input type="radio" v-model="selectedWebSite" name="tienda" value="perfumesClub">
-                PerfumesClub
+           
+              <label v-for="tienda in tiendas" :key="tienda.id">
+                <input type="radio" v-model="selectedWebSite" name="tienda" :value="tienda.name">
+               {{ tienda.name }}
             </label>
         </div>
     </div>
@@ -41,6 +38,7 @@ export default {
     props: {
         quantityWomen: Number,
         quantityMen: Number,
+        tiendas: Array
     },
     data() {
         return {

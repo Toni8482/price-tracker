@@ -2,14 +2,14 @@
  
    
     <div class="content_lista">
-      <FilterPerfumes :quantity-women="quantityWomen" :quantity-men="quantityMen" @filters-changed="updateFilters" />
+      <FilterPerfumes :quantity-women="quantityWomen" :quantity-men="quantityMen" @filters-changed="updateFilters" :tiendas="tiendas"/>
       <ListCards :perfumes="filteredPerfumes" />
     </div>
 
 </template>
 
 <script>
-import { getAllPerfumes } from "@/services/api";
+import { getAllPerfumes, getAllStores,getPerfumesPage } from "@/services/api";
 import FilterPerfumes from '@/components/listPerfumes/FilterPerfumes.vue';
 import ListCards from '@/components/listPerfumes/ListCards.vue';
 
@@ -26,6 +26,7 @@ export default {
   data() {
     return {
       perfumes: [],
+      tiendas: [],
       filters: {
         genre: 'todos',
         webSite: 'todos'
@@ -49,33 +50,25 @@ export default {
     },
 
     
-//################## MODIFICAR POR BUCLES ##################//
+
     filteredPerfumes() {
       let result = [...this.perfumes];
 
-      if (this.filters.genre === 'Hombres') {
+      if (this.filters.genre != 'todos') {
         result = result.filter(
-          p => p.target_public === 'Hombre'
+          p => p.target_public === this.filters.genre
         );
       }
 
-      if (this.filters.genre === 'Mujeres') {
+     
+
+      if (this.filters.webSite != 'todos') {
         result = result.filter(
-          p => p.target_public === 'Mujer'
+          p => p.store_name === this.filters.webSite
         );
       }
 
-      if (this.filters.webSite === 'perfumerias') {
-        result = result.filter(
-          p => p.store_name === 'Perfumerias'
-        );
-      }
-
-      if (this.filters.webSite === 'perfumesClub') {
-        result = result.filter(
-          p => p.store_name === 'Perfumes Club'
-        );
-      }
+     
 
 
       return result;
@@ -97,6 +90,12 @@ export default {
       }));
 
 
+    } catch (error) {
+      console.error(error);
+    }
+
+     try {
+      this.tiendas = await getAllStores();
     } catch (error) {
       console.error(error);
     }

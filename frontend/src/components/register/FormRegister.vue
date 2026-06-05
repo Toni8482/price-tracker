@@ -19,6 +19,15 @@
       <input type="password" v-model="repeatPassword">
 
     </label>
+
+    <label for="role">
+  Privilegios:
+
+    <select id="role" v-model="user.roles">
+      <option :value="['ROLE_USER']" >User</option>
+      <option :value="['ROLE_ADMIN']">Admin</option>
+    </select>
+    </label>
     <button type="submit">{{ btnSubmit }}</button>
   </form>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <MenuComponent :user="userData" @logout="cerrarSesion" />
+    <MenuComponent :user="userData" @logout="cerrarSesion" :es-admin="esAdmin" />
 
     <main class="main-content">
       <router-view />
@@ -15,7 +15,7 @@
 
 import MenuComponent from './components/MenuComponent.vue';
 import Footer from './components/FooterComponent.vue';
-import { logout } from "./services/api";
+import { logout, isAdmin } from "./services/api";
 
 export default {
   name: "App",
@@ -28,7 +28,8 @@ export default {
     return {
       userData: {
         userName: null,
-        userId: null
+        userId: null,
+        roles: []
       }
     };
   },
@@ -37,18 +38,25 @@ export default {
       this.loadUser();
     }
   },
+  computed: {
+    esAdmin() {
+      return this.userData.roles.includes("ROLE_ADMIN");
+    }
+  },
   methods: {
     cerrarSesion() {
       logout();
       this.$router.push('/');
       this.userData = {
         userName: "",
-        userId: null
+        userId: null,
+        roles: []
       };
     },
     loadUser() {
       this.userData.userName = localStorage.getItem('user_email');
       this.userData.userId = localStorage.getItem('user_id');
+      this.userData.roles = JSON.parse(localStorage.getItem('roles') || '[]');
     }
   },
   mounted() {

@@ -1,7 +1,8 @@
 <template>
   <div class="">
    <h1>Users</h1>
-   <TableUsers @id="deleteUser" :users="users"/>
+   <TableUsers v-if="users.length > 0" @id="deleteUser" :users="users"/>
+   <div v-else></div>
   </div>
 </template>
 
