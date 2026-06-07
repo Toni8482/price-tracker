@@ -28,9 +28,53 @@
         <li><router-link to="/perfumes">PERFUMES</router-link></li>
 
         <div class="div-header" v-if="user.userName && user.userId">
-          <li v-if="esAdmin"><router-link to="/users">USERS</router-link></li>
+          <li v-if="esAdmin"><router-link to="/users">USUARIOS</router-link></li>
         </div>
       </ul>
+    </div>
+
+    <div ref="userMenuMovil">
+      <button class="btn-mobile" @click="showMobile = !showMobile"> ≡ </button>
+      <div class=" dropdown-mobile" :class="{ open: showMobile }">
+
+        <router-link to="/">INICIO</router-link>
+        <router-link to="/perfumes">PERFUMES</router-link>
+
+        <div class="div-header" v-if="esAdmin">
+          <router-link to="/users">USERS</router-link>
+        </div>
+
+        <hr class="separator">
+        <template v-if="user.userName">
+
+          <router-link :to="{ name: 'user', params: { id: user.userId } }">
+            MI PERFIL
+          </router-link>
+
+          <router-link :to="{ name: 'lista-favoritos', params: { id: user.userId } }">
+            MIS FAVORITOS
+          </router-link>
+
+          <button @click="logout">
+            CERRAR CUENTA
+          </button>
+
+        </template>
+
+        <template v-else>
+
+          <router-link to="/login">
+            INICIAR SESION
+          </router-link>
+
+          <router-link to="/register">
+            CREAR CUENTA
+          </router-link>
+
+        </template>
+        <hr class="separator">
+        <button class="theme-toggle" @click="toggleTheme"> {{ isDark ? '🌞 Tema claro' : '🌙 Tema oscuro' }}</button>
+      </div>
     </div>
     <!--Botón de usuario-->
     <div class="user-menu" ref="userMenu">
@@ -53,11 +97,11 @@
           </router-link>
 
           <router-link :to="{ name: 'lista-favoritos', params: { id: user.userId } }">
-            Favoritos
+            Mis favoritos
           </router-link>
 
           <button @click="logout">
-            Cerrar sesión
+            Cerrar cuenta
           </button>
           <button class="theme-toggle" @click="toggleTheme"> {{ isDark ? '🌞 Tema claro' : '🌙 Tema oscuro' }}</button>
         </template>
@@ -69,7 +113,7 @@
           </router-link>
 
           <router-link to="/register">
-            Registrarse
+            Crear cuenta
           </router-link>
           <button class="theme-toggle" @click="toggleTheme"> {{ isDark ? '🌞 Tema claro' : '🌙 Tema oscuro' }}</button>
         </template>
@@ -79,7 +123,7 @@
   </nav>
 </template>
 <script>
-import { getAllPerfumes  } from "../services/api";
+import { getAllPerfumes } from "../services/api";
 import logoDark from '../assets/images/flower_white.svg'
 import logoLight from '../assets/images/flower_black.svg'
 import lupa from '../assets/images/lupa.svg'
@@ -98,6 +142,7 @@ export default {
       isScrolled: false,
       isDark: false,
       showMenu: false,
+      showMobile: false,
       lupa,
       userSesion
     }
@@ -106,14 +151,14 @@ export default {
     logoSrc() {
       return this.isDark ? logoDark : logoLight
     },
-   
+
   },
 
   methods: {
     logout() {
 
       this.$emit("logout");
-    
+
     },
 
     buscarPerfume() {
@@ -147,9 +192,14 @@ export default {
 
     handleClickOutside(event) {
       const menu = this.$refs.userMenu;
+      const menuMovil = this.$refs.userMenuMovil;
 
       if (menu && !menu.contains(event.target)) {
         this.showMenu = false;
+      }
+
+      if (menuMovil && !menuMovil.contains(event.target)) {
+        this.showMobile = false;
       }
     },
 
@@ -240,7 +290,7 @@ export default {
   border: none;
 
   cursor: pointer;
-
+color:var(--menu-link);
 
 }
 
@@ -292,7 +342,7 @@ export default {
 }
 
 .busqueda input[type="search"]::placeholder {
-  color: var( --btn-bg);
+  color: var(--btn-bg);
   font-family: 'Montserrat', sans-serif;
   font-size: 0.85rem;
 }
@@ -400,6 +450,55 @@ export default {
   background: rgba(212, 175, 55, .1);
 }
 
+.dropdown-mobile {
+   max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+   display: flex;
+  flex-direction: column;
+  position: absolute;
+
+   background: var(--card-bg);
+  
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .2);
+  width: 100%;
+  
+  right: 0;
+  top: 80px;
+  align-items: center;
+}
+
+.dropdown-mobile.open{
+ max-height: 500px;
+}
+
+.btn-mobile {
+  display: none;
+  background: linear-gradient(135deg, #d4af37, #b8942e);
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50px;
+  cursor: pointer;
+
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+  position: relative;
+  overflow: hidden;
+  font-size: x-large;
+
+}
+
+.separator {
+  width: 80%;
+  border: none;
+  border-top: 1px solid rgba(212, 175, 55, 0.3);
+  margin: 10px 0;
+}
+
 /* ================================
    RESPONSIVE BUSCADOR
 ================================ */
@@ -421,6 +520,15 @@ export default {
 
   .btn_buscar span {
     font-size: 0.9rem;
+  }
+
+  .btn-mobile {
+    display: block;
+  }
+
+  .buscador-links,
+  .user-menu {
+    display: none;
   }
 }
 

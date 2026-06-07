@@ -423,4 +423,26 @@ td button:first-of-type:hover {
   border-color: #d4af37;
   color: #d4af37;
 }
+@media (max-width: 768px) {
+  
+.card {
+   
+ flex-direction: column;
+  gap: 50px;
+  align-items: center;
+}
+.info{
+  width: 100%;
+  align-items: center;
+  padding: 10px;
+  text-align: center;
+}
+
+
+
+}
+
+@media (max-width: 480px) {
+ 
+}
 </style>

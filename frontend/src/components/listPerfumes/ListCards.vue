@@ -78,9 +78,7 @@ export default {
 </script>
 
 <style scoped>
-.list-cards {
- 
-}
+
 
 
 
@@ -141,13 +139,14 @@ export default {
 
 ul {
    
-   display: flex;
-  flex-wrap: wrap;
+   display:grid;
+   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
-    padding: 0;
+   width: 100%;
     margin: 0;
     list-style: none;
     justify-content: center;
+   
 }
 
 li {
@@ -204,5 +203,19 @@ select:hover {
 
 .card button:hover {
     background: var(--btn-hover);
+}
+
+@media (max-width: 768px) {
+  
+ul {
+   
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+}
+
+@media (max-width: 480px) {
+ 
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <h2>Comparar precios</h2>
-
+<div class="table-wrapper">
     <BaseTable class="comparison-table" v-if="perfumesComparados.length">
       <template #header>
         <tr>
@@ -39,10 +39,10 @@
         </tr>
       </template>
     </BaseTable>
-
     <span v-else>
       No hay perfumes para comparar
     </span>
+</div>
  
 </template>
 
@@ -90,6 +90,11 @@ export default {
 </script>
 
 <style scoped>
+ .table-wrapper {
+
+   justify-content: center;
+
+}
 .comparison-table {
   width: 95%;
   max-width: 1300px;
@@ -97,6 +102,7 @@ export default {
   overflow-x: auto;
   position: relative;
   z-index: 1;
+ 
 }
 
 
@@ -179,6 +185,16 @@ button:hover {
 button:active {
   transform: translateY(1px);
 }
+@media (max-width: 768px) {
+  .table-wrapper {
+  width: 95%;
+  overflow-x: auto;
+}
 
+}
+
+@media (max-width: 480px) {
+ 
+}
 
 </style>

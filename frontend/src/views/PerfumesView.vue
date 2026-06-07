@@ -114,7 +114,19 @@ h1 {
 .content_lista {
    display: flex;
  
-  gap: 20px;
+  gap: 50px;
+}
+@media (max-width: 768px) {
+  
+.content_lista {
+   
+ flex-direction: column;
+  gap: 50px;
+  align-items: center;
+}
 }
 
+@media (max-width: 480px) {
+ 
+}
 </style>

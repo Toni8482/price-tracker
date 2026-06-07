@@ -1,6 +1,6 @@
 <template>
   <div class="detalles-user">
-    <h1>Detalles de usuario</h1>
+    <h1>Perfil de usuario</h1>
     <UserCard :usuario="usuario" @id="deleteUser" />
   </div>
 </template>
@@ -74,7 +74,7 @@ export default {
 }
 
 h1 {
-  color: var(--primary-color);
+  color: var(--form-text);
   margin-bottom: 30px;
   text-align: center;
   font-family: 'Segoe UI', sans-serif;

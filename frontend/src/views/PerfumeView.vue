@@ -212,4 +212,23 @@ h1::before {
   margin: 0 15px;
   vertical-align: middle;
 }
+
+@media (max-width: 768px) {
+  h2 {
+    text-align: center;
+  }
+
+  .content_lista {
+
+    flex-direction: column;
+    gap: 50px;
+    align-items: center;
+  }
+
+  .detalles-perfume {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {}
 </style>
