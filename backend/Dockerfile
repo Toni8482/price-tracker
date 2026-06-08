@@ -23,4 +23,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 
 WORKDIR /var/www/html
 
+RUN mkdir -p var/cache var/log \
+    && chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 var
 
+USER www-data
