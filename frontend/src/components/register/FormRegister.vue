@@ -20,24 +20,28 @@
 
     </label>
 
-    <label for="role">
+    <label v-if="esAdmin" for="role">
   Privilegios:
 
     <select id="role" v-model="user.roles">
       <option :value="['ROLE_USER']" >User</option>
       <option :value="['ROLE_ADMIN']">Admin</option>
     </select>
+
     </label>
     <button type="submit">{{ btnSubmit }}</button>
   </form>
 </template>
 
 <script>
+
+
 export default {
   name: 'FormRegister',
   props: {
     btnSubmit: String,
     user: Object,
+    esAdmin:Boolean
   },
   data() {
     return {

@@ -29,7 +29,6 @@ export default {
 
   methods: {
 
-
     async deleteUser(id) {
 
       await eliminarUsuario(this.token, id);

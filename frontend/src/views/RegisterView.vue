@@ -1,13 +1,13 @@
 <template>
   <div class="">
     <h1>{{ titulo }}</h1>
-    <FormRegister @new-user="register" :btn-submit="btnSubmit" :user="user" />
+    <FormRegister @new-user="register" :btn-submit="btnSubmit" :user="user" :esAdmin="esAdmin"/>
   </div>
 </template>
 
 <script>
 import FormRegister from '@/components/register/FormRegister.vue';
-import { CreateUser, getUsers, editarUsuario } from '@/services/api';
+import { CreateUser, getUsers, editarUsuario, isAdmin } from '@/services/api';
 
 export default {
   name: 'RegisterView',
@@ -27,7 +27,8 @@ export default {
       idRoute: null,
       token: null,
       btnSubmit: 'Crear usuario',
-      titulo: 'REGISTRO'
+      titulo: 'REGISTRO',
+      esAdmin: false
     }
   },
 
@@ -37,8 +38,6 @@ export default {
 
   methods: {
     async register(newUser) {
-
-
 
       if (this.idRoute) {
         try {
@@ -53,7 +52,6 @@ export default {
         } catch (error) {
           alert("Error al actualizar el usuario");
         }
-
 
       } else {
 
@@ -78,8 +76,6 @@ export default {
         }
       }
 
-
-
     }
   },
 
@@ -92,10 +88,10 @@ export default {
       let usuarios = await getUsers(this.token);
 
       this.user = usuarios.find(u => u.id == this.idRoute);
-      console.log("Usuario: "+JSON.stringify(this.user));
+      console.log("Usuario: " + JSON.stringify(this.user));
 
     }
-
+    this.esAdmin = isAdmin();
   },
 }
 </script>

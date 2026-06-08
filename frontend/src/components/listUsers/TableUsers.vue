@@ -4,6 +4,7 @@
             <tr>
                 <th>Id</th>
                 <th>Email</th>
+                <th>Roles</th>
 
                 <th></th>
 
@@ -13,6 +14,7 @@
             <tr v-for="user in users">
                 <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>
+                <td>{{ user.roles.join(', ') }}</td>
 
                 <td>
                     <button @click="editarUsuario(user.id)">Editar</button>

@@ -9,9 +9,7 @@
 
 <script>
 import { eliminarFavorito, getFavoritosUser, getFavoritosVariableUser } from "../services/api";
-
 import TableFavorites from '@/components/favoritePerfume/TableFavorites.vue';
-
 
 export default {
   name: 'FavoriteView',

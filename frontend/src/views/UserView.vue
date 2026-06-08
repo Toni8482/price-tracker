@@ -53,9 +53,7 @@ export default {
         this.$router.push({ name:'HomeView'});
       }
 
-
     }
-
 
   },
 

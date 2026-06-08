@@ -7,9 +7,6 @@
 
     <FeaturedPerfumes :featured-perfumes="featuredPerfumes" />
 
-
-
-
   </div>
 </template>
 

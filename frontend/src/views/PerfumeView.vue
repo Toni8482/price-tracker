@@ -32,8 +32,6 @@ export default {
   data() {
     return {
       perfume: null,
-
-
       perfumes: [],
       contenidoSeleccionadoId: null,
       id: null,

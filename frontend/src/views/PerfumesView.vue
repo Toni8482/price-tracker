@@ -50,7 +50,6 @@ export default {
     },
 
     
-
     filteredPerfumes() {
       let result = [...this.perfumes];
 
@@ -60,16 +59,11 @@ export default {
         );
       }
 
-     
-
       if (this.filters.webSite != 'todos') {
         result = result.filter(
           p => p.store_name === this.filters.webSite
         );
       }
-
-     
-
 
       return result;
     }

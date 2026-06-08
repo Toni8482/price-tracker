@@ -71,10 +71,6 @@ export async function Login(user) {
 }
 
 
-
-
-
-
 /**
  * Datos de usuario logueado
  */
@@ -176,10 +172,6 @@ export async function getFavoritosUser(token) {
 }
 
 
-
-
-
-
 export async function getFavoritosVariableUser(token) {
   try {
     const response = await axios.get(`${BASE_URL}api/favorites/variables/users`, {
@@ -195,7 +187,6 @@ export async function getFavoritosVariableUser(token) {
     throw error;
   }
 }
-
 
 export async function editarUsuario(token, user) {
   try {
@@ -271,7 +262,6 @@ export function isAdmin() {
   return getRoles().includes("ROLE_ADMIN");
 }
 
-
 export async function getAllStores() {
   try {
     const response = await axios.get(BASE_URL + "all/stores");
@@ -281,7 +271,6 @@ export async function getAllStores() {
     throw error;
   }
 }
-
 
 export async function getPerfumesPage(page = 2) {
   const response = await axios.get(

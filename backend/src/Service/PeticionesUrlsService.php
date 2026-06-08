@@ -38,7 +38,7 @@ class PeticionesUrlsService
         $responses = Utils::settle($promises)->wait();
 
 
-        // 👇 AQUÍ ESTABA EL PROBLEMA
+       
         if (
             !isset($responses[0]['state']) ||
             $responses[0]['state'] !== 'fulfilled'
@@ -146,11 +146,10 @@ class PeticionesUrlsService
 
         $marca = 'h1.titleProduct > a';
         $nombre = 'h1.titleProduct > span';
-     //   $precio = 'div.contPrecioNuevo';
-      //  $urlImagen = 'img.zoom';
+    
         $descripcion = 'div#descriptionPFCPropio';
         $concentracion = 'h2.titleProduct';
-      //  $contenido = 'div > div.col-md-2.col-lg-2.col-xl-2.hackName.align-self-center > div';
+     
  
         $promises[] = $this->client->postAsync($this->scraperUrl, [
             'json' => [
