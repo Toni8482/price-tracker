@@ -7,11 +7,11 @@
                 Todos
             </label>
             <label>
-                <input type="radio" v-model="selectedGenre" name="genero" value="Mujeres">
+                <input type="radio" v-model="selectedGenre" name="genero" value="Mujer">
                 Mujeres {{ quantityWomen }}
             </label>
             <label>
-                <input type="radio" v-model="selectedGenre" name="genero" value="Hombres">
+                <input type="radio" v-model="selectedGenre" name="genero" value="Hombre">
                 Hombres {{ quantityMen }}
             </label>
         </div>
@@ -22,13 +22,10 @@
                 <input type="radio" v-model="selectedWebSite" name="tienda" value="todos">
                 Todos
             </label>
-            <label>
-                <input type="radio" v-model="selectedWebSite" name="tienda" value="perfumerias">
-                Perfumerias
-            </label>
-            <label>
-                <input type="radio" v-model="selectedWebSite" name="tienda" value="perfumesClub">
-                PerfumesClub
+
+            <label v-for="tienda in tiendas" :key="tienda.id">
+                <input type="radio" v-model="selectedWebSite" name="tienda" :value="tienda.name">
+                {{ tienda.name }}
             </label>
         </div>
     </div>
@@ -41,6 +38,7 @@ export default {
     props: {
         quantityWomen: Number,
         quantityMen: Number,
+        tiendas: Array
     },
     data() {
         return {
@@ -79,10 +77,14 @@ export default {
 
 <style scoped>
 .filtros-content {
-  display: flex;
-  flex-direction: column;
-    margin: 30px;
-   
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 30%;
+    margin: 20px;
+    align-items: center;
+    position: sticky;
+    top: 150px;
 }
 
 .seleccion_filtrado {
@@ -95,5 +97,29 @@ export default {
     padding: 20px;
     font-size: 20px;
     color: var(--text-color);
+    width: 80%;
+    
+}
+
+
+@media (max-width: 768px) {
+  
+.filtros-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    margin: 20px;
+    align-items: center;
+    position:static;
+   
+}
+.seleccion_filtrado {
+   
+}
+}
+
+@media (max-width: 480px) {
+ 
 }
 </style>

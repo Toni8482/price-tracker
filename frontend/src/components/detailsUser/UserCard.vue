@@ -3,7 +3,7 @@
     <BaseCard class="card">
 
 
-      <div class="info">
+     
 
 
         <h2>{{ usuario.email }}</h2>
@@ -20,7 +20,10 @@
           <strong>Favoritos:</strong> 
         </p>
 
-      </div>
+
+           <button @click="eliminarUsuario(usuario.id)">Eliminar cuenta</button>
+     
+
 
     </BaseCard>
 
@@ -55,7 +58,10 @@ export default {
   },
 
   methods: {
+   eliminarUsuario(id) {
 
+            this.$emit("id", id);
+        }
   },
 
   mounted() {
@@ -65,45 +71,23 @@ export default {
 </script>
 
 <style scoped>
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 15px 35px var(--card-shadow);
-}
-
-.card img {
+.card{
   width: 100%;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 10px;
 }
 
-.card .marca {
-  color: var(--card-marca);
-  font-weight: bold;
+.card h2 {
+  text-decoration: underline;
 }
 
-.card .nombre {
-  font-weight: bold;
-  color: var(--card-title);
-  margin: 5px 0;
-}
 
-.card .precio {
-  color: var(--card-price);
-  font-weight: bold;
-}
-
-.card .marca,
-.card .nombre {
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.card p {
+ text-align: left;
+ width: 100%;
+ margin: 10px;
 }
 
 .card button {
-  margin: auto;
+ 
   background: var(--btn-bg);
   color: var(--btn-text);
   border: none;
@@ -112,6 +96,7 @@ export default {
   cursor: pointer;
   transition: all 0.2s;
   width: 100%;
+  margin-top: 20px;
 }
 
 .card button:hover {

@@ -21,25 +21,31 @@ class UserService
 
     ) {}
 
-   public function saveUser(array $user)
-{
-    $newUser = new User();
+    public function saveUser(array $user)
+    {
+        $newUser = new User();
 
-    $newUser->setEmail($user['email']);
+        $newUser->setEmail($user['email']);
 
-    // asignar rol por defecto
-    $newUser->setRoles(['ROLE_USER']);
+        $totalUsers = $this->userRepository->count([]);
 
-    $hashedPassword = $this->passwordHasher->hashPassword(
-        $newUser,
-        $user['password']
-    );
+        if ($totalUsers === 0) {
+            $newUser->setRoles(['ROLE_ADMIN']);
+        } else {
+              $newUser->setRoles(['ROLE_USER']);
+        }
 
-    $newUser->setPassword($hashedPassword);
 
-    $this->em->persist($newUser);
-    $this->em->flush();
-}
+        $hashedPassword = $this->passwordHasher->hashPassword(
+            $newUser,
+            $user['password']
+        );
+
+        $newUser->setPassword($hashedPassword);
+
+        $this->em->persist($newUser);
+        $this->em->flush();
+    }
 
     public function editUser(int $id, array $data): void
     {
@@ -62,6 +68,10 @@ class UserService
             $user->setPassword($hashedPassword);
         }
 
+        if (isset($data['roles'])) {
+            $user->setRoles($data['roles']);
+        }
+
         $this->em->flush();
     }
 
@@ -80,35 +90,35 @@ class UserService
     public function saveFavorites(User $user, Perfumes $perfume)
     {
 
-    
+
         $user->addPerfume($perfume);
 
         $this->em->flush();
     }
 
-      public function deleteFavorites(User $user, Perfumes $perfume)
+    public function deleteFavorites(User $user, Perfumes $perfume)
     {
 
-    
+
         $user->deletePerfume($perfume);
 
         $this->em->flush();
     }
 
 
-     public function saveFavoritesVariable(User $user, PrecioContenido $perfume)
+    public function saveFavoritesVariable(User $user, PrecioContenido $perfume)
     {
 
-    
+
         $user->addPerfumeVariable($perfume);
 
         $this->em->flush();
     }
 
-      public function deleteFavoritesVariable(User $user, PrecioContenido $perfume)
+    public function deleteFavoritesVariable(User $user, PrecioContenido $perfume)
     {
 
-    
+
         $user->deletePerfumeVariable($perfume);
 
         $this->em->flush();

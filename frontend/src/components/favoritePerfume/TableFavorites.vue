@@ -78,19 +78,7 @@ export default {
 </script>
 
 <style scoped>
-table {
-  width: 90%;
-  max-width: 900px;
-  margin: 30px auto;
-  border-collapse: collapse;
-  background: var(--table-bg);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-  color: var(--table-text);
-  display: table;
-}
+
 
 /* CABECERA */
 th {

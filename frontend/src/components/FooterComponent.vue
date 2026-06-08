@@ -40,6 +40,7 @@ export default {
     padding: 20px;
     border-top: 1px solid var(--card-border);
     background: var(--card-bg);
+    margin-top: 20px;
 }
 
 .footer-content {

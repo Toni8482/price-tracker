@@ -13,9 +13,6 @@ class FormatterService
 
         foreach ($perfumes as $perfume) {
 
-
-
-
             echo "\033[32m##############Producto detalle de perfume##############\033[0m\n";
             echo "\033[33mUrl producto: \033[0m";
             echo $perfume['url_producto'] . "\n";
@@ -27,7 +24,7 @@ class FormatterService
             echo $perfume['concentracion'] . "\n";
             echo "\033[34mDescripcion: \033[0m";
             echo $perfume['descripcion'] . "\n";
-             echo "\033[32m#######Variantes#######\033[0m\n";
+            echo "\033[32m#######Variantes#######\033[0m\n";
             foreach ($perfume['precio_contenido'] as $precioContenido) {
 
                 echo "\033[35mPrecio: \033[0m";
@@ -38,7 +35,7 @@ class FormatterService
                 echo $precioContenido['image_url'] . "\n";
             }
 
-              echo "\n";
+            echo "\n";
         }
     }
 
@@ -55,12 +52,6 @@ class FormatterService
             $urlProducto  = $data['url'] ?? '—';
             $nombre = $data['nombre'] ?? '—';
 
-
-
-
-
-
-            // $precioRaw = $data['data']['precio'][0]['text'] ?? '—';
             $urlImagen = $data['url_imagen'][0]['src'] ?? '—';
 
             if (!preg_match('#^https?://#i', $urlImagen)) {
@@ -76,10 +67,6 @@ class FormatterService
                 $concentracion = trim($partesNodoConcentracion[0]);
             }
 
-
-
-            //   $contenido = $data['data']['contenido'][0]['text'] ?? '—';
-            // $contenido = trim($contenido);
             $variantes = $data['variantes'] ?? [];
 
             $precioContenido = [];
@@ -89,12 +76,6 @@ class FormatterService
                 $precio = (float) str_replace(',', '.', $precioLimpio);
 
                 $url_img = $variantes[$i]['imagen_url_contenido'] ?? '—';
-/** 
-                if ($url_img != '-' && !str_contains($url_img, 'https://i1.perfumesclub.com')) {
-                    $url_img = rtrim($webSite, '/') . '/' . ltrim($url_img, '/');
-                }
-
-*/
 
                 $precioContenido[] = [
                     'precio' => $precio ?? '—',
@@ -108,19 +89,10 @@ class FormatterService
             echo "🌐 URL            : {$urlProducto}" . PHP_EOL;
             echo "🏷️ Marca          : {$marca}" . PHP_EOL;
             echo "🧴 Nombre         : {$nombre}" . PHP_EOL;
-            //  echo "💰 Precio         : {$precioContenido}" . PHP_EOL;
             echo "🖼️ Imagen URL     : {$cleanUrl}" . PHP_EOL;
             echo "📝 Descripción    : {$descripcion}" . PHP_EOL;
             echo "⚗️ Concentración  : {$concentracion}" . PHP_EOL;
-            //    echo "📦 Contenido      : {$contenido}" . PHP_EOL;
             echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" . PHP_EOL;
-
-
-
-            //  $contenido = str_replace(["\\n", "\\r", "\\t"], '',  $contenido);
-            // $contenido = trim($contenido);
-
-
 
             $respuesta[] = [
                 'url' =>  $urlProducto,
@@ -134,7 +106,6 @@ class FormatterService
                 'url_producto' =>  $urlProducto,
             ];
         }
-
 
         return $respuesta;
     }

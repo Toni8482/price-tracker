@@ -10,6 +10,8 @@ return [
     [ // $staticRoutes
         '/api/favorites/variables/users' => [[['_route' => 'api_favorites_variable_users', '_controller' => 'App\\Controller\\ApiFavoritesController::favoritesVariableUsers'], null, ['GET' => 0], null, false, false, null]],
         '/api/perfumes' => [[['_route' => 'app_api_perfumes', '_controller' => 'App\\Controller\\ApiPerfumesController::index'], null, null, null, false, false, null]],
+        '/perfumes/page' => [[['_route' => 'app_apiperfumes_perfumespage', '_controller' => 'App\\Controller\\ApiPerfumesController::perfumesPage'], null, ['GET' => 0], null, false, false, null]],
+        '/all/stores' => [[['_route' => 'app_api_stores', '_controller' => 'App\\Controller\\ApiStoresController::stores'], null, null, null, false, false, null]],
         '/users' => [[['_route' => 'app_api_users', '_controller' => 'App\\Controller\\ApiUsersController::index'], null, ['POST' => 0], null, false, false, null]],
         '/api/me' => [[['_route' => 'api_me', '_controller' => 'App\\Controller\\ApiUsersController::me'], null, ['GET' => 0], null, false, false, null]],
         '/api/all/users' => [[['_route' => 'api_all_users', '_controller' => 'App\\Controller\\ApiUsersController::users'], null, ['GET' => 0], null, false, false, null]],

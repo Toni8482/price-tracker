@@ -6,7 +6,7 @@ module.exports = {
   // Configuración de Puppeteer
   MAX_PAGES: 4,
   MAX_SCROLLS: 20,
-  MAX_ITEMS: 200,
+  MAX_ITEMS: 35,
   TIMEOUT: {
     NAVIGATION: 30000,
     SELECTOR: 10000,

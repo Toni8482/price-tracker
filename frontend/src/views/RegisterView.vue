@@ -1,13 +1,13 @@
 <template>
   <div class="">
     <h1>{{ titulo }}</h1>
-    <FormRegister @new-user="register" :btn-submit="btnSubmit" :user="user" />
+    <FormRegister @new-user="register" :btn-submit="btnSubmit" :user="user" :esAdmin="esAdmin"/>
   </div>
 </template>
 
 <script>
 import FormRegister from '@/components/register/FormRegister.vue';
-import { CreateUser, getUsers, editarUsuario } from '@/services/api';
+import { CreateUser, getUsers, editarUsuario, isAdmin } from '@/services/api';
 
 export default {
   name: 'RegisterView',
@@ -21,12 +21,14 @@ export default {
         id: '',
         email: '',
         password: '',
+        roles: ['ROLE_USER']
       },
 
       idRoute: null,
       token: null,
       btnSubmit: 'Crear usuario',
-      titulo:'REGISTRO'
+      titulo: 'REGISTRO',
+      esAdmin: false
     }
   },
 
@@ -37,17 +39,20 @@ export default {
   methods: {
     async register(newUser) {
 
-
-
       if (this.idRoute) {
-        await editarUsuario(this.token, newUser);
-        alert("Usuario editado");
+        try {
+          await editarUsuario(this.token, newUser);
+          alert("Usuario editado");
 
-        this.user.id = "";
-        this.user.nombre = "";
-        this.user.email = "";
-        this.user.password = "";
-      
+          this.user.id = "";
+          this.user.nombre = "";
+          this.user.email = "";
+          this.user.password = "";
+          this.user.roles = ['ROLE_USER'];
+        } catch (error) {
+          alert("Error al actualizar el usuario");
+        }
+
       } else {
 
         try {
@@ -62,16 +67,14 @@ export default {
           this.user.nombre = "";
           this.user.email = "";
           this.user.password = "";
-         
+          this.user.roles = ['ROLE_USER'];
         } catch (error) {
 
-          alert("Error al crear usuario");
+          alert("Error al crear el usuario");
 
           console.error(error);
         }
       }
-
-
 
     }
   },
@@ -85,8 +88,10 @@ export default {
       let usuarios = await getUsers(this.token);
 
       this.user = usuarios.find(u => u.id == this.idRoute);
+      console.log("Usuario: " + JSON.stringify(this.user));
 
     }
+    this.esAdmin = isAdmin();
   },
 }
 </script>
